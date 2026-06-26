@@ -1,0 +1,5 @@
+# Patterns excluded from lychee link checks.
+# One entry per line — Go-style regular expressions.
+
+# Intel content-delivery CDN blocks automated HTTP HEAD/GET requests.
+https://www\.intel\.com/content/dam/

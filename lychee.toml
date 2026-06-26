@@ -1,0 +1,28 @@
+# lychee link-checker configuration
+# https://lychee.cli.rs/usage/config/
+
+# Treat these HTTP status codes as valid.
+# 429 = rate-limited — the URL exists, we are just being throttled.
+accept = [200, 206, 429]
+
+# Parallel requests — polite default for a small list.
+max_concurrency = 6
+
+# Seconds per request before timing out.
+timeout = 25
+
+# Seconds to wait between retries.
+retry_wait_time = 3
+
+# Retry each URL this many times before reporting a failure.
+max_retries = 3
+
+# Exclude these URL patterns from checking.
+# Entries are Go-style regular expressions.
+exclude = [
+  # Intel content-delivery CDN returns 403 to automated scanners.
+  "https://www\\.intel\\.com/content/dam/",
+  # Wayback Machine / archive links are not in the README but guard against
+  # accidental future additions that lychee cannot check reliably.
+  "https://web\\.archive\\.org/",
+]
