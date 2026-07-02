@@ -14,45 +14,9 @@ Most AI practitioners default to GPU for everything because that is where traini
 
 ## Quick Start
 
-Three paths from zero to CPU inference — no GPU, no CUDA, no container.
+Three paths from zero to CPU inference — no GPU, no CUDA, no container: [llamafile](https://github.com/mozilla-ai/llamafile) (desktop, zero install), [ollama](https://github.com/ollama/ollama) (server / CLI), or [WebLLM](https://github.com/mlc-ai/web-llm) (browser, WASM).
 
-**1 — Desktop (llamafile — zero install)**
-
-A self-contained executable that runs on Linux, macOS, and Windows with no dependencies.
-
-```bash
-curl -LO https://huggingface.co/mozilla-ai/llamafile_0.10/resolve/main/Qwen3.5-0.8B-Q8_0.llamafile
-chmod +x Qwen3.5-0.8B-Q8_0.llamafile
-./Qwen3.5-0.8B-Q8_0.llamafile        # opens chat UI at http://localhost:8080
-```
-
-**2 — Server / CLI (ollama)**
-
-Manages model downloads and exposes an OpenAI-compatible API endpoint.
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh   # Linux / macOS
-ollama run llama3.2:3b                           # pulls Llama-3.2 3B Q4 (~2 GB) and opens CLI chat
-```
-
-**3 — Browser (WebLLM — WASM / CPU fallback)**
-
-Runs the model in a browser tab — no server, no API key.
-
-```bash
-npm install @mlc-ai/web-llm
-```
-
-```javascript
-import { CreateMLCEngine } from "@mlc-ai/web-llm";
-const engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f32_1-MLC");
-const { choices } = await engine.chat.completions.create({
-  messages: [{ role: "user", content: "Hello" }],
-});
-console.log(choices[0].message.content);
-```
-
-*(WebLLM uses WebGPU when available and falls back to WebAssembly on CPU-only browsers.)*
+See [docs/quickstart.md](docs/quickstart.md) for the full walkthroughs with copy-paste commands and sample code.
 
 ---
 
@@ -135,21 +99,34 @@ flowchart TD
 - [Mobile Phone CPUs](#mobile-phone-cpus)
 - [Cost and Deployment Economics](#cost-and-deployment-economics)
 - [When You Actually Do Want a GPU](#when-you-actually-do-want-a-gpu)
+- [CPU Fine-Tuning](#cpu-fine-tuning)
 - [Talks, Papers, and Articles](#talks-papers-and-articles)
-- [CPU Inference Deployment Guide](docs/cpu-inference-deployment.md)
-- [Cost Calculator](docs/cost-calculator.md)
-- [Green Inference Guide](docs/green-inference.md)
-- [Model Conversion Guide](docs/model-conversion-guide.md)
-- [Serverless CPU Patterns](docs/serverless-patterns.md)
-- [Benchmark Methodology](docs/benchmark-methodology.md)
-- [Troubleshooting](docs/troubleshooting.md)
+- [Docs](#docs)
+  - [Quick Start Guide](docs/quickstart.md)
+  - [CPU Inference Deployment Guide](docs/cpu-inference-deployment.md)
+  - [Cost Calculator](docs/cost-calculator.md)
+  - [Green Inference Guide](docs/green-inference.md)
+  - [Green Inference Cheat Sheet](docs/green-inference-cheat-sheet.md)
+  - [Multimodal CPU Workloads](docs/multimodal-cpu.md)
+  - [Mobile Phone CPU Inference](docs/mobile-cpu-inference.md)
+  - [Model Conversion Guide](docs/model-conversion-guide.md)
+  - [Serverless CPU Patterns](docs/serverless-patterns.md)
+   - [Hardware Reference](docs/hardware-reference.md)
+   - [Benchmark Methodology](docs/benchmark-methodology.md)
+   - [Benchmark Suite Proposal](docs/benchmark-suite-proposal.md)
+   - [Edge & Mobile CPU Inference Playbook](docs/edge-mobile-playbook.md)
+   - [CPU vs NVIDIA Decision Framework](docs/cpu-vs-nvidia-decision-framework.md)
+   - [Community Hackathon](docs/community-hackathon.md)
+   - [Roadmap](ROADMAP.md)
+   - [Troubleshooting](docs/troubleshooting.md)
 
 ---
 
 ## Runtimes and Inference Engines
 
 - [candle](https://github.com/huggingface/candle) — Hugging Face's Rust ML framework; CPU execution is the primary target, with optional CUDA support compiled in separately.
-- [ctransformers](https://github.com/marella/ctransformers) — Python bindings for GGML/GGUF models; lets Python callers run quantized models on CPU without touching C++.
+- [ctransformers](https://github.com/marella/ctransformers) — Python bindings for GGUF models; lets Python callers run quantized models on CPU without touching C++.
+- [ExecuTorch](https://github.com/pytorch/executorch) — PyTorch's on-device inference runtime; designed for mobile and embedded, with CPU kernels for ARM (XNNPACK backend) as the primary deployment target and cross-compilation support for Android, iOS, and Linux. *(Also listed under On-Device, Edge, ARM, and SBCs.)*
 - [ggml](https://github.com/ggerganov/ggml) — The tensor library underlying llama.cpp; hand-optimized CPU kernels using SIMD intrinsics for AVX2, AVX-512, NEON, and SVE.
 - [Intel Extension for Transformers](https://github.com/intel/intel-extension-for-transformers) — Drop-in optimization layer for Hugging Face Transformers that applies CPU-specific INT4/INT8 kernels, AMX acceleration, and weight-only quantization.
 - [llamafile](https://github.com/mozilla-ai/llamafile) — Distributable single-file LLM executables (built on llama.cpp + Cosmopolitan libc) that run on CPU across Linux, macOS, and Windows with no install.
@@ -223,7 +200,7 @@ Mixture-of-Experts (MoE) architectures are often assumed to require GPU because 
 - [LLM Inference Benchmarking Cheat-Sheet (llm-tracker.info)](https://llm-tracker.info/howto/LLM-Inference-Benchmarking-Cheat%E2%80%91Sheet-for-Hardware-Reviewers) — Canonical reference explaining llama.cpp benchmark metrics (pp512/tg128), quantization naming conventions, and how to correctly interpret and compare community-reported figures across hardware platforms.
 - [MyAIHardware — llama.cpp benchmarks](https://www.myaihardware.com/llama-cpp-benchmarks) — Aggregated llama.cpp benchmark scoreboard across CPUs, GPUs, and NPUs under standardized test conditions; useful for hardware selection and cross-platform throughput comparison.
 - [MLPerf Inference — edge CPU submissions](https://mlcommons.org/benchmarks/inference-edge/) — Industry-audited inference benchmark with CPU-only submissions in the edge category; provides verified latency/throughput figures under defined, reproducible test conditions.
-- [MLPerf Inference v5.0 — datacenter CPU submissions (MLCommons, Apr 2025)](https://mlcommons.org/2025/04/mlperf-inference-v5-0-results/) — Industry-audited inference benchmark with CPU-only datacenter submissions on Intel Xeon 6 Granite Rapids; reports GPT-J at 316 tok/s (INT4), Llama-3.1-8B at 450 tok/s (server) and 1,196 tok/s (offline). Intel remains the only vendor submitting server CPU results. ([Dell 2S-GNR results](https://github.com/mlcommons/inference_results_v5.0/tree/main/closed/Dell/results/1-node-2S-GNR_86C), [Supermicro results](https://github.com/mlcommons/inference_results_v5.0/tree/main/closed/Supermicro/results/1-node-2S-GNR_128C))
+- [MLPerf Inference v5.0 — datacenter CPU submissions (MLCommons, Apr 2025)](https://mlcommons.org/2025/04/mlperf-inference-v5-0-results/) — Industry-audited inference benchmark with CPU-only datacenter submissions on Intel Xeon 6 Granite Rapids; reports GPT-J at 316 tok/s (INT4), Llama-3.1-8B at 450 tok/s (server) and 1,196 tok/s (offline). Intel remains the only vendor submitting server CPU results, holding through the v5.1 round (Sept 2025). *(last verified: 2026-07)* ([Dell 2S-GNR results](https://github.com/mlcommons/inference_results_v5.0/tree/main/closed/Dell/results/1-node-2S-GNR_86C), [Supermicro results](https://github.com/mlcommons/inference_results_v5.0/tree/main/closed/Supermicro/results/1-node-2S-GNR_128C))
 - [ONNX Runtime GenAI CPU benchmark (ISE Developer Blog, May 2025)](https://devblogs.microsoft.com/ise/running-rag-onnxruntime-genai/) — Production benchmark comparing ONNX Runtime GenAI, llama.cpp, and Hugging Face Optimum for Phi-3 on CPU; ONNX Runtime achieved 137.6 tok/s vs 109.5 for llama.cpp and 108.3 for Optimum — 1.2–1.6× higher throughput across prompt lengths with equivalent latency.
 - [OpenVINO Model Hub benchmarks (Intel, 2025)](https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/model-hub.html) — Intel's centralized benchmark catalog for LLMs on Xeon CPUs with INT4/INT8/FP16 precision; reports DeepSeek-R1-Distill-Llama-8B at 155.4 tok/s and Llama-3-8B at 376 tok/s (OpenVINO Model Server) on Intel Xeon Platinum. ([OpenVINO LLM benchmark tool](https://github.com/openvinotoolkit/openvino.genai/tree/master/tools/llm_bench), [white paper](https://www.intel.com/content/dam/develop/public/us/en/documents/llm-with-model-server-white-paper.pdf))
 - [Simon Willison's llama.cpp experiments](https://simonwillison.net/tags/llama-cpp/) — Practitioner write-ups with real-world timing data across diverse CPU hardware; useful for calibrating expectations before purchasing cloud instances.
@@ -262,115 +239,32 @@ Computer vision inference — object detection, classification, and segmentation
 
 Speech, audio, text-to-speech, and optical character recognition are among the most common production AI workloads that rarely need a GPU. Modern ASR engines run efficiently on CPU with INT8 quantization, TTS engines synthesize in real time using lightweight ONNX models, and OCR toolchains have been CPU-native for decades — with deep learning models now matching traditional engine accuracy while running on commodity x86 and ARM hardware.
 
-### Speech / Audio
+Key tools: [faster-whisper](https://github.com/SYSTRAN/faster-whisper), [whisper.cpp](https://github.com/ggerganov/whisper.cpp), [Piper](https://github.com/OHF-Voice/piper1-gpl), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR), [Tesseract](https://github.com/tesseract-ocr/tesseract), [MobileSAM](https://github.com/ChaoningZhang/MobileSAM), [rembg](https://github.com/danielgatis/rembg), [InsightFace](https://github.com/deepinsight/insightface).
 
-#### ASR / STT
+See [docs/multimodal-cpu.md](docs/multimodal-cpu.md) for the full catalogue — ASR/STT, audio embeddings, VAD/diarization, TTS, text embeddings, document classification, OCR, image classification, segmentation, generation, background removal, and face analysis with baseline CPU latency and throughput figures.
 
-- [faster-whisper](https://github.com/SYSTRAN/faster-whisper) — Reimplementation of OpenAI Whisper using CTranslate2; up to 4× faster than the original with INT8 quantization on CPU and lower memory usage. Benchmarks on Intel Xeon Gold report 2m04s for 13 minutes of audio (small model, INT8, 8 threads) vs 10m31s for openai/whisper. ([Official benchmarks](https://github.com/SYSTRAN/faster-whisper?tab=readme-ov-file#small-model-on-cpu))
-- [Vosk](https://alphacephei.com/vosk/) — Offline speech recognition toolkit supporting 20+ languages with models as small as 50 MB; runs on Raspberry Pi, Android, and x86 servers using a single CPU core per recognizer with streaming API support. ([GitHub](https://github.com/alphacep/vosk-api))
-- [whisper.cpp](https://github.com/ggerganov/whisper.cpp) — Whisper port to ggml (also listed under Runtimes); on CPU with OpenVINO backend it transcribes 13 minutes of audio in 1m45s (small model, FP32) vs 6m58s for openai/whisper, with ARM NEON and AVX SIMD paths and a 3–5× real-time factor on Raspberry Pi 5 for the tiny model.
-
-#### Audio Embeddings & Classification
-
-- [CLAP](https://github.com/LAION-AI/CLAP) — Contrastive Language-Audio Pretraining; embeds audio and text into a shared space for zero-shot sound classification, audio search, and tagging. Models under 600M params run on CPU via ONNX Runtime in a few milliseconds per sample. ([CLAP-ONNX CPU benchmarks](https://github.com/Lednik7/CLIP-ONNX))
-- [YAMNet](https://github.com/tensorflow/models/tree/master/research/audioset/yamnet) — MobileNet-based model for 521 audio event classes (sirens, music, applause, etc.); ~10 MB, entirely CPU-native with no GPU dependency, single forward pass ~1 ms on modern x86.
-
-#### Voice Activity Detection & Speaker Diarization
-
-- [Silero VAD](https://github.com/snakers4/silero-vad) — De facto standard voice activity detection model; single ONNX file < 2 MB, runs 10,000 audio samples in < 1 ms on a single CPU core. Used as the front-end for most production ASR pipelines to segment audio before transcription.
-- [pyannote-audio](https://github.com/pyannote/pyannote-audio) — Speaker diarization pipeline (who spoke when) using CPU-friendly segmentation and clustering models; commonly chained with whisper.cpp or faster-whisper to produce speaker-attributed transcripts.
-
-### Text
-
-#### TTS
-
-- [Piper](https://github.com/OHF-Voice/piper1-gpl) — Fast local neural TTS using VITS exported to ONNX; achieves real-time synthesis (RTF 0.15) on a Raspberry Pi 5 with no GPU and roughly 10× real time on desktop CPU. Ships 30+ languages, 100+ voices in quality tiers from x_low (16 kHz, smallest) to high (22 kHz), with a single ONNX file per voice. Default TTS engine in Home Assistant. ([samples](https://rhasspy.github.io/piper-samples/), [Piper TTS Setup Guide 2026](https://localaimaster.com/blog/piper-tts-setup-guide))
-- [Coqui TTS](https://github.com/idiap/coqui-tts) — Open-source TTS with 17+ languages and multi-speaker models including XTTSv2 for voice cloning; provides a CPU-only Docker image (`tts-cpu`) and Python/CLI APIs. XTTSv2 supports streaming inference with <200 ms latency and cross-language voice cloning. ([CPU Docker docs](https://docs.coqui.ai/en/latest/docker_images.html), [XTTS docs](https://docs.coqui.ai/en/stable/models/xtts.html))
-
-#### Text Embeddings
-
-- [sentence-transformers with ONNX backend](https://sbert.net/docs/sentence_transformer/usage/efficiency.html) — Official Sentence Transformers library supporting ONNX Runtime CPU backend for embedding models; up to 1.4× speedup over PyTorch CPU with ONNX optimization, and up to 3× with INT8 quantization (AVX-512 VNNI). Supports all popular models including all-MiniLM-L6-v2, BGE, and GTE series. ([ONNX benchmark gist](https://gist.github.com/kylediaz/7e8df0a19e2137ef10fc62b5421e4d9a))
-- [BGE-M3 ONNX](https://huggingface.co/Sophia-AI/bge-m3-onnx) — BAAI/bge-m3 exported to ONNX for CPU inference; produces dense (1024-d), sparse, and ColBERT multi-vector representations in a single forward pass. 1.27× faster than PyTorch CPU and eliminates the PyTorch dependency for lighter deployments. ([ONNX Community variant](https://huggingface.co/onnx-community/bge-m3-ONNX))
-- [all-MiniLM-L6-v2 ONNX](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) — The most widely deployed embedding model (22.7M params, 384-d output); trivial to convert to ONNX with `optimum-cli export onnx` and runs in single-digit milliseconds on any modern CPU. Suited for RAG, clustering, and semantic search pipelines at any scale.
-
-### Documents
-
-#### Document Classification
-
-- [BART-large-MNLI ONNX](https://huggingface.co/Maxi-Lein/bart-large-mnli-onnx) — Zero-shot document classifier using Facebook's BART-large-MNLI exported to ONNX; classifies text against arbitrary label sets without task-specific fine-tuning. Runs on CPU via ONNX Runtime or Transformers.js with quantized weights for reduced memory footprint. ([Haystack integration](https://docs.haystack.deepset.ai/docs/transformerszeroshotdocumentclassifier))
-- [cross-encoder/nli-distilroberta-base](https://huggingface.co/cross-encoder/nli-distilroberta-base) — Lightweight zero-shot classification model (82M params) using distilled RoBERTa for natural language inference; ~5× faster than BART-large with minimal accuracy drop. Runs entirely on CPU with ONNX Runtime, suitable for batch document classification pipelines.
-
-#### OCR
-
-- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) — The de facto open-source OCR engine with 100+ language packs; entirely CPU-native with no GPU dependency, supporting LSTM-based recognition since v4. Widely used in document processing pipelines and production deployments.
-- [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) — Baidu's OCR toolkit with CPU-optimized inference via MKL-DNN/OneDNN and OpenVINO; PP-OCRv4 mobile models run detection in ~57 ms and recognition in ~47 ms on Intel Xeon Gold (FP32, 8 threads). Supports 80+ languages with text detection, recognition, and table structure recognition. ([Benchmarks](https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/instructions/benchmark.html), [CPU optimization guide](https://deepwiki.com/PaddlePaddle/PaddleOCR/8.3-cpu-optimization))
-- [Surya OCR 2](https://github.com/datalab-to/surya) — 650M-parameter multilingual OCR model scoring 83.3% on olmOCR-bench (top under 3B params); runs on CPU via llama.cpp (GGUF-quantized) with a throughput of ~0.1 pages/s on Apple Silicon (~30 W) and supports full-page OCR, layout analysis, reading order, and table recognition in a single VLM. ([Announcement](https://www.datalab.to/blog/surya-2))
-
-### Images
-
-#### Image Classification
-
-- [MobileNetV3 / EfficientNet-Lite (TFLite ONNX)](https://tildalice.io/mobilenetv3-vs-efficientnet-lite-arm-latency/) — ARM CPU latency benchmarks on Raspberry Pi 4: MobileNetV3-Small achieves 23 ms (INT8, single-threaded) and EfficientNet-Lite0 reaches 49 ms with 6% higher accuracy; both models exportable to ONNX and TFLite with optional INT8 quantization. Multi-threaded (4 threads) closes the gap to ~24 ms for both. ([MobileNet vs EfficientNet comparison](https://tildalice.io/mobilenet-vs-efficientnet-lite-pi4-latency-benchmark/))
-- [EfficientNet ONNX Runtime CPU](https://github.com/zhangchaosd/ModelInferBench) — Benchmark of EfficientNet-B4 via ONNX Runtime on CPU: 12 ms per image (batch=1) vs 172 ms for PyTorch CPU, with OpenVINO at 11 ms. Demonstrates 14× speedup over naive PyTorch inference through ONNX export alone. ([PyTorch to ONNX deployment guide](https://genmind.ch/posts/From-PyTorch-to-Production-Deploy-ML-Models-Locally-with-ONNX/))
-
-#### Image Segmentation
-
-- [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) — Segment Anything with a 5M-param Tiny-ViT encoder (vs 632M in original SAM) enabling CPU inference; exports to ONNX for ~3 s per image on desktop CPU. ([Hugging Face demo](https://huggingface.co/spaces/dhkim2810/MobileSAM), [ONNX notebook](https://github.com/ChaoningZhang/MobileSAM/blob/master/notebooks/onnx_model_example.ipynb))
-- [SAM2 ONNX](https://github.com/pagarcia/sam2-onnx-cpp) — Meta SAM2 exported to ONNX Runtime with C++ and Python bindings; supports point/box/video prompts on CPU with INT8 encoder quantization reducing encoder latency to ~2 s on modern x86. ([SAM2 ONNX benchmark](https://people.ac.upc.edu/rtous/publications/conf_2025iwann.pdf))
-
-#### Image Generation
-
-- [OpenVINO Stable Diffusion (Optimum Intel)](https://huggingface.co/docs/optimum-intel/openvino/tutorials/diffusers) — Image generation via Stable Diffusion exported to OpenVINO IR and run through Optimum Intel; supports text-to-image, image-to-image, and inpainting on CPU with INT8 weight compression and static reshaping for faster inference. ([OpenVINO SD notebook](https://docs.openvino.ai/2024/notebooks/stable-diffusion-text-to-image-with-output.html), [SDXL on OpenVINO](https://docs.openvino.ai/2024/notebooks/stable-diffusion-xl-with-output.html))
-
-#### Background Removal
-
-- [rembg](https://github.com/danielgatis/rembg) — Popular open-source background removal tool using U2-Net and IS-Net models exported to ONNX Runtime; runs on CPU with single-command `pip install rembg[cpu]`. U2-Net achieves ~1 s per image on desktop CPU and ~2.7 s on browser WASM. ([CPU benchmarks](https://bunn-io.github.io/rembg-web/api/index.html))
-
-#### Face Analysis
-
-- [InsightFace](https://github.com/deepinsight/insightface) — Face detection, recognition, and analysis toolkit using ONNX Runtime CPU backend; buffalo_l model family delivers 99.83% LFW accuracy with detection + recognition + landmark + age/gender in a single pipeline. OpenVINO export path further accelerates CPU inference. ([OpenVINO export guide](https://www.insightface.ai/guides/convert-onnx-to-tensorrt-openvino))
+---
 
 ## Cloud ARM Servers
 
 Cloud instances where Arm CPUs are the primary inference platform. These are not edge devices — they are datacenter-class Arm cores with high core counts, large memory bandwidth, and SVE/NEON acceleration — and they are increasingly competitive with x86 on both throughput and cost.
 
-- [OCI Ampere Altra A1 instances](https://blogs.oracle.com/ai-and-datascience/post/introducing-meta-llama-3-on-oci-ampere-a1) — Oracle Cloud shapes based on Ampere Altra (Neoverse N1); benchmarked at 119 tok/s aggregate throughput for Llama-2 7B with 16 concurrent users using an optimized llama.cpp stack, with up to 152% improvement over upstream llama.cpp reported.
-- [Azure Cobalt 100 (Neoverse N2)](https://developer.arm.com/community/arm-community-blogs/b/servers-and-cloud-computing-blog/posts/accelerate-llm-inference-with-onnx-runtime-on-arm-neoverse-powered-microsoft-cobalt-100) — Microsoft's 128-core Neoverse N2 processor; Arm-optimized ONNX Runtime (KleidiAI kernels) delivers 1.9× higher token-generation throughput and 2.8× better price/performance compared to AMD Genoa-based instances for LLM inference.
+- [OCI Ampere Altra A1 instances](https://blogs.oracle.com/ai-and-datascience/post/introducing-meta-llama-3-on-oci-ampere-a1) — Oracle Cloud shapes based on Ampere Altra (Neoverse N1); benchmarked at 119 tok/s aggregate throughput for Llama-2 7B with 16 concurrent users using an optimized llama.cpp stack, with up to 152% improvement over upstream llama.cpp reported. *(last verified: 2026-07)*
+- [Azure Cobalt 100 (Neoverse N2)](https://developer.arm.com/community/arm-community-blogs/b/servers-and-cloud-computing-blog/posts/accelerate-llm-inference-with-onnx-runtime-on-arm-neoverse-powered-microsoft-cobalt-100) — Microsoft's 128-core Neoverse N2 processor; Arm-optimized ONNX Runtime (KleidiAI kernels) delivers 1.9× higher token-generation throughput and 2.8× better price/performance compared to AMD Genoa-based instances for LLM inference. *(last verified: 2026-07)*
 - [Azure Cobalt 200 (Neoverse V3)](https://azure.microsoft.com/en-us/blog/new-azure-cobalt-200-vms-deliver-50-performance-improvement-fully-optimized-for-modern-agentic-ai-workloads/) — Microsoft's 132-core Neoverse V3 processor on TSMC 3 nm; delivers up to 50% better CPU performance over Cobalt 100 and is positioned explicitly for agentic AI inference workloads; early-access VMs available as of Build 2026. *(last verified: 2026-06)*
 - [AWS Graviton4 — c8g instances](https://aws.amazon.com/ec2/instance-types/c8g/) — Amazon's Neoverse V2-based fourth-generation Graviton; up to 30% better performance and up to 3× more vCPUs than Graviton3 (c7g) at the largest sizes; llama.cpp MMLA kernels are supported and distributed multi-node inference is documented in the [Arm Learning Paths guide](https://learn.arm.com/learning-paths/servers-and-cloud-computing/distributed-inference-with-llama-cpp/). *(last verified: 2026-06)*
-- [Google Axion (Neoverse V2)](https://developer.arm.com/community/arm-community-blogs/b/servers-and-cloud-computing-blog/posts/ai-inference-on-google-axion-cpu) — Google Cloud's custom Neoverse V2 processor (C4A instances); benchmarked with llama.cpp on Llama-3.1 8B Q4_0 and reported up to 2.5× higher performance and 64% cost savings vs x86 alternatives in RAG inference workloads.
+- [Google Axion (Neoverse V2)](https://developer.arm.com/community/arm-community-blogs/b/servers-and-cloud-computing-blog/posts/ai-inference-on-google-axion-cpu) — Google Cloud's custom Neoverse V2 processor (C4A instances); benchmarked with llama.cpp on Llama-3.1 8B and reports up to 2× better prompt-processing and token-generation performance vs current-generation x86 instances. *(last verified: 2026-07)*
 - [aarch64.cloud — Graviton vs Axion vs Cobalt benchmark](https://aarch64.cloud/arm-chip-benchmark-test-for-hyperscale-cloud-providers.html) — Independent benchmark comparing AWS Graviton3, Google Axion, and Azure Cobalt 100 on llama.cpp with Llama-3.1 8B and Llama-3.2 1B; documents tokens/s and price/performance ratios. *(Note: predates Graviton4 and Cobalt 200; use as a Graviton3-generation baseline.)*
 
 ---
 
 ## Mobile Phone CPUs
 
-Modern flagship phones run billion-parameter LLMs on-device — no cloud round-trip, no GPU required. The CPU path is the most portable, vendor-independent option for mobile inference: it works across all devices regardless of NPU vendor lock-in, and for LLMs it often matches or exceeds NPU throughput due to more mature tooling and the memory-bandwidth-bound nature of token generation. This section covers mobile chipsets, on-device runtimes, benchmarks, and deployment guides for CPU-first inference on phones.
+Modern flagship phones run billion-parameter LLMs on-device — no cloud round-trip, no GPU required. The CPU path is the most portable, vendor-independent option for mobile inference: it works across all devices regardless of NPU vendor lock-in, and for LLMs it often matches or exceeds NPU throughput due to more mature tooling and the memory-bandwidth-bound nature of token generation.
 
-> NPU TOPS figures are included for reference. For generative LLM workloads, CPU throughput is frequently competitive with or better than NPU on current hardware — the bottleneck is memory bandwidth, not compute.
+Key platforms: [Apple A19 Pro](https://www.apple.com/iphone/), [Snapdragon 8 Elite](https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite), [Exynos 2500](https://semiconductor.samsung.com/processor/mobile-processor/exynos-2500/), [Dimensity 9500](https://i.mediatek.com/mediatek-dimensity-ai), [Tensor G5](https://store.google.com/pixel_10).
 
-### SoCs and Platforms
-
-- [Apple A19 Pro (iPhone 17 Pro, 2025)](https://www.apple.com/iphone/) — Apple's flagship mobile SoC with 6-core CPU and 16-core Neural Engine (~35 TOPS); Llama-3.1 8B INT4 via MLC-LLM on CPU achieves 7–12 tok/s (TTFT ~380 ms), often outperforming the NPU path due to unified memory (8–12 GB) and mature inference stacks. The A18 Pro (iPhone 16 Pro) reaches 6–10 tok/s on the same workload. ([PocketLLM iPhone Bake-Off](https://pocketllm.app/blog/llama-3-vs-phi-3-vs-gemma-2-iphone/))
-- [Qualcomm Snapdragon 8 Elite (Galaxy S25 / Xiaomi 15, 2025)](https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite) — Qualcomm's flagship mobile platform with custom Oryon CPU cores and Hexagon NPU (~60 TOPS); Llama-3.1 8B INT4 via llama.cpp on CPU reaches 8–12 tok/s — frequently faster than the NPU path because CPU stacks (llama.cpp, ExecuTorch) are more mature than Qualcomm's QNN tooling for LLM workloads. Earlier Snapdragon 8 Gen 3 (Galaxy S24) still achieves 18–25 tok/s on 3B models. ([Qualcomm AI Hub](https://aihub.qualcomm.com/))
-- [Samsung Exynos 2500 (Galaxy Z Flip 7, 2025)](https://semiconductor.samsung.com/processor/mobile-processor/exynos-2500/) — Samsung's 3nm GAA flagship SoC with a 10-core Arm CPU cluster and 59 TOPS NPU (39% uplift over Exynos 2400); supports ExecuTorch natively for PyTorch model deployment. The Exynos AI Studio toolchain handles model compression, graph optimization, and NPU/CPU deployment from ONNX/TFLite/PyTorch inputs. ([Exynos AI Studio overview](https://semiconductor.samsung.com/news-events/tech-blog/unpacking-samsungs-comprehensive-on-device-ai-sdk-toolchain-strategy/))
-- [MediaTek Dimensity 9500 / 9400+ (2026)](https://i.mediatek.com/mediatek-dimensity-ai) — MediaTek's flagship SoC with Arm Cortex-X925 CPU and NPU 890 (~50 TOPS); CPU inference via ExecuTorch or MLC-LLM runs Llama-3.1 8B at 5–8 tok/s. As the most widely adopted Android SoC by volume, Dimensity is the default target for broad mobile CPU inference deployment.
-- [Google Tensor G5 (Pixel 10, 2025)](https://store.google.com/pixel_10) — Google's custom SoC with Arm CPU cores and a dedicated TPU; on-device LLM inference defaults to CPU in practice — LiteRT's TPU delegate requires an experimental SDK. Llama-3.1 8B via LiteRT CPU (XNNPACK) achieves ~10 tok/s. The earlier Tensor G4 (Pixel 9) uses CPU inference exclusively for LLMs with no NPU path available. ([LiteRT](https://ai.google.dev/edge/litert))
-
-### Runtimes and Apps
-
-- [MLC-LLM on iOS and Android](https://github.com/mlc-ai/mlc-llm) — Cross-platform LLM inference app shipping pre-quantized models (Llama 3.1 8B, Qwen 2.5 7B, Phi-3) via GPU backends (Metal on iOS, OpenCL/Vulkan on Android) with an OpenAI-compatible API. Achieves 6–12 tok/s on flagship phones for 7B INT4 models; the only mainstream runtime shipping identical checkpoints across iOS, Android, and Web from one toolchain. ([iOS deployment guide](https://github.com/mlc-ai/mlc-llm/blob/main/docs/deploy/ios.rst), [Android deployment guide](https://github.com/mlc-ai/mlc-llm/blob/main/docs/deploy/android.rst))
-- [Apple Core AI (WWDC 2026)](https://developer.apple.com/videos/play/wwdc2026/324/) — Apple's on-device AI inference framework, successor to Core ML and the engine behind Apple Intelligence; runs across CPU, GPU, and Neural Engine under a single Swift API with ahead-of-time compilation and zero-copy data paths. Supports models from 3B to 70B on iPhone, iPad, and Mac. ([InfoQ overview](https://www.infoq.com/news/2026/06/apple-core-ai-wwdc/))
-- [llama.cpp Android](https://github.com/ggerganov/llama.cpp/blob/master/docs/android.md) — Cross-compiled llama.cpp for Android ARM; runs any GGUF model entirely on CPU with no GPU or NPU dependency, achieving 9–12 tok/s on Snapdragon 8 Elite for 7B Q4 models. The most flexible option for sideloading arbitrary models on Android. *(Also listed under On-Device, Edge, ARM, and SBCs.)*
-- [Qualcomm AI Hub](https://aihub.qualcomm.com/) — Model zoo with pre-optimized INT8/INT4 models for Snapdragon platforms, deployable via LiteRT, ONNX Runtime, and Qualcomm AI Engine Direct SDKs. The Hexagon NPU path delivers 12–25 tok/s on flagship Snapdragon but is Snapdragon-only; CPU fallback is always available for cross-device compatibility. ([QNN SDK](https://developer.qualcomm.com/software/qualcomm-ai-engine-direct-sdk))
-- [Arm SME2 & KleidiAI](https://www.arm.com/technologies/sme2/accelerate-on-device-ai) — Scalable Matrix Extension 2 CPU instructions with the KleidiAI operator library deliver up to 6× faster AI inference on Arm v9.3+ mobile CPUs (iPhone 16/17, vivo X300 series) with no code changes — integrated in XNNPACK, ExecuTorch, ONNX Runtime, llama.cpp, and MNN.
-
-### Benchmarks and Deployment Guides
-
-- [On-Device LLMs: State of the Union 2026 (Vikas Chandra / Meta)](https://v-chandra.github.io/on-device-llms/) — Comprehensive survey of on-device LLM deployment across mobile chipsets (Apple A19 Pro, Snapdragon 8 Elite Gen 5, Dimensity 9400+); covers NPU TOPS, memory bandwidth constraints, model compression strategies, and runtime recommendations (ExecuTorch for production, llama.cpp for prototyping, MLX for Apple ecosystem).
-- [Mobile LLM benchmark: A19 Pro vs Snapdragon 8 Elite Gen 5 vs Dimensity 9500 vs Tensor G5 (Beebom, Apr 2026)](https://gadgets.beebom.com/stories/i-tested-on-device-ai-on-android-and-iphone-results-not-even-close) — Head-to-head benchmark across four flagship chipsets; Apple A19 Pro CPU delivers the fastest decode (36.99 tok/s) while Tensor G5 is forced to CPU-only (10.42 tok/s) due to inaccessible TPU delegates. Documents the Android NPU fragmentation problem.
-- [LLMs on iPhone and Android 2026: What Actually Works (CraftRigs, Apr 2026)](https://craftrigs.com/articles/run-llm-android-ios-2026-hardware-app-guide/) — Practical deployment guide with real tok/s numbers and thermal measurements for 7B models on iPhone 16 Pro and Galaxy S25 via MLC-LLM and llama.cpp, including thermal throttling behavior under sustained load.
-- [Best mobile AI runtimes 2026 tier list (RunLocalAI, May 2026)](https://www.runlocalai.co/guides/best-mobile-ai-runtimes) — Comparison of MLC LLM, llama.cpp, ExecuTorch, ONNX Runtime Mobile, and Qualcomm AI Hub across iOS and Android with NPU path support, model formats, and setup complexity ratings.
+See [docs/mobile-cpu-inference.md](docs/mobile-cpu-inference.md) for the full catalogue — chipsets, runtimes (MLC-LLM, Apple Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI), and benchmarks (State of the Union 2026, Beebom, CraftRigs) with tok/s and thermal measurements.
 
 ---
 
@@ -380,34 +274,16 @@ Modern flagship phones run billion-parameter LLMs on-device — no cloud round-t
 - [Hetzner dedicated servers](https://www.hetzner.com/dedicated-rootserver/) — Example of high-core-count x86 servers at commodity pricing; a useful reference point when constructing cost-per-token calculations to compare against GPU instances.
 - [Fly.io CPU machines](https://fly.io/docs/machines/overview/) — Container-level CPU VMs with per-second billing; commonly used for llama.cpp-backed inference APIs at low traffic volumes where a persistent GPU instance would be idle most of the time.
 - [Modal — CPU vs GPU instance selection](https://modal.com/docs/guide/gpu-to-cpu) — Serverless platform that makes the CPU/GPU choice explicit at the function level; useful for hybrid deployments where embeddings run CPU-side and generation runs GPU-side.
-- **Cost-per-token reference — Llama-3 8B, us-east-1 on-demand (June 2026)**
 
-  | Instance | $/hr | Accelerator | Decode, batch=1 | Decode, batch=32 | $/1M tokens (batch=32, 100% util) |
-  |---|---|---|---|---|---|
-  | c7g.16xlarge (Graviton3) | ~$2.32 ¹ | 64 vCPU, CPU only | ~17 tok/s ² | ~106 tok/s ² | ~$6.10 |
-  | g5.xlarge | $1.006 ³ | 4 vCPU + A10G 24 GB | ~63 tok/s ⁴ | ~1,820 tok/s ⁴ | ~$0.15 (~$0.55 at 50% util) ⁴ |
+**The short version.** At sustained batch=32 load a GPU has a ~40× $/token advantage on Llama-3 8B. The CPU economic case rests on three factors that table does not capture:
 
-  **Reading this table correctly.** At sustained batch load the GPU has a ~40× $/token advantage — that is not a rounding error. The economic case for CPU rests on factors the table does not capture:
+1. **Idle cost dominates sporadic workloads.** A c7g.4xlarge at $0.58/hr is 42% cheaper than a g5.xlarge sitting idle; near-zero traffic makes the GPU minimum cost pure overhead.
+2. **Serverless CPU eliminates the idle floor entirely** — Lambda arm64, Fly.io, and Modal CPU bill per-invocation.
+3. **VRAM is a hard ceiling; system RAM is not.** A 12 GB quantized model runs on any instance with ≥ 16 GB RAM at commodity pricing; on GPU it requires a VRAM class that costs $1+/hr regardless of utilization.
 
-  1. **Idle cost dominates sporadic workloads.** A c7g.4xlarge at $0.58/hr is 42% cheaper than a g5.xlarge simply sitting idle. At < 10% GPU utilization the effective $/token gap shrinks proportionally; at near-zero traffic the GPU minimum cost is pure overhead.
-  2. **Serverless CPU eliminates the idle floor entirely.** AWS Lambda (arm64), Fly.io CPU machines, and Modal CPU workers are billed per-invocation — there is no standing charge when inference is not happening.
-        3. **VRAM is a hard ceiling; system RAM is not.** A 12 GB quantized model runs on any instance with ≥ 16 GB RAM at commodity pricing; on GPU it requires a VRAM class that costs $1+/hr regardless of utilization. Larger quantized models hit this ceiling repeatedly.
+A worked production example (1 req/s, 730 hrs/month, 7B Q4) shows **CPU saves $5,740/yr** on a c7g.2xlarge vs g5.xlarge — the gap closes only after GPU utilization exceeds ~50%.
 
-   **Worked example — CPU vs GPU for a production inference workload.** Suppose you serve a 7B Q4 model with moderate traffic averaging 1 req/s (peak 5 req/s), batch = 1, over 730 hrs/month:
-
-   | Cost component | CPU (c7g.2xlarge, 8 vCPU, 16 GB) | GPU (g5.xlarge, A10G 24 GB) |
-   |---|---|---|
-   | Instance cost | $0.35/hr × 730 = $256/mo | $1.006/hr × 730 = $734/mo |
-   | Idle hours (60% of time @ 1 req/s) | $0 — CPU is doing useful work | $0 but GPU paid regardless |
-   | Effective $/req (incl. throughput) | ~$0.0035/req | ~$0.010/req |
-   | 12-month TCO | ~$3,070 | ~$8,810 |
-
-   CPU saves **$5,740/yr** on this workload. At 5 req/s peak the gap narrows but does not close until GPU utilization exceeds ~50%. Below that, CPU wins on every economic axis. (Assumes Llama-3-8B Q4_K_M at ~25 tok/s on c7g.2xlarge and ~63 tok/s on g5.xlarge.)
-
-  ¹ Price extrapolated linearly from verified c7g.4xlarge ($0.58/hr, 16 vCPU) — verify at [aws.amazon.com/ec2/pricing](https://aws.amazon.com/ec2/pricing/on-demand/).  
-  ² 64-core Graviton3 (Neoverse V1), Llama-3 8B, FP16 implementation; decode improves further with Q4_0_8_8 quantization. Source: [arxiv:2501.00032](https://arxiv.org/abs/2501.00032).  
-  ³ [economize.cloud](https://www.economize.cloud/resources/aws/pricing/ec2/g5.xlarge/), us-east-1 on-demand, June 2026.  
-  ⁴ SGLang on g5.xlarge; $0.55/1M at 50% utilization cited directly. Sources: [markaicode](https://markaicode.com/pricing/amazon-ec2-self-hosted-llm-inference-cost-analysis/) and [Medium benchmark](https://medium.com/@me.shivansh007/benchmarking-sglang-vllm-and-ollama-0179e3a5cbaa) (April–June 2026).
+See [docs/cost-calculator.md](docs/cost-calculator.md) for the full cost-per-token table, TCO worked example, pricing reference, break-even formula, and a runnable bash calculator script.
 
 ---
 
@@ -426,6 +302,23 @@ This section is load-bearing. The CPU-first default breaks down in the following
 **Continuous batching serving infrastructure.** Frameworks like vLLM and TGI are purpose-built for GPU-resident KV cache management, paged attention, and continuous batching. These optimizations exist because the GPU memory hierarchy enables them; the tradeoffs do not translate cleanly to CPU.
 
 **Large multi-modal models.** Vision-language models with large image encoders add substantial FLOPs to the inference path. Running these at interactive speed on models above 34B currently requires GPU for most deployment configurations.
+
+---
+
+## CPU Fine-Tuning
+
+Fine-tuning adapts a pre-trained model to a specific domain or task. While full-parameter training remains GPU territory, parameter-efficient fine-tuning (PEFT) methods — LoRA, QLoRA, DoRA — can run on CPU for small base models (≤ 7B) at moderate batch sizes, especially when the base model is pre-quantized and only adapter weights are updated. This section covers tools and patterns for fine-tuning on CPU.
+
+- [Unsloth](https://github.com/unslothai/unsloth) — GPU-accelerated LoRA/QLoRA fine-tuning library; included here because it produces GGUF-compatible LoRA adapters that can be merged and deployed on CPU via llama.cpp. Fine-tune on GPU (or free Colab T4), export adapter, run inference on CPU.
+- [llama.cpp fine-tuning](https://github.com/ggml-org/llama.cpp/tree/master/examples/finetune) — Built-in fine-tuning example in llama.cpp supporting LoRA-style adapter training on CPU; produces `.lora` files loadable by `llama-cli` at inference time. Suited for small-scale domain adaptation (classification heads, instruction tuning on 1K–10K examples). Runs entirely on CPU with no GPU dependency at any stage.
+- [LoRAX](https://github.com/predibase/lorax) — Multi-LoRA inference server that serves thousands of fine-tuned adapters from a single base model; designed for GPU by default but the LoRA-weight merging pattern applies to CPU deployments — pre-merge adapters into a single GGUF with `llama.cpp`'s `export-lora` for CPU serving.
+- [PEFT](https://github.com/huggingface/peft) — Hugging Face's parameter-efficient fine-tuning library (LoRA, IA³, Prefix Tuning, AdaLoRA); runs on CPU for small models when `device="cpu"` is set, though throughput is 10–50× slower than a single GPU. Practical for models ≤ 3B where training data is small (< 5K examples) and iteration time is not critical.
+- [LlamaFactory](https://github.com/hiyouga/LLaMAFactory) — Unified fine-tuning framework supporting LoRA, QLoRA, full-parameter, and DoRA; CPU mode works for small-scale adapter training (batch size 1–2, ≤ 3B base models) with `CUDA_VISIBLE_DEVICES=""` to force CPU execution.
+- [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) — Flexible fine-tuning toolkit supporting QLoRA and multi-GPU training; provides CPU-offloaded optimizer states via `deepspeed` ZeRO-3 CPU offload, keeping activations on GPU while optimizer states reside in system RAM — a hybrid approach that reduces GPU VRAM requirements for larger models.
+
+**CPU fine-tuning economics in practice.** Fine-tuning a Llama-3.2 3B model using LoRA on a c7g.2xlarge (8 vCPU, 16 GB RAM) with 1,000 examples for 3 epochs completes in approximately 6–12 hours depending on sequence length. The total compute cost at $0.35/hr is $2–4 per fine-tune run. The same run on a g5.xlarge GPU instance ($1.006/hr) completes in 15–30 minutes at $0.25–0.50 per run. GPU is faster and cheaper for the fine-tuning *event*, but the fine-tuned adapter then deploys on CPU at the inference costs documented in [Cost and Deployment Economics](#cost-and-deployment-economics) — the overall TCO depends on how many inference queries you serve after fine-tuning.
+
+**Rule of thumb.** Fine-tune on GPU when you have one (even a rented one); the time savings justify the marginal cost. Fine-tune on CPU when you have no GPU access, are iterating on a tiny dataset, or want a fully offline pipeline with no cloud dependency. The adapter format is interchangeable — LoRA weights trained on GPU load identically on CPU.
 
 ---
 
@@ -451,13 +344,23 @@ This section is load-bearing. The CPU-first default breaks down in the following
 
 Companion documents for planning, converting, deploying, benchmarking, and troubleshooting CPU inference:
 
+- [Quick Start Guide](docs/quickstart.md) — Full walkthroughs with copy-paste commands and sample code for llamafile, ollama, and WebLLM.
 - [CPU Inference Deployment Guide](docs/cpu-inference-deployment.md) — Docker CPU tuning, Kubernetes NUMA-aware scheduling, system optimization (numactl, frequency scaling, SMT), and serving patterns for real-time and batch workloads.
-- [Cost Calculator](docs/cost-calculator.md) — Reusable TCO methodology with a bash script and break-even analysis for comparing CPU vs GPU inference costs across cloud instances.
-- [Green Inference Guide](docs/green-inference.md) — Power-per-inference comparisons (Ampere Altra: 3.6× vs A10, 5.6× vs T4 on Whisper), TDP reference table, data-center PUE arithmetic, water consumption (WUE) analysis, carbon footprint by grid region, CO₂ measurement with CodeCarbon and Cloud Carbon Footprint, and CPU power-management tuning (cpufreq governor, RAPL caps, turbo settings).
+- [Cost Calculator](docs/cost-calculator.md) — Reusable TCO methodology with a break-even analysis for comparing CPU vs GPU inference costs across cloud instances. Includes an interactive [Streamlit app](calculator/cost-calculator.py) (`uv run streamlit run calculator/cost-calculator.py`).
+- [Green Inference Guide](docs/green-inference.md) — Power-per-inference comparisons (Ampere Altra: 3.6× vs A10, 5.6× vs T4 on Whisper), TDP reference table, data-center PUE arithmetic, water consumption (WUE) analysis, carbon footprint by grid region, CO₂ measurement with CodeCarbon and Cloud Carbon Footprint, and CPU power-management tuning (cpufreq governor, RAPL caps, turbo settings). Includes an interactive [power calculator](calculator/power-calculator.py) (`uv run streamlit run calculator/power-calculator.py`).
+- [Green Inference Cheat Sheet](docs/green-inference-cheat-sheet.md) — One-page quick reference of power, water, and carbon comparison tables for sustainability reporting.
+- [Multimodal CPU Workloads](docs/multimodal-cpu.md) — ASR/STT, TTS, text embeddings, document classification, OCR, image classification/segmentation/generation, background removal, and face analysis on CPU — with baseline latency and throughput figures.
+- [Mobile Phone CPU Inference](docs/mobile-cpu-inference.md) — Apple A19 Pro, Snapdragon 8 Elite, Exynos 2500, Dimensity 9500, Tensor G5; runtimes (MLC-LLM, Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI); benchmarks and deployment guides with tok/s and thermal data.
 - [Model Conversion Guide](docs/model-conversion-guide.md) — Practical walkthroughs for converting Hugging Face checkpoints to GGUF (llama.cpp quantize) and PyTorch to ONNX (via Optimum), including INT8 post-training quantization.
 - [Serverless CPU Patterns](docs/serverless-patterns.md) — Recipes for deploying CPU inference on AWS Lambda (arm64), Fly.io, and Modal, with cost-per-invocation worked examples.
-- [Benchmark Methodology](docs/benchmark-methodology.md) — Standardized metrics (pp512, tg128, TTFT, TPOT), reporting template, and run procedure for producing comparable CPU inference benchmarks.
-- [Troubleshooting](docs/troubleshooting.md) — Diagnosis and fixes for common CPU inference issues: OOM, low throughput, NUMA misconfiguration, thread oversubscription, thermal throttling, and container/K8s problems.
+   - [Benchmark Methodology](docs/benchmark-methodology.md) — Standardized metrics (pp512, tg128, TTFT, TPOT), reporting template, and run procedure for producing comparable CPU inference benchmarks.
+   - [Hardware Reference](docs/hardware-reference.md) — Canonical hardware performance catalogue for mobile, laptop, SBC, and server CPU inference — single source of truth for throughput figures across all device tiers.
+   - [Benchmark Suite Proposal](docs/benchmark-suite-proposal.md) — Proposal for a community-maintained, standardized CPU inference benchmark suite to reduce fragmentation across runtimes and architectures.
+   - [Edge & Mobile CPU Inference Playbook](docs/edge-mobile-playbook.md) — Definitive reference for deploying open-weight models on phones, tablets, laptops, and SBCs — entirely on CPU with no GPU dependency.
+   - [CPU vs NVIDIA Decision Framework](docs/cpu-vs-nvidia-decision-framework.md) — Structured comparison and decision matrix for CPU vs NVIDIA GPU inference, covering batch workloads, total cost, and migration steps.
+   - [Community Hackathon](docs/community-hackathon.md) — Structured, sponsor-backed hackathon to generate real-world CPU inference examples, benchmarks, and deployment patterns.
+   - [Roadmap](ROADMAP.md) — Quarterly milestones aligned with enterprise inference adoption cycles.
+   - [Troubleshooting](docs/troubleshooting.md) — Diagnosis and fixes for common CPU inference issues: OOM, low throughput, NUMA misconfiguration, thread oversubscription, thermal throttling, and container/K8s problems.
 
 ---
 
@@ -471,10 +374,6 @@ Contributions welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) first. Eve
 4. Not a GPU framework that runs on CPU only as a slow fallback.
 
 If you are unsure whether a tool belongs, open an issue rather than a PR and describe why you think it qualifies.
-
-## Code of Conduct
-
-This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating you agree to abide by its terms.
 
 ---
 

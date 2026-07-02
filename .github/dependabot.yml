@@ -1,0 +1,17 @@
+# Dependabot configuration
+# https://docs.github.com/en/code-security/dependabot
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+      time: "07:00"
+      timezone: "UTC"
+    labels:
+      - "maintenance"
+    commit-message:
+      prefix: "ci"
+      include: "scope"

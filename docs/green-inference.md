@@ -2,6 +2,25 @@
 
 Monetary $/token analysis (see [cost-calculator.md](cost-calculator.md)) captures instance price but misses energy cost — a significant factor for on-prem deployments and hyperscale cloud operators who pay directly for power. This guide covers power-per-inference comparisons, data-center energy arithmetic, and CPU power-management tuning.
 
+> **Quick-reference summary**: see [green-inference-cheat-sheet.md](green-inference-cheat-sheet.md) for the one-page distillation of power, water, and carbon tables.
+
+---
+
+## Contents
+
+- [Why Power Cost Matters](#why-power-cost-matters)
+- [TDP Reference Table](#tdp-reference-table)
+- [Power-Per-Inference: The Ampere Anchor](#power-per-inference-the-ampere-anchor)
+- [Data-Center Energy Arithmetic](#data-center-energy-arithmetic)
+- [CPU Power Management for Inference](#cpu-power-management-for-inference)
+- [Measuring Actual Power Draw](#measuring-actual-power-draw)
+- [Cloud Instance Energy Transparency](#cloud-instance-energy-transparency)
+- [Water Consumption](#water-consumption)
+- [Carbon Footprint](#carbon-footprint)
+- [Energy Efficiency Summary](#energy-efficiency-summary)
+- [See also](#see-also)
+- [References](#references)
+
 ---
 
 ## Why Power Cost Matters
@@ -343,4 +362,16 @@ The three arguments — energy cost, water consumption, and carbon emissions —
 
 For organisations with net-zero commitments or scope 2/3 targets, CPU inference is a measurable, immediately deployable intervention that reduces all three metrics without requiring new carbon offsets or renewable energy procurement.
 
-See also: [cost-calculator.md](cost-calculator.md) for monetary $/token analysis.
+See also: [Green Inference Cheat Sheet](green-inference-cheat-sheet.md) · [Cost Calculator](cost-calculator.md) · [CPU Inference Deployment Guide](cpu-inference-deployment.md) · [Benchmark Methodology](benchmark-methodology.md)
+
+For interactive power, water, and CO₂ modelling see the [Streamlit power calculator](../calculator/power-calculator.py) (`uv run streamlit run calculator/power-calculator.py`).
+
+---
+
+## References
+
+- [Scaleway blog — "Why CPUs also make sense for AI inference"](https://www.scaleway.com/en/blog/why-cpus-also-make-sense-for-ai-inference/)
+- [mlco2/codecarbon](https://github.com/mlco2/codecarbon)
+- [cloudcarbonfootprint.org](https://www.cloudcarbonfootprint.org/)
+- [app.electricitymaps.com](https://app.electricitymaps.com/)
+- ["Energy and Policy Considerations for Deep Learning in NLP"](https://arxiv.org/abs/1906.02629)

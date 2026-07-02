@@ -16,20 +16,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Check repository staleness
-        id: check
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # continue-on-error keeps the job green; outcome captures the real result.
-        continue-on-error: true
-        run: |
-          python3 .github/scripts/check-staleness.py | tee /tmp/staleness.md
+        uses: ./.github/actions/run-staleness-check
+        with:
+          script: .github/scripts/check-staleness.py
+          issue-title: "[auto] Stale or archived repos"
+          report-file: /tmp/staleness.md
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Open issue on stale repos
-        if: steps.check.outcome == 'failure'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh issue create \
-            --title "[auto] Stale or archived repos $(date -u +%Y-%m)" \
-            --body-file /tmp/staleness.md \
-            --label maintenance
+  content-staleness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check content staleness
+        uses: ./.github/actions/run-staleness-check
+        with:
+          script: .github/scripts/check-content-staleness.py
+          issue-title: "[auto] Content needing re-verification"
+          report-file: /tmp/content-staleness.md
+          github-token: ${{ secrets.GITHUB_TOKEN }}

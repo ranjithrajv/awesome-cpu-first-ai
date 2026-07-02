@@ -1,0 +1,38 @@
+name: Run staleness check and file issue
+description: >
+  Runs a staleness-checking script, and if it exits non-zero, opens a
+  GitHub issue with the script's stdout as the issue body.
+
+inputs:
+  script:
+    description: Path to the Python script to run (relative to repo root)
+    required: true
+  issue-title:
+    description: Title for the issue opened on failure (a "$(date -u +%Y-%m)" suffix is appended)
+    required: true
+  report-file:
+    description: Where to write the script's stdout
+    required: false
+    default: /tmp/staleness-report.md
+  github-token:
+    description: Token used to create the issue via gh CLI
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      # continue-on-error keeps the job green; outcome captures the real result.
+      continue-on-error: true
+      run: python3 ${{ inputs.script }} | tee ${{ inputs.report-file }}
+
+    - if: steps.check.outcome == 'failure'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        gh issue create \
+          --title "${{ inputs.issue-title }} $(date -u +%Y-%m)" \
+          --body-file ${{ inputs.report-file }} \
+          --label maintenance

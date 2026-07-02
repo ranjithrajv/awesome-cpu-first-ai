@@ -42,10 +42,54 @@ Follow the existing style exactly:
 - Keep descriptions to one sentence. If you need a caveat (see AutoGPTQ), add it as a parenthetical `*(Note: ...)*` on the same line.
 - Place the entry in alphabetical order within its section, unless a logical ordering is clearly better.
 - Use `<!-- TODO: ... -->` rather than inventing benchmark numbers or latency figures you cannot verify.
+- If an entry states a fact that can change independently of its source's publication date — current pricing, "only vendor to do X," instance availability — tag it `*(last verified: YYYY-MM)*` with the month you actually confirmed it against the live source. Don't add this tag to a citation's own publication date (e.g. "(MLCommons, Apr 2025)"); that date never goes stale, it's just when the source was published.
 
 ## Sections
 
 Add entries to the most specific section that fits. If a project spans multiple sections, pick the primary use case. If no existing section fits, propose a new one in your PR description and explain why the grouping is warranted.
+
+## CI checks
+
+All pull requests run the following automated checks:
+
+- **Link Check** — `lychee` verifies all external URLs in `README.md`, `CONTRIBUTING.md`, and `docs/` are reachable.
+- **ToC Validation** — `check-toc.py` ensures the `## Contents` table of contents in each doc file covers all `##` section headings.
+- **Snippet Validation** — `check-snippets.py` syntax-checks Python code blocks and flags common errors (e.g. `llama-server --prompt` instead of `llama-cli`).
+- **Calculator Lint** — `ruff check`, `ruff format --check`, and `ty check` validate the `calculator/` Streamlit apps whenever they change (lint, formatting, and type checking respectively).
+
+Two more checks run monthly (not per-PR) and file an issue if they find something:
+
+- **Staleness Check** — `check-staleness.py` flags linked GitHub repos that are archived or haven't pushed in over a year.
+- **Content Staleness** — `check-content-staleness.py` flags any `*(last verified: YYYY-MM)*` tag older than a year, prompting a re-check against the live source.
+
+Run them locally before pushing:
+```bash
+python3 .github/scripts/check-toc.py
+python3 .github/scripts/check-snippets.py
+
+# If you touched calculator/:
+cd calculator && uv run ruff check . && uv run ruff format --check . && uv run ty check .
+```
+
+### Pre-commit hook (link check)
+
+A local `pre-commit` hook catches broken links before they reach CI, using the same `lychee.toml` config as the Link Check workflow. One-time setup:
+
+```bash
+# Install the lychee binary (pick one)
+cargo install lychee
+# or: brew install lychee
+
+# Install the pre-commit framework, then activate the hook
+pip install pre-commit   # or: brew install pre-commit
+pre-commit install
+```
+
+After that, `git commit` runs `lychee` against any staged `README.md`, `CONTRIBUTING.md`, or `docs/*.md` files automatically. Run it on demand with:
+
+```bash
+pre-commit run lychee-link-check --all-files
+```
 
 ## Pull request checklist
 
@@ -55,11 +99,8 @@ Add entries to the most specific section that fits. If a project spans multiple 
 - [ ] The entry is placed in the correct section and in order
 - [ ] You have not introduced any fabricated numbers or unverified claims
 - [ ] `README.md` renders correctly with `grip` or GitHub's preview
+- [ ] CI checks pass (ToC validation, snippet syntax, link check)
 
 ## Filling in TODOs
 
 The README contains several `<!-- TODO: ... -->` placeholders marking gaps where a benchmark, paper, or cost analysis would strengthen the list but could not be verified at time of writing. Contributions that fill a TODO with a real, citable source are especially welcome. Include the source URL and a brief note on why you trust the figures (e.g., peer-reviewed, MLPerf-audited, reproduced independently).
-
-## Code of conduct
-
-This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). Be direct, be specific, and be kind.

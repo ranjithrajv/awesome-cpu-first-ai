@@ -6,7 +6,29 @@ Practical walkthroughs for converting Hugging Face checkpoints to CPU-friendly f
 
 ## Contents
 
-- [HF → GGUF (llama.cpp Quantize)](#hf--gguf)
+- [Conversion Pipeline](#conversion-pipeline)
+- [HF → GGUF](#hf--gguf)
+- [PyTorch → ONNX (via Optimum)](#pytorch--onnx-via-optimum)
+- [Troubleshooting](#troubleshooting)
+- [See also](#see-also)
+- [References](#references)
+
+---
+
+## Conversion Pipeline
+
+```mermaid
+flowchart TD
+    A([Hugging Face checkpoint]) --> B{Target runtime?}
+
+    B -- "llama.cpp / GGUF" --> C[convert_hf_to_gguf.py\n→ FP16 GGUF]
+    C --> D[llama-quantize\n→ Q4_K_M / Q5_K_M / etc.]
+    D --> E[Verify with llama-cli]
+
+    B -- "ONNX Runtime / OpenVINO" --> F[Optimum ORTModelForCausalLM\nexport=True → ONNX]
+    F --> G[ORTQuantizer\n→ INT8]
+    G --> H[Validate with ORTModelForCausalLM]
+```
 
 ## HF → GGUF
 
@@ -95,13 +117,24 @@ from optimum.onnxruntime.configuration import AutoCalibrationConfig
 
 # Post-training quantization
 quantizer = ORTQuantizer.from_pretrained(model)
+
+# Create calibration dataset from a text corpus
 calibration_dataset = quantizer.get_calibration_dataset(
-    "dataset_name",
-    calibration_config=AutoCalibrationConfig.minmax(calibration_dataset),
+    "c4",
+    dataset_config_name="en",
+    num_samples=10,
 )
+
+# Configure minmax calibration
+calibration_config = AutoCalibrationConfig.minmax(calibration_dataset)
+
+# Compute calibration ranges
+ranges = quantizer.compute_calibration(calibration_dataset, calibration_config)
+
+# Quantize
 quantizer.quantize(
     save_dir="./llama-3.2-3b-onnx-int8",
-    calibration_tensors_range=quantizer.compute_calibration(calibration_dataset),
+    calibration_tensors_range=ranges,
 )
 ```
 
@@ -147,3 +180,18 @@ model = ORTModelForCausalLM.from_pretrained(
     model_id, export=True, torch_dtype="cpu"
 )
 ```
+
+---
+
+## See also
+
+- [Multimodal CPU Workloads](multimodal-cpu.md)
+- [CPU Inference Deployment Guide](cpu-inference-deployment.md)
+- [Benchmark Methodology](benchmark-methodology.md)
+- [Troubleshooting](troubleshooting.md)
+
+---
+
+## References
+
+- [ONNX Runtime operator support matrix](https://onnxruntime.ai/docs/operators/)

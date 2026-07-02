@@ -4,6 +4,22 @@ A reusable methodology for comparing inference costs across CPU and GPU instance
 
 ---
 
+## Contents
+
+- [Quick Formula](#quick-formula)
+- [Calculator App](#calculator-app)
+- [Cloud Pricing Reference (us-east-1, June 2026)](#cloud-pricing-reference-us-east-1-june-2026)
+- [Throughput Reference](#throughput-reference)
+- [Break-even Analysis](#break-even-analysis)
+- [Production Worked Example (Llama-3 8B, us-east-1, June 2026)](#production-worked-example-llama-3-8b-us-east-1-june-2026)
+  - [Cost-per-token reference](#cost-per-token-reference)
+  - [Worked TCO example — 1 req/s, 730 hrs/month](#worked-tco-example--1-reqs-730-hrsmonth)
+  - [Footnotes](#footnotes)
+- [See also](#see-also)
+- [References](#references)
+
+---
+
 ## Quick Formula
 
 ```
@@ -24,38 +40,15 @@ At 100% utilization they're close. At 50% GPU utilization the effective GPU cost
 
 ---
 
-## Calculator Script
+## Calculator App
 
-Save as `calc-cost.sh` and run with `bash calc-cost.sh`:
+Interactive Streamlit app with utilisation sweep, TCO worked example, and per-request cost.
 
 ```bash
-#!/usr/bin/env bash
-# CPU vs GPU inference cost comparison
-# Usage: ./calc-cost.sh [tokens_per_second_cpu] [tokens_per_second_gpu]
-
-CPU_TOK=${1:-25}
-GPU_TOK=${2:-63}
-CPU_PRICE=${3:-0.35}     # c7g.2xlarge $/hr
-GPU_PRICE=${4:-1.006}    # g5.xlarge $/hr
-HOURS=${5:-730}          # monthly hours
-
-echo "=== CPU vs GPU Inference Cost ==="
-echo "Model: Llama-3-8B Q4_K_M"
-echo "CPU: ${CPU_TOK} tok/s at \$${CPU_PRICE}/hr"
-echo "GPU: ${GPU_TOK} tok/s at \$${GPU_PRICE}/hr"
-echo ""
-
-for UTIL in 1.0 0.5 0.25 0.1; do
-  CPU_COST=$(echo "scale=4; $CPU_PRICE * 1000000 / ($CPU_TOK * 3600 * $UTIL)" | bc)
-  GPU_COST=$(echo "scale=4; $GPU_PRICE * 1000000 / ($GPU_TOK * 3600 * $UTIL)" | bc)
-  CPU_MONTHLY=$(echo "scale=2; $CPU_PRICE * $HOURS" | bc)
-  GPU_MONTHLY=$(echo "scale=2; $GPU_PRICE * $HOURS" | bc)
-  echo "At ${UTIL}x utilization ($((UTIL * 100))%):"
-  echo "  CPU: \$${CPU_COST}/1M tokens  | \$${CPU_MONTHLY}/mo"
-  echo "  GPU: \$${GPU_COST}/1M tokens  | \$${GPU_MONTHLY}/mo"
-  echo ""
-done
+uv run streamlit run calculator/cost-calculator.py
 ```
+
+`uv` resolves dependencies from [calculator/pyproject.toml](../calculator/pyproject.toml) automatically — no `pip install` or virtualenv needed. Source: [calculator/cost-calculator.py](../calculator/cost-calculator.py) · Folder docs: [calculator/README.md](../calculator/README.md)
 
 ---
 
@@ -97,3 +90,54 @@ GPU wins on raw $/token when utilization is high. CPU wins when:
 4. **Batch = 1** — GPU memory bandwidth advantage shrinks at single-request throughput
 
 To find your break-even: divide GPU instance cost by CPU instance cost, then multiply by the CPU/GPU throughput ratio. If the result is < 1, GPU wins at full utilization.
+
+---
+
+## Production Worked Example (Llama-3 8B, us-east-1, June 2026)
+
+### Cost-per-token reference
+
+| Instance | $/hr | Accelerator | Decode, batch=1 | Decode, batch=32 | $/1M tokens (batch=32, 100% util) |
+|---|---|---|---|---|---|
+| c7g.16xlarge (Graviton3) | ~$2.32 ¹ | 64 vCPU, CPU only | ~17 tok/s ² | ~106 tok/s ² | ~$6.10 |
+| g5.xlarge | $1.006 ³ | 4 vCPU + A10G 24 GB | ~63 tok/s ⁴ | ~1,820 tok/s ⁴ | ~$0.15 (~$0.55 at 50% util) ⁴ |
+
+**Reading this table correctly.** At sustained batch load the GPU has a ~40× $/token advantage — that is not a rounding error. The economic case for CPU rests on factors the table does not capture:
+
+1. **Idle cost dominates sporadic workloads.** A c7g.4xlarge at $0.58/hr is 42% cheaper than a g5.xlarge simply sitting idle. At < 10% GPU utilization the effective $/token gap shrinks proportionally; at near-zero traffic the GPU minimum cost is pure overhead.
+2. **Serverless CPU eliminates the idle floor entirely.** AWS Lambda (arm64), Fly.io CPU machines, and Modal CPU workers are billed per-invocation — there is no standing charge when inference is not happening.
+3. **VRAM is a hard ceiling; system RAM is not.** A 12 GB quantized model runs on any instance with ≥ 16 GB RAM at commodity pricing; on GPU it requires a VRAM class that costs $1+/hr regardless of utilization. Larger quantized models hit this ceiling repeatedly.
+
+### Worked TCO example — 1 req/s, 730 hrs/month
+
+Suppose you serve a 7B Q4 model with moderate traffic averaging 1 req/s (peak 5 req/s), batch = 1, over 730 hrs/month:
+
+| Cost component | CPU (c7g.2xlarge, 8 vCPU, 16 GB) | GPU (g5.xlarge, A10G 24 GB) |
+|---|---|---|
+| Instance cost | $0.35/hr × 730 = $256/mo | $1.006/hr × 730 = $734/mo |
+| Idle hours (60% of time @ 1 req/s) | $0 — CPU is doing useful work | $0 but GPU paid regardless |
+| Effective $/req (incl. throughput) | ~$0.0035/req | ~$0.010/req |
+| 12-month TCO | ~$3,070 | ~$8,810 |
+
+CPU saves **$5,740/yr** on this workload. At 5 req/s peak the gap narrows but does not close until GPU utilization exceeds ~50%. Below that, CPU wins on every economic axis. (Assumes Llama-3-8B Q4_K_M at ~25 tok/s on c7g.2xlarge and ~63 tok/s on g5.xlarge.)
+
+### Footnotes
+
+1. Price extrapolated linearly from verified c7g.4xlarge ($0.58/hr, 16 vCPU) — verify at [aws.amazon.com/ec2/pricing](https://aws.amazon.com/ec2/pricing/on-demand/).
+2. 64-core Graviton3 (Neoverse V1), Llama-3 8B, FP16 implementation; decode improves further with Q4_0_8_8 quantization. Source: [arxiv:2501.00032](https://arxiv.org/abs/2501.00032).
+3. [economize.cloud](https://www.economize.cloud/resources/aws/pricing/ec2/g5.xlarge/), us-east-1 on-demand, June 2026.
+4. SGLang on g5.xlarge; $0.55/1M at 50% utilization cited directly. Sources: [markaicode](https://markaicode.com/pricing/amazon-ec2-self-hosted-llm-inference-cost-analysis/) and [Medium benchmark](https://medium.com/@me.shivansh007/benchmarking-sglang-vllm-and-ollama-0179e3a5cbaa) (April–June 2026).
+
+---
+
+See also: [Serverless CPU Patterns](serverless-patterns.md) · [Green Inference Guide](green-inference.md) · [CPU Inference Deployment Guide](cpu-inference-deployment.md)
+
+---
+
+## References
+
+- [aws.amazon.com/ec2/pricing](https://aws.amazon.com/ec2/pricing/on-demand/)
+- [arxiv:2501.00032](https://arxiv.org/abs/2501.00032)
+- [economize.cloud](https://www.economize.cloud/resources/aws/pricing/ec2/g5.xlarge/)
+- [markaicode](https://markaicode.com/pricing/amazon-ec2-self-hosted-llm-inference-cost-analysis/)
+- [Medium benchmark](https://medium.com/@me.shivansh007/benchmarking-sglang-vllm-and-ollama-0179e3a5cbaa)

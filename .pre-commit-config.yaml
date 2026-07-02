@@ -1,0 +1,10 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lychee-link-check
+        name: Check links with lychee
+        description: Verifies external URLs in README, CONTRIBUTING, and docs/ are reachable (same check as CI).
+        entry: lychee --config lychee.toml --no-progress
+        language: system
+        files: ^(README\.md|CONTRIBUTING\.md|docs/.*\.md)$
+        pass_filenames: true

@@ -6,10 +6,31 @@ Recipes for deploying CPU inference on serverless platforms, with cost-per-invoc
 
 ## Contents
 
+- [Choosing a Platform](#choosing-a-platform)
 - [AWS Lambda (arm64 / Graviton2)](#aws-lambda-arm64--graviton2)
 - [Fly.io CPU Machines](#flyio-cpu-machines)
 - [Modal CPU Functions](#modal-cpu-functions)
 - [Cost Comparison](#cost-comparison)
+- [See also](#see-also)
+
+---
+
+## Choosing a Platform
+
+```mermaid
+flowchart TD
+    A([Serverless CPU inference]) --> B{Invocation pattern?}
+
+    B -- "Short, event-driven\nrequests" --> Lambda["✅ AWS Lambda arm64\nlowest $/invocation, no idle floor"]
+
+    B -- "Persistent endpoint,\nlow-traffic API" --> Fly["✅ Fly.io CPU Machines\nper-second billing, always-on VM"]
+
+    B -- "Python-native,\nbursty batch jobs" --> Modal["✅ Modal CPU Functions\nscale-to-zero, zero idle cost"]
+
+    style Lambda fill:#1b5e20,color:#fff,stroke:#1b5e20
+    style Fly    fill:#1b5e20,color:#fff,stroke:#1b5e20
+    style Modal  fill:#1b5e20,color:#fff,stroke:#1b5e20
+```
 
 ---
 
@@ -40,12 +61,12 @@ import subprocess
 import os
 
 MODEL = "/opt/models/llama-3.2-1b-q4_k_m.gguf"
-LLAMA_SERVER = "/opt/bin/llama-server"
+LLAMA_CLI = "/opt/bin/llama-cli"
 
 def handler(event, context):
     prompt = event.get("prompt", "Hello")
     result = subprocess.run(
-        [LLAMA_SERVER, "--model", MODEL, "--prompt", prompt,
+        [LLAMA_CLI, "--model", MODEL, "--prompt", prompt,
          "--threads", "2", "-n", "128", "--no-display-prompt"],
         capture_output=True, text=True, timeout=30
     )
@@ -187,3 +208,12 @@ At 10,000 invocations/day: ~$39/mo with zero idle cost.
 \* Fly.io charges for the VM even when idle (per-second, not per-invocation).
 
 **Rule of thumb**: If your inference runs fewer than 100,000 invocations/month, serverless CPU is cheaper than any GPU option — the GPU's minimum instance cost alone will exceed your total serverless bill.
+
+---
+
+## See also
+
+- [Cost Calculator](cost-calculator.md)
+- [CPU Inference Deployment Guide](cpu-inference-deployment.md)
+- [Benchmark Methodology](benchmark-methodology.md)
+- [Green Inference Guide](green-inference.md)

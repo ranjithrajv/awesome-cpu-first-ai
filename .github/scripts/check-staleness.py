@@ -15,7 +15,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-STALE_THRESHOLD_DAYS = 365
+from _staleness_common import STALE_THRESHOLD_DAYS, checklist_line, report_header
+
 README = Path("README.md")
 
 
@@ -80,12 +81,7 @@ def main() -> int:
         )
         return 0
 
-    lines = [
-        "## Staleness Report",
-        f"_Generated {now.strftime('%Y-%m-%d')} · "
-        f"threshold: {STALE_THRESHOLD_DAYS} days_",
-        "",
-    ]
+    lines = report_header("Staleness Report", now)
 
     if stale:
         lines += [
@@ -94,16 +90,20 @@ def main() -> int:
         ]
         for repo, age in sorted(stale, key=lambda x: -x[1]):
             lines.append(
-                f"- [ ] [{repo}](https://github.com/{repo}) "
-                f"— {age} days since last push"
+                checklist_line(
+                    repo, f"https://github.com/{repo}", f"{age} days since last push"
+                )
             )
 
     if archived:
         lines += ["", "### Archived", ""]
         for repo, age in sorted(archived, key=lambda x: -x[1]):
             lines.append(
-                f"- [ ] [{repo}](https://github.com/{repo}) "
-                f"— archived ({age} days since last push)"
+                checklist_line(
+                    repo,
+                    f"https://github.com/{repo}",
+                    f"archived ({age} days since last push)",
+                )
             )
 
     if errors:

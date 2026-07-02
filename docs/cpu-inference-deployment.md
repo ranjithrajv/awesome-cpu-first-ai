@@ -11,6 +11,8 @@ Best practices for deploying CPU inference in production — covering Docker, Ku
 - [System Tuning](#system-tuning)
 - [NUMA and Multi-Socket](#numa-and-multi-socket)
 - [Serving Patterns](#serving-patterns)
+- [See also](#see-also)
+- [References](#references)
 
 ---
 
@@ -223,6 +225,23 @@ Use `--numa spread` in llama.cpp (available since b4043) to distribute memory ac
 
 ## Serving Patterns
 
+```mermaid
+flowchart TD
+    A([Choose a serving pattern]) --> B{Traffic pattern?}
+
+    B -- "Sporadic / long idle\nperiods" --> C["✅ Serverless\nPer-request container\nzero idle charge"]
+
+    B -- "Steady, always-on\ntraffic" --> D{Optimization goal?}
+
+    D -- "Minimize per-request\nlatency" --> E["✅ Single-Batch Real-Time\nbatch-size 1"]
+
+    D -- "Maximize aggregate\nthroughput" --> F["✅ Small-Batch High-Throughput\nbatch-size 32"]
+
+    style C fill:#1b5e20,color:#fff,stroke:#1b5e20
+    style E fill:#1b5e20,color:#fff,stroke:#1b5e20
+    style F fill:#1b5e20,color:#fff,stroke:#1b5e20
+```
+
 ### Single-Batch Real-Time
 
 Best for: chatbots, code completion, interactive agents.
@@ -259,13 +278,29 @@ Best for: sporadic workloads with long idle periods.
 
 Package the model + runtime in a container and deploy on AWS Lambda (arm64), Fly.io, Modal, or similar. Each invocation starts a fresh container — total cost is proportional to inference time × memory, with zero idle charge.
 
-```bash
+```python
 # Example: Modal CPU inference
-@app.function(cpu=2.0, memory=4096, image=my_image)
+@app.function(cpu=2.0, memory=4096)
 def generate(prompt: str) -> str:
     result = subprocess.run(
-        ["./llama-server", "--model", MODEL, "--prompt", prompt],
+        ["./llama-cli", "--model", MODEL, "--prompt", prompt],
         capture_output=True, text=True
     )
     return result.stdout
 ```
+
+---
+
+## See also
+
+- [Serverless CPU Patterns](serverless-patterns.md)
+- [Benchmark Methodology](benchmark-methodology.md)
+- [Cost Calculator](cost-calculator.md)
+- [Troubleshooting](troubleshooting.md)
+- [Model Conversion Guide](model-conversion-guide.md)
+
+---
+
+## References
+
+- [Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/)

@@ -1,0 +1,21 @@
+[project]
+name = "awesome-cpu-first-ai-calculators"
+version = "0.1.0"
+description = "Interactive cost calculators for CPU vs GPU inference"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.30",
+    "pandas>=2.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+target-version = "py310"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.20",
+    "ty>=0.0.56",
+]

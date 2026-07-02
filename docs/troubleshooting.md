@@ -6,11 +6,39 @@ Common issues when deploying and running CPU inference, with root causes and fix
 
 ## Contents
 
+- [Quick Diagnosis](#quick-diagnosis)
 - [OOM and Memory Issues](#oom-and-memory-issues)
 - [Low Throughput](#low-throughput)
 - [High Latency](#high-latency)
 - [Threading Issues](#threading-issues)
 - [Container Issues](#container-issues)
+- [See also](#see-also)
+- [References](#references)
+
+---
+
+## Quick Diagnosis
+
+```mermaid
+flowchart TD
+    A([Inference behaving badly?]) --> B{What is the symptom?}
+
+    B -- "Crash or OOM\non model load" --> OOM["OOM and Memory Issues\nbad_alloc · mmap failure · swap thrashing"]
+
+    B -- "t/s below\ncommunity benchmarks" --> LOW["Low Throughput\ngovernor · NUMA · thread count · throttling"]
+
+    B -- "Slow TTFT or\ntail latency spikes" --> LAT["High Latency\nprefill · jitter · KV cache growth"]
+
+    B -- "Perf worsens as\nthreads increase" --> THR["Threading Issues\nSMT · oversubscription · context switching"]
+
+    B -- "Only fails inside\nDocker or Kubernetes" --> CTR["Container Issues\nNUMA pinning · OOMKilled · CrashLoopBackOff"]
+
+    style OOM fill:#7f1d1d,color:#fff,stroke:#7f1d1d
+    style LOW fill:#7f1d1d,color:#fff,stroke:#7f1d1d
+    style LAT fill:#7f1d1d,color:#fff,stroke:#7f1d1d
+    style THR fill:#7f1d1d,color:#fff,stroke:#7f1d1d
+    style CTR fill:#7f1d1d,color:#fff,stroke:#7f1d1d
+```
 
 ---
 
@@ -249,3 +277,18 @@ Monitor actual usage with:
 ```bash
 kubectl top pod cpu-inference-pod
 ```
+
+---
+
+## See also
+
+- [CPU Inference Deployment Guide](cpu-inference-deployment.md)
+- [Benchmark Methodology](benchmark-methodology.md)
+- [Model Conversion Guide](model-conversion-guide.md)
+- [Multimodal CPU Workloads](multimodal-cpu.md)
+
+---
+
+## References
+
+- [cset shield](https://manpages.ubuntu.com/manpages/focal/man1/cset.1.html)

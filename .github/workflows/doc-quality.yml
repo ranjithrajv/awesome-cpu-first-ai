@@ -1,0 +1,38 @@
+name: Doc Quality
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - README.md
+      - docs/**
+      - .github/workflows/doc-quality.yml
+      - .github/scripts/check-toc.py
+      - .github/scripts/check-snippets.py
+  pull_request:
+    paths:
+      - README.md
+      - docs/**
+      - .github/scripts/check-toc.py
+      - .github/scripts/check-snippets.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  toc-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate tables of contents
+        run: python3 .github/scripts/check-toc.py
+
+  snippet-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate code snippets
+        run: python3 .github/scripts/check-snippets.py

@@ -8,10 +8,12 @@ on:
     paths:
       - README.md
       - CONTRIBUTING.md
+      - docs/**
   pull_request:
     paths:
       - README.md
       - CONTRIBUTING.md
+      - docs/**
   workflow_dispatch:
 
 permissions:
@@ -34,6 +36,7 @@ jobs:
             --no-progress
             README.md
             CONTRIBUTING.md
+            docs/
           fail: true
           output: ${{ runner.temp }}/lychee-report.md
         env:

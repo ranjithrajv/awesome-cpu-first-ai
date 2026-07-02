@@ -4,6 +4,21 @@ Standardized procedure for running and reporting CPU inference benchmarks. Follo
 
 ---
 
+## Contents
+
+- [Metrics](#metrics)
+  - [Which metric to use](#which-metric-to-use)
+- [Reporting Template](#reporting-template)
+- [Procedure](#procedure)
+  - [Preparation](#preparation)
+  - [Running the Benchmark](#running-the-benchmark)
+  - [Warmup](#warmup)
+  - [Reporting](#reporting)
+- [Common Pitfalls](#common-pitfalls)
+- [See also](#see-also)
+
+---
+
 ## Metrics
 
 | Metric | Definition | What it tells you |
@@ -53,6 +68,13 @@ results:
 ---
 
 ## Procedure
+
+```mermaid
+flowchart LR
+    A[Preparation\ngovernor · turbo · NUMA pin] --> B[Warmup\ndiscard first run]
+    B --> C[Run Benchmark\nllama-bench, 5+ runs]
+    C --> D[Reporting\nmean ± stddev, pp512/tg128]
+```
 
 ### Preparation
 
@@ -118,3 +140,12 @@ Run at least one inference before recording results. The first run includes comp
 | Cold start (first run included) | Results 2–5× slower than steady-state | Discard first 1–2 runs |
 | Benchmarking while system is under load | Unpredictable results | Isolate the system or use `cset shield` |
 | Different input/output lengths | Non-comparable t/s values | Standardize on pp512/tg128 |
+
+---
+
+## See also
+
+- [Cost Calculator](cost-calculator.md)
+- [CPU Inference Deployment Guide](cpu-inference-deployment.md)
+- [Troubleshooting](troubleshooting.md)
+- [Model Conversion Guide](model-conversion-guide.md)
