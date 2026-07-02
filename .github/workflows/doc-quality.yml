@@ -24,7 +24,7 @@ jobs:
   toc-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Validate tables of contents
         run: python3 .github/scripts/check-toc.py
@@ -32,7 +32,7 @@ jobs:
   snippet-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Validate code snippets
         run: python3 .github/scripts/check-snippets.py
