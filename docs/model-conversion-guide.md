@@ -169,7 +169,7 @@ Reduce the `--context-size` in the convert script or quantize on a machine with 
 
 ### ONNX export fails on custom ops
 
-Some model architectures use unsupported operators. Check the [ONNX Runtime operator support matrix](https://onnxruntime.ai/docs/operators/) and consider using a model variant that avoids custom ops.
+Some model architectures use unsupported operators. Check the [ONNX Runtime operator support matrix](https://onnxruntime.ai/docs/reference/operators/) and consider using a model variant that avoids custom ops.
 
 ### "CUDA error: out of memory" during export
 
@@ -194,4 +194,4 @@ model = ORTModelForCausalLM.from_pretrained(
 
 ## References
 
-- [ONNX Runtime operator support matrix](https://onnxruntime.ai/docs/operators/)
+- [ONNX Runtime operator support matrix](https://onnxruntime.ai/docs/reference/operators/)

@@ -1,5 +1,32 @@
 # Patterns excluded from lychee link checks.
 # One entry per line — Go-style regular expressions.
 
+# Badge/canonical URLs that may have transient network errors in CI.
+https://awesome\.re/
+
 # Intel content-delivery CDN blocks automated HTTP HEAD/GET requests.
 https://www\.intel\.com/content/dam/
+
+# Intel developer pages return 403 to automated scanners.
+https://www\.intel\.com/content/www/us/en/
+
+# Oracle blogs block automated checks.
+https://blogs\.oracle\.com/
+
+# Arm developer blogs block automated checks.
+https://developer\.arm\.com/community/arm-community-blogs/
+
+# Scaleway blog blocks automated checks.
+https://www\.scaleway\.com/en/blog/
+
+# Medium blocks automated checks on some articles.
+https://medium\.com/
+
+# Qualcomm product pages frequently restructure URLs.
+https://www\.qualcomm\.com/products/
+
+# MediaTek short URLs may not resolve reliably from CI.
+https://i\.mediatek\.com/
+
+# Google Store may redirect individual product pages.
+https://store\.google\.com/

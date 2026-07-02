@@ -71,7 +71,7 @@ Speech, audio, text-to-speech, and optical character recognition are among the m
 ### OCR
 
 - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) — The de facto open-source OCR engine with 100+ language packs; entirely CPU-native with no GPU dependency, supporting LSTM-based recognition since v4. Widely used in document processing pipelines and production deployments.
-- [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) — Baidu's OCR toolkit with CPU-optimized inference via MKL-DNN/OneDNN and OpenVINO; PP-OCRv4 mobile models run detection in ~57 ms and recognition in ~47 ms on Intel Xeon Gold (FP32, 8 threads). Supports 80+ languages with text detection, recognition, and table structure recognition. ([Benchmarks](https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/instructions/benchmark.html), [CPU optimization guide](https://deepwiki.com/PaddlePaddle/PaddleOCR/8.3-cpu-optimization))
+- [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) — Baidu's OCR toolkit with CPU-optimized inference via MKL-DNN/OneDNN and OpenVINO; PP-OCRv4 mobile models run detection in ~57 ms and recognition in ~47 ms on Intel Xeon Gold (FP32, 8 threads). Supports 80+ languages with text detection, recognition, and table structure recognition. ([Training benchmarks](https://github.com/PaddlePaddle/PaddleOCR/tree/main/benchmark), [CPU optimization guide](https://deepwiki.com/PaddlePaddle/PaddleOCR/8.3-cpu-optimization))
 - [Surya OCR 2](https://github.com/datalab-to/surya) — 650M-parameter multilingual OCR model scoring 83.3% on olmOCR-bench (top under 3B params); runs on CPU via llama.cpp (GGUF-quantized) with a throughput of ~0.1 pages/s on Apple Silicon (~30 W) and supports full-page OCR, layout analysis, reading order, and table recognition in a single VLM. ([Announcement](https://www.datalab.to/blog/surya-2))
 
 ---
@@ -134,7 +134,7 @@ See also: [Vision on CPU (README)](../README.md#vision-on-cpu) · [Model Convers
 - [cross-encoder/nli-distilroberta-base](https://huggingface.co/cross-encoder/nli-distilroberta-base)
 - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
 - [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
-- [Benchmarks](https://www.paddleocr.ai/latest/en/version3.x/pipeline_usage/instructions/benchmark.html)
+- [Training benchmarks](https://github.com/PaddlePaddle/PaddleOCR/tree/main/benchmark)
 - [CPU optimization guide](https://deepwiki.com/PaddlePaddle/PaddleOCR/8.3-cpu-optimization)
 - [Surya OCR 2](https://github.com/datalab-to/surya)
 - [Announcement](https://www.datalab.to/blog/surya-2)

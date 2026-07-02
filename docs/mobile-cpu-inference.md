@@ -29,7 +29,7 @@ Modern flagship phones run billion-parameter LLMs on-device — no cloud round-t
 
 - [MLC-LLM on iOS and Android](https://github.com/mlc-ai/mlc-llm) — Cross-platform LLM inference app shipping pre-quantized models (Llama 3.1 8B, Qwen 2.5 7B, Phi-3) via GPU backends (Metal on iOS, OpenCL/Vulkan on Android) with an OpenAI-compatible API. Achieves 6–12 tok/s on flagship phones for 7B INT4 models; the only mainstream runtime shipping identical checkpoints across iOS, Android, and Web from one toolchain. ([iOS deployment guide](https://github.com/mlc-ai/mlc-llm/blob/main/docs/deploy/ios.rst), [Android deployment guide](https://github.com/mlc-ai/mlc-llm/blob/main/docs/deploy/android.rst))
 - [Apple Core AI (WWDC 2026)](https://developer.apple.com/videos/play/wwdc2026/324/) — Apple's on-device AI inference framework, successor to Core ML and the engine behind Apple Intelligence; runs across CPU, GPU, and Neural Engine under a single Swift API with ahead-of-time compilation and zero-copy data paths. Supports models from 3B to 70B on iPhone, iPad, and Mac. ([InfoQ overview](https://www.infoq.com/news/2026/06/apple-core-ai-wwdc/))
-- [llama.cpp Android](https://github.com/ggerganov/llama.cpp/blob/master/docs/android.md) — Cross-compiled llama.cpp for Android ARM; runs any GGUF model entirely on CPU with no GPU or NPU dependency, achieving 9–12 tok/s on Snapdragon 8 Elite for 7B Q4 models. The most flexible option for sideloading arbitrary models on Android. *(Also listed under On-Device, Edge, ARM, and SBCs in the README.)*
+- [llama.cpp Android](https://github.com/ggml-org/llama.cpp/blob/master/docs/android.md) — Cross-compiled llama.cpp for Android ARM; runs any GGUF model entirely on CPU with no GPU or NPU dependency, achieving 9–12 tok/s on Snapdragon 8 Elite for 7B Q4 models. The most flexible option for sideloading arbitrary models on Android. *(Also listed under On-Device, Edge, ARM, and SBCs in the README.)*
 - [Qualcomm AI Hub](https://aihub.qualcomm.com/) — Model zoo with pre-optimized INT8/INT4 models for Snapdragon platforms, deployable via LiteRT, ONNX Runtime, and Qualcomm AI Engine Direct SDKs. The Hexagon NPU path delivers 12–25 tok/s on flagship Snapdragon but is Snapdragon-only; CPU fallback is always available for cross-device compatibility. ([QNN SDK](https://developer.qualcomm.com/software/qualcomm-ai-engine-direct-sdk))
 - [Arm SME2 & KleidiAI](https://www.arm.com/technologies/sme2/accelerate-on-device-ai) — Scalable Matrix Extension 2 CPU instructions with the KleidiAI operator library deliver up to 6× faster AI inference on Arm v9.3+ mobile CPUs (iPhone 16/17, vivo X300 series) with no code changes — integrated in XNNPACK, ExecuTorch, ONNX Runtime, llama.cpp, and MNN.
 
@@ -64,7 +64,7 @@ See also: [On-Device, Edge, ARM, and SBCs (README)](../README.md#on-device-edge-
 - [Android deployment guide](https://github.com/mlc-ai/mlc-llm/blob/main/docs/deploy/android.rst)
 - [Apple Core AI (WWDC 2026)](https://developer.apple.com/videos/play/wwdc2026/324/)
 - [InfoQ overview](https://www.infoq.com/news/2026/06/apple-core-ai-wwdc/)
-- [llama.cpp Android](https://github.com/ggerganov/llama.cpp/blob/master/docs/android.md)
+- [llama.cpp Android](https://github.com/ggml-org/llama.cpp/blob/master/docs/android.md)
 - [QNN SDK](https://developer.qualcomm.com/software/qualcomm-ai-engine-direct-sdk)
 - [Arm SME2 & KleidiAI](https://www.arm.com/technologies/sme2/accelerate-on-device-ai)
 - [On-Device LLMs: State of the Union 2026 (Vikas Chandra / Meta)](https://v-chandra.github.io/on-device-llms/)
