@@ -1,0 +1,41 @@
+name: 🔗 Report a stale or broken link
+description: Flag a dead link, a redirected/renamed repo, or an archived/unmaintained project.
+title: "[Stale]: <entry name>"
+labels: ["stale-link", "good first issue", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Link rot is the number-one way an awesome list decays. Thanks for keeping it healthy — these are some of the easiest issues to fix, and great first contributions.
+  - type: input
+    id: entry
+    attributes:
+      label: Which entry?
+      placeholder: e.g. AutoGPTQ under "Quantization and Model Formats"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Current (broken) link
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What's wrong?
+      options:
+        - 404 / dead link
+        - Redirects to a renamed or transferred repo
+        - Repository is archived
+        - Repository is disabled or deleted
+        - Content moved (link resolves but no longer shows the referenced material)
+        - Benchmark/figure no longer matches the source
+    validations:
+      required: true
+  - type: input
+    id: replacement
+    attributes:
+      label: Correct/replacement link (if known)
+      placeholder: https://github.com/new-owner/new-repo

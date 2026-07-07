@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion / "Does this tool qualify?"
+    url: https://github.com/ranjithrajv/awesome-cpu-first-ai/discussions
+    about: Not sure whether something belongs on the list, or want to discuss CPU-vs-GPU tradeoffs? Open a discussion instead of an issue.
+  - name: 📖 Contribution guidelines
+    url: https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/CONTRIBUTING.md
+    about: Read the inclusion bar before suggesting a resource or opening a PR.

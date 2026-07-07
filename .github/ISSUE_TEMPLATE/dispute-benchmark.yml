@@ -1,0 +1,46 @@
+name: 📊 Dispute or add a benchmark figure
+description: Challenge a tokens/sec, latency, cost, or power number — or contribute a new measured figure.
+title: "[Benchmark]: <what the number is about>"
+labels: ["benchmark", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This list lives or dies on the credibility of its numbers. If a figure looks wrong, or you've measured something the list should cite, this is the place. Please cite a reproducible source — see [docs/benchmark-methodology.md](https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/docs/benchmark-methodology.md).
+  - type: input
+    id: claim
+    attributes:
+      label: The figure in question
+      description: Quote the exact number and where it appears (README section or docs file).
+      placeholder: '"18–22 tok/s generation on OCI Ampere A1" in Mixture-of-Experts on CPU'
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Is this a dispute or a new contribution?
+      options:
+        - Existing figure looks wrong / is unverifiable
+        - New measured figure to add
+        - Figure is stale and needs re-verification
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware & config
+      description: CPU model, core count, RAM, quantization, runtime + version, thread count, context length.
+      placeholder: |
+        CPU: AWS Graviton4 c8g.4xlarge (16 vCPU)
+        Model: Llama-3.1-8B Q4_K_M
+        Runtime: llama.cpp b4321, --threads 16
+        Metric: tg128 / pp512
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Reproducible source
+      description: Link to the run, a gist of the command + output, or the upstream benchmark. No unverifiable numbers, per CONTRIBUTING.
+    validations:
+      required: true

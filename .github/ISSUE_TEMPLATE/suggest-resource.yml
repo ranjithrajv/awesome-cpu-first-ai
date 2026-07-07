@@ -1,0 +1,71 @@
+name: 🔧 Suggest a resource
+description: Propose a runtime, tool, format, benchmark, paper, or article to add to the list.
+title: "[Suggest]: <project or resource name>"
+labels: ["suggestion", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping the list grow. Please make sure your suggestion clears the [inclusion bar](https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/CONTRIBUTING.md) before filing. Small PRs are welcome too — but for anything borderline, an issue first is the fastest path.
+  - type: input
+    id: name
+    attributes:
+      label: Resource name
+      placeholder: e.g. llama.cpp
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: section
+    attributes:
+      label: Which section does it belong in?
+      options:
+        - Runtimes and Inference Engines
+        - Quantization and Model Formats
+        - Performance Tuning
+        - Mixture-of-Experts on CPU
+        - Benchmarks and Evidence
+        - On-Device, Edge, ARM, and SBCs
+        - Vision on CPU
+        - Multimodal CPU Workloads
+        - Cloud ARM Servers
+        - Mobile Phone CPUs
+        - Cost and Deployment Economics
+        - CPU Fine-Tuning
+        - Talks, Papers, and Articles
+        - New section (explain below)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: One-line description (in your own words)
+      description: Neutral and specific, not marketing copy. This is the format entries use.
+      placeholder: "C/C++ LLM inference engine designed from day one for CPU; optional GPU offload of individual layers."
+    validations:
+      required: true
+  - type: checkboxes
+    id: bar
+    attributes:
+      label: Inclusion bar
+      description: Confirm the resource meets the list's thesis (CPU is the default; GPU is the exception you justify).
+      options:
+        - label: It is CPU-native or CPU-first — CPU is a primary target, not a slow fallback.
+          required: true
+        - label: It is directly relevant to the CPU-vs-GPU inference decision.
+          required: true
+        - label: It is maintained (activity in the last ~12 months) OR I've noted its archived/unmaintained status.
+          required: true
+        - label: It is not already on the list, and not a near-duplicate of a better-maintained entry.
+          required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence (optional but strongly encouraged)
+      description: Benchmark numbers, a link to CPU deployment docs, or why this beats what's already listed.
