@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Awesome CPU-First AI — Run LLM &amp; AI Inference on CPU (No GPU Needed)</title>
+<meta name="description" content="A curated, evidence-backed list of runtimes, quantization formats, benchmarks, and cost math for running AI and LLM inference on CPU — llama.cpp, ONNX Runtime, OpenVINO, ncnn, GGUF. Start with CPU, justify the GPU.">
+<meta name="keywords" content="CPU inference, LLM on CPU, run LLM without GPU, llama.cpp, ONNX Runtime, OpenVINO, ncnn, GGUF, quantization, CPU AI inference, on-device AI, edge inference, ARM inference, Graviton, Ampere, serverless inference, cost per token, awesome list">
+<meta name="author" content="ranjithrajv">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://ranjithrajv.github.io/awesome-cpu-first-ai/">
+<meta name="theme-color" content="#0b0f14">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Awesome CPU-First AI">
+<meta property="og:title" content="Awesome CPU-First AI — Run AI Inference on CPU, No GPU Needed">
+<meta property="og:description" content="Curated runtimes, benchmarks, and cost math for CPU inference. Training needs GPUs. Inference usually doesn't.">
+<meta property="og:url" content="https://ranjithrajv.github.io/awesome-cpu-first-ai/">
+<meta property="og:image" content="https://ranjithrajv.github.io/awesome-cpu-first-ai/assets/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Awesome CPU-First AI — Run AI Inference on CPU">
+<meta name="twitter:description" content="Curated runtimes, benchmarks, and cost math for GPU-free inference. Start with CPU, justify the GPU.">
+<meta name="twitter:image" content="https://ranjithrajv.github.io/awesome-cpu-first-ai/assets/social-preview.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%99%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Awesome CPU-First AI",
+  "url": "https://ranjithrajv.github.io/awesome-cpu-first-ai/",
+  "description": "A curated, evidence-backed list of runtimes, formats, tools, and benchmarks for running AI inference on CPU.",
+  "keywords": "CPU inference, LLM on CPU, llama.cpp, ONNX Runtime, OpenVINO, GGUF, quantization, edge AI",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "author": { "@type": "Person", "name": "ranjithrajv" },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "CPU-first AI inference resources",
+    "itemListElement": [
+      { "@type": "SoftwareApplication", "name": "llama.cpp", "applicationCategory": "AI inference runtime", "operatingSystem": "Linux, macOS, Windows", "url": "https://github.com/ggerganov/llama.cpp" },
+      { "@type": "SoftwareApplication", "name": "ONNX Runtime", "applicationCategory": "AI inference runtime", "url": "https://onnxruntime.ai/" },
+      { "@type": "SoftwareApplication", "name": "OpenVINO", "applicationCategory": "AI inference runtime", "url": "https://github.com/openvinotoolkit/openvino" },
+      { "@type": "SoftwareApplication", "name": "ncnn", "applicationCategory": "AI inference runtime", "url": "https://github.com/Tencent/ncnn" }
+    ]
+  }
+}
+</script>
+
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#111823; --panel2:#0e141c; --line:rgba(255,255,255,.10);
+    --ink:#e8eef2; --muted:#9fb0bd; --grn:#4ade80; --grn2:#22c55e; --sky:#7dd3fc;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#f7f9fb; --panel:#ffffff; --panel2:#f0f3f7; --line:rgba(2,8,20,.10);
+           --ink:#0e1621; --muted:#4a5b6b; --grn:#16a34a; --grn2:#15803d; --sky:#0369a1; }
+  }
+  :root[data-theme="dark"]{ --bg:#0b0f14; --panel:#111823; --panel2:#0e141c; --line:rgba(255,255,255,.10);
+    --ink:#e8eef2; --muted:#9fb0bd; --grn:#4ade80; --grn2:#22c55e; --sky:#7dd3fc; }
+  :root[data-theme="light"]{ --bg:#f7f9fb; --panel:#ffffff; --panel2:#f0f3f7; --line:rgba(2,8,20,.10);
+    --ink:#0e1621; --muted:#4a5b6b; --grn:#16a34a; --grn2:#15803d; --sky:#0369a1; }
+
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased; }
+  a{ color:var(--grn); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
+  .mono{ font-family:var(--mono); }
+
+  header.hero{ position:relative; overflow:hidden; border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(900px 480px at 85% -20%, color-mix(in srgb, var(--grn) 16%, transparent), transparent 60%),
+      radial-gradient(700px 420px at -10% 120%, color-mix(in srgb, var(--sky) 12%, transparent), transparent 55%),
+      var(--bg); }
+  .hero-inner{ padding:64px 0 52px; }
+  .eyebrow{ font-family:var(--mono); color:var(--sky); font-size:.82rem; letter-spacing:.08em;
+    text-transform:uppercase; }
+  h1{ font-size:clamp(2.4rem,6vw,4rem); line-height:1.03; letter-spacing:-.02em; margin:.35em 0 .15em; }
+  h1 .g{ color:var(--grn); }
+  .tag{ font-family:var(--mono); font-size:clamp(1.05rem,2.6vw,1.45rem); color:var(--ink); }
+  .tag b{ color:var(--grn); }
+  .sub{ color:var(--muted); max-width:60ch; margin:.8em 0 0; }
+  .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:26px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:11px;
+    font-weight:600; border:1px solid var(--line); }
+  .btn.primary{ background:var(--grn); color:#06210f; border-color:transparent; }
+  .btn.primary:hover{ background:var(--grn2); text-decoration:none; }
+  .btn.ghost{ background:var(--panel); color:var(--ink); }
+  .btn.ghost:hover{ text-decoration:none; border-color:var(--grn); }
+
+  section{ padding:46px 0; border-bottom:1px solid var(--line); }
+  h2{ font-size:1.5rem; letter-spacing:-.01em; margin:0 0 .2em; }
+  h2 .num{ font-family:var(--mono); color:var(--grn); font-size:1rem; margin-right:.5em; }
+  .lead{ color:var(--muted); max-width:70ch; margin:.2em 0 1.4em; }
+
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
+  .stat{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .stat .n{ font-size:1.7rem; font-weight:800; color:var(--grn); line-height:1; }
+  .stat .l{ color:var(--muted); font-size:.9rem; margin-top:6px; }
+
+  .tablewrap{ overflow-x:auto; border:1px solid var(--line); border-radius:14px; }
+  table{ border-collapse:collapse; width:100%; min-width:520px; font-size:.95rem; }
+  th,td{ text-align:left; padding:12px 16px; border-bottom:1px solid var(--line); }
+  thead th{ background:var(--panel2); font-family:var(--mono); font-size:.82rem; letter-spacing:.03em;
+    text-transform:uppercase; color:var(--muted); }
+  tbody tr:last-child td{ border-bottom:none; }
+  .cpu{ color:var(--grn); font-weight:600; }
+  .gpu{ color:var(--muted); }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px;
+    transition:border-color .15s, transform .15s; }
+  .card:hover{ border-color:var(--grn); transform:translateY(-2px); }
+  .card h3{ margin:0 0 4px; font-size:1.02rem; }
+  .card p{ margin:0; color:var(--muted); font-size:.88rem; }
+  .card a{ color:inherit; }
+
+  .pills{ display:flex; flex-wrap:wrap; gap:9px; }
+  .pill{ font-family:var(--mono); font-size:.86rem; color:var(--muted);
+    border:1px solid var(--line); border-radius:9px; padding:8px 13px; background:var(--panel); }
+  .pill a{ color:inherit; }
+  .pill:hover{ border-color:var(--grn); }
+
+  footer{ padding:40px 0 64px; color:var(--muted); font-size:.9rem; }
+  footer a{ color:var(--muted); text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">▚ Awesome list · CC0</div>
+    <h1>Awesome <span class="g">CPU-First AI</span></h1>
+    <p class="tag">Training needs GPUs. <b>Inference usually doesn't.</b></p>
+    <p class="sub">A curated, evidence-backed list of runtimes, quantization formats, benchmarks, and
+      cost math for running AI and LLM inference on the CPU you already have — servers, laptops,
+      edge devices, and serverless functions. Start with CPU; justify the GPU.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/ranjithrajv/awesome-cpu-first-ai">⭐ Star on GitHub</a>
+      <a class="btn ghost" href="https://github.com/ranjithrajv/awesome-cpu-first-ai#contents">Browse the full list →</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2><span class="num">01</span>Most inference never needed a GPU</h2>
+    <p class="lead">Independent analysis of the Hugging Face ecosystem shows the models people
+      actually run are small — small enough to fit comfortably on a modern CPU once quantized.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">92%</div><div class="l">of HF downloads go to models under 1B params</div></div>
+      <div class="stat"><div class="n">406M</div><div class="l">median downloaded model size</div></div>
+      <div class="stat"><div class="n">~60%</div><div class="l">of models are ≤ 13B params (quantized)</div></div>
+      <div class="stat"><div class="n">$5,740</div><div class="l">/yr saved: 7B Q4 on CPU vs idle GPU</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span>When to choose CPU vs GPU for inference</h2>
+    <p class="lead">This list is GPU-skeptical, not GPU-hostile. Here's the honest split — the full
+      <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#decision-flowchart">decision flowchart</a>
+      and <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#when-you-actually-do-want-a-gpu">"when you actually want a GPU"</a>
+      section live in the repo.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Lean CPU</th><th>Lean GPU</th></tr></thead>
+        <tbody>
+          <tr><td>Workload</td><td class="cpu">Inference</td><td class="gpu">Training, fine-tuning</td></tr>
+          <tr><td>Model size</td><td class="cpu">≤ 13B (quantized)</td><td class="gpu">70B+ dense</td></tr>
+          <tr><td>Throughput</td><td class="cpu">Single-digit req/s</td><td class="gpu">Hundreds req/s, batched</td></tr>
+          <tr><td>Latency SLA</td><td class="cpu">100 ms – 2 s TTFT ok</td><td class="gpu">&lt; 50 ms TTFT</td></tr>
+          <tr><td>Context length</td><td class="cpu">≤ 8K tokens</td><td class="gpu">32K+ prefill-heavy</td></tr>
+          <tr><td>Deployment</td><td class="cpu">Edge, serverless, SBC</td><td class="gpu">Dedicated cluster</td></tr>
+          <tr><td>Cost / availability</td><td class="cpu">Ubiquitous, no VRAM cap</td><td class="gpu">5–20× more, VRAM ceiling</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span>CPU-native runtimes &amp; inference engines</h2>
+    <p class="lead">Engines built for CPU as a primary target — not GPU frameworks that fall back to a slow CPU path.</p>
+    <div class="grid">
+      <div class="card"><h3><a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a></h3><p>C/C++ LLM inference designed for CPU from day one; GGUF, x86/ARM/RISC-V.</p></div>
+      <div class="card"><h3><a href="https://onnxruntime.ai/docs/execution-providers/">ONNX Runtime (CPU EP)</a></h3><p>Production-grade CPU execution provider with operator fusion and INT8.</p></div>
+      <div class="card"><h3><a href="https://github.com/openvinotoolkit/openvino">OpenVINO</a></h3><p>Intel's toolkit targeting x86 CPU as first-class hardware.</p></div>
+      <div class="card"><h3><a href="https://github.com/Tencent/ncnn">ncnn</a></h3><p>Dependency-free mobile/embedded inference for ARM and x86.</p></div>
+      <div class="card"><h3><a href="https://github.com/pytorch/executorch">ExecuTorch</a></h3><p>PyTorch on-device runtime; ARM CPU (XNNPACK) is the primary target.</p></div>
+      <div class="card"><h3><a href="https://github.com/mozilla-ai/llamafile">llamafile</a></h3><p>Single-file LLM executables that run on CPU with no install.</p></div>
+    </div>
+    <p class="lead" style="margin-top:16px">See all runtimes, plus a
+      <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#runtimes-and-inference-engines">format/arch/OS comparison table</a>, in the repo.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span>What's inside</h2>
+    <div class="pills">
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#quantization-and-model-formats">Quantization &amp; GGUF</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#performance-tuning">Performance tuning</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#mixture-of-experts-on-cpu">MoE on CPU</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#benchmarks-and-evidence">Benchmarks &amp; evidence</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#on-device-edge-arm-and-sbcs">Edge, ARM &amp; SBCs</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#vision-on-cpu">Vision on CPU</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#multimodal-cpu-workloads">Multimodal (ASR/TTS/OCR)</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#cloud-arm-servers">Cloud ARM servers</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#mobile-phone-cpus">Mobile phone CPUs</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#cost-and-deployment-economics">Cost economics</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#cpu-fine-tuning">CPU fine-tuning</a></span>
+      <span class="pill"><a href="https://github.com/ranjithrajv/awesome-cpu-first-ai#talks-papers-and-articles">Talks &amp; papers</a></span>
+    </div>
+    <p class="lead" style="margin-top:20px">Plus companion guides: a
+      <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/docs/cost-calculator.md">cost calculator</a>,
+      <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/docs/green-inference.md">green-inference power math</a>,
+      <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/docs/benchmark-methodology.md">benchmark methodology</a>, and
+      <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/docs/troubleshooting.md">troubleshooting</a>.</p>
+  </section>
+
+  <section style="border-bottom:none">
+    <h2><span class="num">05</span>Contribute</h2>
+    <p class="lead">Know a CPU-native runtime, a real benchmark, or a broken link? Contributions are welcome —
+      there are one-click issue templates for suggesting a resource, reporting a stale link, or disputing a
+      benchmark figure.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/ranjithrajv/awesome-cpu-first-ai/issues/new/choose">Suggest a resource</a>
+      <a class="btn ghost" href="https://github.com/ranjithrajv/awesome-cpu-first-ai/discussions">Join the discussion</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  Awesome CPU-First AI · Released under
+  <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> ·
+  <a href="https://github.com/ranjithrajv/awesome-cpu-first-ai">Source on GitHub</a>
+</footer>
+
+<script>
+  // honor GitHub-style theme override if a parent ever stamps data-theme; otherwise prefers-color-scheme wins.
+  (function(){ try{ var t=localStorage.getItem('theme'); if(t) document.documentElement.setAttribute('data-theme',t); }catch(e){} })();
+</script>
+</body>
+</html>

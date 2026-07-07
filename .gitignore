@@ -8,3 +8,6 @@ node_modules/
 .venv
 __pycache__/
 *.pyc
+
+# Playwright MCP scratch
+.playwright-mcp/

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ranjithrajv.github.io/awesome-cpu-first-ai/sitemap.xml
