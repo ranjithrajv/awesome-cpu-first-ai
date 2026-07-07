@@ -2,6 +2,8 @@
 
 > Training needs GPUs. Inference usually doesn't. Start with CPU; justify the GPU.
 
+🌐 **Browse as a website:** <https://ranjithrajv.github.io/awesome-cpu-first-ai/>
+
 A curated list of runtimes, formats, tools, and evidence for running AI inference on CPU — the platform you already have everywhere.
 
 ---
