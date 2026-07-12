@@ -4,6 +4,15 @@ All notable additions and changes to awesome-cpu-first-ai.
 
 ---
 
+## 2026-07-13
+
+- **Runtimes**: Added LiteRT.js — Google AI Edge's in-browser ML runtime (WebAssembly CPU via XNNPACK, WebGPU optional), with a new row in the runtime comparison table
+- **On-Device**: Annotated TensorFlow Lite entry to note LiteRT as its official successor (same `.tflite` format, same XNNPACK CPU backend); expanded XNNPACK entry to cross-link LiteRT/LiteRT.js, ExecuTorch, and ONNX Runtime mobile as consumers
+- **Multimodal**: Added PocketTTS (Kyutai Labs, 100M params, CPU-first TTS with voice cloning, ~6× real-time on M4) and PocketTTS.cpp (single-file C++/ONNX port, 9.2× real-time INT8) to TTS subsection and README key-tools line
+- **Multimodal**: Added transcribe.cpp (handy-computer, ggml/GGUF STT library for 16+ ASR model families — Parakeet, Canary, Moonshine, Voxtral, etc., CPU-default via tinyBLAS, 60+ WER-validated GGUFs) to ASR/STT subsection and README key-tools line
+- **README**: Fixed dangling "Pi-phi TTS" placeholder in *What's New* → PocketTTS
+- **Gap Map**: Added [CPU AI Gap Map](docs/cpu-ai-gap-map.md) — a scored assessment of the CPU-first AI tooling landscape across 10 workload categories (LLM decode, LLM prefill, ASR/STT, TTS, embeddings, vision detection, vision segmentation, OCR, image generation, fine-tuning), grading CPU-nativeness, CPU performance, architecture coverage, and adoption. README summary dashboard added between Benchmarks and On-Device sections.
+
 ## 2026-06-27
 
 - **MoE**: Added new "Mixture-of-Experts on CPU" section with DeepSeek-R1 paper, Arm Graviton4 deployment guide, and OCI Ampere A1 practitioner guide

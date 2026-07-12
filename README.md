@@ -1,4 +1,4 @@
-# Awesome CPU-First AI [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# Awesome CPU-First AI [![Awesome](https://awesome.re/badge.svg)](https://awesome.re) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md) [![GitHub stars](https://img.shields.io/github/stars/ranjithrajv/awesome-cpu-first-ai?style=social)](https://github.com/ranjithrajv/awesome-cpu-first-ai)
 
 > Training needs GPUs. Inference usually doesn't. Start with CPU; justify the GPU.
 
@@ -11,6 +11,16 @@ A curated list of runtimes, formats, tools, and evidence for running AI inferenc
 ## Introduction
 
 Most AI practitioners default to GPU for everything because that is where training lives. But once a model is trained, the inference workload often fits comfortably on a modern CPU: smaller batch sizes, modest throughput requirements, and quantized models that slip inside L3 cache. Independent analysis of the Hugging Face ecosystem finds 40–51% of models are sub-7B and 55–65% are sub-13B parameters — 92% of all downloads go to models under 1B params and the median downloaded model is just 406M params. The vast majority of inference workloads people actually run never needed a GPU. This list is for engineers who want to question that GPU default and reach for the right tool instead of the expensive one. It is aimed at practitioners deploying inference on servers, laptops, edge devices, or serverless functions — anywhere a GPU is absent, costly, or simply overkill. The list is GPU-skeptical, not GPU-hostile; the **When You Actually Do Want a GPU** section below is load-bearing, not decorative.
+
+---
+
+## What's New
+
+- **2026-07**: [CPU AI Gap Map](#cpu-ai-gap-map) &mdash; a scored assessment of the CPU-first AI tooling landscape across 10 workload categories, grading CPU-nativeness, performance, architecture coverage, and adoption. [Vision on CPU](#vision-on-cpu), [Multimodal CPU Workloads](#multimodal-cpu-workloads), and [Mobile Phone CPUs](#mobile-phone-cpus) sections added &mdash; covering YOLOv8+OpenVINO, CLIP, whisper.cpp, PocketTTS, Apple A19 Pro, Snapdragon 8 Elite, and more.
+- **2026-06**: Initial public release with 14 sections covering runtimes, quantization, benchmarks, edge deployment, MoE on CPU, cloud ARM servers, cost economics, and CPU fine-tuning.
+
+See [CHANGELOG](CHANGELOG.md) for the full history.  
+> **Want to help shape the next release?** There are [`good first issue`](https://github.com/ranjithrajv/awesome-cpu-first-ai/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) tasks waiting for a contributor.
 
 ---
 
@@ -94,6 +104,7 @@ flowchart TD
 - [Performance Tuning](#performance-tuning)
 - [Mixture-of-Experts on CPU](#mixture-of-experts-on-cpu)
 - [Benchmarks and Evidence](#benchmarks-and-evidence)
+- [CPU AI Gap Map](#cpu-ai-gap-map)
 - [On-Device, Edge, ARM, and SBCs](#on-device-edge-arm-and-sbcs)
 - [Vision on CPU](#vision-on-cpu)
 - [Multimodal CPU Workloads](#multimodal-cpu-workloads)
@@ -107,6 +118,12 @@ flowchart TD
 
 ---
 
+> **🔍 Missing something?** If a CPU-native runtime, benchmark, or deployment guide belongs here, [open a suggestion](https://github.com/ranjithrajv/awesome-cpu-first-ai/issues/new/choose).  
+> First-timer? Issues tagged [`good first issue`](https://github.com/ranjithrajv/awesome-cpu-first-ai/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) are the quickest way to contribute — low effort, high impact.  
+> Also check [`help wanted`](https://github.com/ranjithrajv/awesome-cpu-first-ai/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) for bigger gaps.
+
+---
+
 ## Runtimes and Inference Engines
 
 - [candle](https://github.com/huggingface/candle) - Hugging Face's Rust ML framework; CPU execution is the primary target, with optional CUDA support compiled in separately.
@@ -114,6 +131,7 @@ flowchart TD
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch's on-device inference runtime; designed for mobile and embedded, with CPU kernels for ARM (XNNPACK backend) as the primary deployment target and cross-compilation support for Android, iOS, and Linux. *(Also listed under On-Device, Edge, ARM, and SBCs.)*
 - [ggml](https://github.com/ggerganov/ggml) - The tensor library underlying llama.cpp; hand-optimized CPU kernels using SIMD intrinsics for AVX2, AVX-512, NEON, and SVE.
 - [Intel Extension for Transformers](https://github.com/intel/intel-extension-for-transformers) - Drop-in optimization layer for Hugging Face Transformers that applies CPU-specific INT4/INT8 kernels, AMX acceleration, and weight-only quantization.
+- [LiteRT.js](https://ai.google.dev/edge/litert/web) - Google AI Edge's in-browser ML runtime; the web target of [LiteRT](https://github.com/google-ai-edge/LiteRT) (the successor to TensorFlow Lite), running `.tflite` models via WebAssembly (CPU, XNNPACK backend) or WebGPU with zero server dependency, supporting INT8 quantized models on the CPU path.
 - [llamafile](https://github.com/mozilla-ai/llamafile) - Distributable single-file LLM executables (built on llama.cpp + Cosmopolitan libc) that run on CPU across Linux, macOS, and Windows with no install.
 - [llama.cpp](https://github.com/ggerganov/llama.cpp) - C/C++ LLM inference engine designed from day one for CPU; optional GPU offload of individual layers rather than GPU-first design.
 - [llama2.c](https://github.com/karpathy/llama2.c) - Andrej Karpathy's minimal C implementation of LLaMA 2 inference; a pedagogical reference showing that CPU inference requires no ML framework, only a few hundred lines of C.
@@ -139,8 +157,9 @@ flowchart TD
 | candle                      | GGUF, safetensors | x86, ARM              | Linux, macOS, Windows        |
 | Transformers.js             | ONNX              | WebAssembly           | Browser                      |
 | WebLLM                      | MLC               | WebAssembly, WebGPU   | Browser                      |
+| LiteRT.js                   | TFLite            | WebAssembly, WebGPU   | Browser                      |
 | ExecuTorch                  | ExecuTorch        | x86, ARM              | Linux, Android, iOS          |
-| TensorFlow Lite             | TFLite            | x86, ARM              | Linux, Windows, Android, iOS |
+| TensorFlow Lite (LiteRT)    | TFLite            | x86, ARM              | Linux, Windows, Android, iOS |
 | Intel Ext. for Transformers | PyTorch, ONNX     | x86                   | Linux, Windows               |
 | whisper.cpp                 | GGUF              | x86, ARM              | Linux, macOS, Windows        |
 
@@ -193,12 +212,41 @@ Mixture-of-Experts (MoE) architectures are often assumed to require GPU because 
 
 ---
 
+## CPU AI Gap Map
+
+A scored assessment of the CPU-first AI tooling landscape across 10 workload categories — grading every major tool on CPU-nativeness, CPU performance, architecture coverage, and adoption — to identify where the ecosystem is mature and where gaps remain. Inspired by the [AI Potluck Open Source AI Gap Map](https://www.aipotluck.org/map) (which scores *openness*), this map scores **CPU-nativeness** — the degree to which a tool is designed for CPU inference rather than treating it as a secondary fallback.
+
+### Summary Dashboard
+
+| # | Category | Stage | Gaps | Mature CPU-native tools | Best CPU-native option |
+|---|---|---|---|---|---|
+| 1 | LLM inference (decode) | **5** | - | 7 | llama.cpp |
+| 2 | LLM prompt processing (prefill) | **4** | Architecture | 3 | ONNX Runtime GenAI |
+| 3 | ASR / STT | **5** | - | 4 | whisper.cpp |
+| 4 | TTS | **4** | Maturity | 3 | Piper / PocketTTS |
+| 5 | Embeddings | **5** | - | 3 | sentence-transformers ONNX |
+| 6 | Vision - detection & classification | **5** | - | 4 | YOLOv8 + OpenVINO |
+| 7 | Vision - segmentation | **3** | Performance, Coverage | 0 | MobileSAM |
+| 8 | OCR | **5** | - | 3 | PaddleOCR |
+| 9 | Image generation (diffusion) | **2** | Performance, Architecture | 0 | OpenVINO Stable Diffusion |
+| 10 | Fine-tuning (LoRA / QLoRA) | **3** | Performance | 1 | llama.cpp fine-tuning |
+
+**At a glance:** 5 of 10 categories are at Stage 5 (mature). 2 categories carry performance gaps (segmentation, diffusion). 1 category has a void for non-x86 architectures (diffusion). Fine-tuning on CPU is viable but slow - the ecosystem needs faster CPU LoRA kernels to close the throughput gap.
+
+**Maturity stages:** 5 = Mature CPU ecosystem, 4 = Competitive, 3 = Viable alternatives, 2 = Emerging, 1 = Experiments, 0 = Void.
+
+**Scoring axes:** CPU-nativeness (0-5, core axis - only tools scoring >= 4 advance maturity stage), CPU performance (0-5, within-category), Architecture coverage (x86 / ARM / RISC-V / WASM grid), Adoption (1-5, GitHub stars + PyPI downloads).
+
+See the [full CPU AI Gap Map](docs/cpu-ai-gap-map.md) for methodology, per-category scorecards, architecture coverage grids, and gap analysis.
+
+---
+
 ## On-Device, Edge, ARM, and SBCs
 
 - [Core ML](https://developer.apple.com/machine-learning/core-ml/) - Apple's on-device inference framework for iOS, macOS, and visionOS; runs models on the CPU (ANE/GPU also supported but optional) with optimized kernels for Apple Silicon M-series chips. Supports model conversion from PyTorch and TensorFlow via [`coremltools`](https://github.com/apple/coremltools).
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch's on-device inference runtime; designed for mobile and embedded, with CPU kernels for ARM (XNNPACK backend) as the primary deployment target.
-- [XNNPACK](https://github.com/google/XNNPACK) - Google's accelerated neural network inference library for ARM and x86; used as the CPU backend in TFLite, ExecuTorch, and ONNX Runtime's mobile path.
-- [TensorFlow Lite](https://www.tensorflow.org/lite) - Google's inference runtime for mobile and embedded; the default execution path is CPU (ARM/x86), with delegate APIs for optional hardware accelerators.
+- [XNNPACK](https://github.com/google/XNNPACK) - Google's accelerated neural network inference library for ARM and x86; the shared CPU kernel backend behind [TFLite](https://www.tensorflow.org/lite) / [LiteRT](https://github.com/google-ai-edge/LiteRT) (including [LiteRT.js](https://ai.google.dev/edge/litert/web) WebAssembly), [ExecuTorch](https://github.com/pytorch/executorch), and ONNX Runtime's mobile path — hand-tuned for NEON, SSE/AVX, and WASM SIMD.
+- [TensorFlow Lite](https://www.tensorflow.org/lite) - Google's inference runtime for mobile and embedded; the default execution path is CPU (ARM/x86), with delegate APIs for optional hardware accelerators. *(Note: [LiteRT](https://github.com/google-ai-edge/LiteRT) is the official successor to TensorFlow Lite, keeping the same `.tflite` format and XNNPACK CPU backend; the browser target [LiteRT.js](https://ai.google.dev/edge/litert/web) is listed under Runtimes and Inference Engines.)*
 - [MLC LLM (WebAssembly/CPU target)](https://github.com/mlc-ai/mlc-llm) - Compiles LLMs to native CPU code or WebAssembly via TVM; the browser/WebAssembly target is inherently CPU-only. *(Note: also targets GPU; relevant here specifically for its WebAssembly/CPU compilation path.)*
 - [llama.cpp Android build](https://github.com/ggerganov/llama.cpp/blob/master/docs/android.md) - Official docs for cross-compiling llama.cpp for Android ARM; runs on-device without network access or cloud inference costs.
 - [V-Seek — LLM inference on RISC-V server CPUs (arxiv:2503.17422)](https://arxiv.org/abs/2503.17422) - Paper documenting LLM inference optimizations on the Sophon SG2042, the first commercially available many-core RISC-V server CPU (64 RVV-capable cores); achieves 13 tok/s for 7B models and 5.5× throughput over baseline llama.cpp by exploiting RISC-V Vector (RVV) extensions with vectorized GEMM kernels.
@@ -224,7 +272,7 @@ Computer vision inference — object detection, classification, and segmentation
 
 Speech, audio, text-to-speech, and optical character recognition are among the most common production AI workloads that rarely need a GPU. Modern ASR engines run efficiently on CPU with INT8 quantization, TTS engines synthesize in real time using lightweight ONNX models, and OCR toolchains have been CPU-native for decades — with deep learning models now matching traditional engine accuracy while running on commodity x86 and ARM hardware.
 
-Key tools: [faster-whisper](https://github.com/SYSTRAN/faster-whisper), [whisper.cpp](https://github.com/ggerganov/whisper.cpp), [Piper](https://github.com/OHF-Voice/piper1-gpl), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR), [Tesseract](https://github.com/tesseract-ocr/tesseract), [MobileSAM](https://github.com/ChaoningZhang/MobileSAM), [rembg](https://github.com/danielgatis/rembg), [InsightFace](https://github.com/deepinsight/insightface).
+Key tools: [faster-whisper](https://github.com/SYSTRAN/faster-whisper), [whisper.cpp](https://github.com/ggerganov/whisper.cpp), [transcribe.cpp](https://github.com/handy-computer/transcribe.cpp), [Piper](https://github.com/OHF-Voice/piper1-gpl), [PocketTTS](https://github.com/kyutai-labs/pocket-tts), [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR), [Tesseract](https://github.com/tesseract-ocr/tesseract), [MobileSAM](https://github.com/ChaoningZhang/MobileSAM), [rembg](https://github.com/danielgatis/rembg), [InsightFace](https://github.com/deepinsight/insightface).
 
 See [docs/multimodal-cpu.md](docs/multimodal-cpu.md) for the full catalogue — ASR/STT, audio embeddings, VAD/diarization, TTS, text embeddings, document classification, OCR, image classification, segmentation, generation, background removal, and face analysis with baseline CPU latency and throughput figures.
 

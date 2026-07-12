@@ -32,6 +32,7 @@ Speech, audio, text-to-speech, and optical character recognition are among the m
 
 - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) — Reimplementation of OpenAI Whisper using CTranslate2; up to 4× faster than the original with INT8 quantization on CPU and lower memory usage. Benchmarks on Intel Xeon Gold report 2m04s for 13 minutes of audio (small model, INT8, 8 threads) vs 10m31s for openai/whisper. ([Official benchmarks](https://github.com/SYSTRAN/faster-whisper?tab=readme-ov-file#small-model-on-cpu))
 - [Vosk](https://alphacephei.com/vosk/) — Offline speech recognition toolkit supporting 20+ languages with models as small as 50 MB; runs on Raspberry Pi, Android, and x86 servers using a single CPU core per recognizer with streaming API support. ([GitHub](https://github.com/alphacep/vosk-api))
+- [transcribe.cpp](https://github.com/handy-computer/transcribe.cpp) — General-purpose ggml/GGUF speech-to-text inference library covering 16+ ASR model families beyond Whisper — Parakeet, Canary, Canary-Qwen, Moonshine, Qwen3-ASR, Voxtral, Granite Speech, GigaAM, SenseVoice, FunASR Nano, Nemotron, Cohere Transcribe, and MedASR — with 60+ pre-built, WER-validated GGUF variants, streaming and batch modes, a `transcribe-quantize` tool (F16/Q8_0/Q6_K/Q5_K_M/Q4_K_M), and Python / TypeScript / Rust / Swift bindings. CPU is the default path via Justine Tunney's tinyBLAS (`llamafile_sgemm`) kernels, with optional OpenBLAS giving ~10–15× host-decoder speedup; Metal/Vulkan/CUDA are opt-in accelerators. Mozilla-AI sponsored. ([Hugging Face GGUFs](https://huggingface.co/handy-computer))
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp) — Whisper port to ggml (also listed under Runtimes); on CPU with OpenVINO backend it transcribes 13 minutes of audio in 1m45s (small model, FP32) vs 6m58s for openai/whisper, with ARM NEON and AVX SIMD paths and a 3–5× real-time factor on Raspberry Pi 5 for the tiny model.
 
 ### Audio Embeddings & Classification
@@ -52,6 +53,7 @@ Speech, audio, text-to-speech, and optical character recognition are among the m
 
 - [Piper](https://github.com/OHF-Voice/piper1-gpl) — Fast local neural TTS using VITS exported to ONNX; achieves real-time synthesis (RTF 0.15) on a Raspberry Pi 5 with no GPU and roughly 10× real time on desktop CPU. Ships 30+ languages, 100+ voices in quality tiers from x_low (16 kHz, smallest) to high (22 kHz), with a single ONNX file per voice. Default TTS engine in Home Assistant. ([samples](https://rhasspy.github.io/piper-samples/), [Piper TTS Setup Guide 2026](https://localaimaster.com/blog/piper-tts-setup-guide))
 - [Coqui TTS](https://github.com/idiap/coqui-tts) — Open-source TTS with 17+ languages and multi-speaker models including XTTSv2 for voice cloning; provides a CPU-only Docker image (`tts-cpu`) and Python/CLI APIs. XTTSv2 supports streaming inference with <200 ms latency and cross-language voice cloning. ([CPU Docker docs](https://docs.coqui.ai/en/latest/docker_images.html), [XTTS docs](https://docs.coqui.ai/en/stable/models/xtts.html))
+- [PocketTTS](https://github.com/kyutai-labs/pocket-tts) — Lightweight TTS from Kyutai Labs (100M params, MIT); designed from the ground up for CPU — the authors note they "did not observe a speedup" on GPU vs CPU at batch=1. Achieves ~6× real-time on a MacBook Air M4 (2 CPU cores) with ~200 ms to first audio chunk; supports zero-shot voice cloning from a short audio sample and 6 languages (en, fr, de, pt, it, es). [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp) is a single-file C++/ONNX-Runtime port achieving 9.2× real-time (INT8) on a Ryzen 7 3800X with ~30 ms TTFA, an OpenAI-compatible HTTP server, and a WASM build for browser deployment. ([tech report](https://kyutai.org/blog/2026-01-13-pocket-tts), [paper](https://arxiv.org/abs/2509.06926))
 
 ### Text Embeddings
 
@@ -112,6 +114,8 @@ See also: [Vision on CPU (README)](../README.md#vision-on-cpu) · [Model Convers
 - [Official benchmarks](https://github.com/SYSTRAN/faster-whisper?tab=readme-ov-file#small-model-on-cpu)
 - [Vosk](https://alphacephei.com/vosk/)
 - [GitHub](https://github.com/alphacep/vosk-api)
+- [transcribe.cpp](https://github.com/handy-computer/transcribe.cpp)
+- [Hugging Face GGUFs](https://huggingface.co/handy-computer)
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
 - [CLAP](https://github.com/LAION-AI/CLAP)
 - [CLAP-ONNX CPU benchmarks](https://github.com/Lednik7/CLIP-ONNX)
@@ -124,6 +128,10 @@ See also: [Vision on CPU (README)](../README.md#vision-on-cpu) · [Model Convers
 - [Coqui TTS](https://github.com/idiap/coqui-tts)
 - [CPU Docker docs](https://docs.coqui.ai/en/latest/docker_images.html)
 - [XTTS docs](https://docs.coqui.ai/en/stable/models/xtts.html)
+- [PocketTTS](https://github.com/kyutai-labs/pocket-tts)
+- [tech report](https://kyutai.org/blog/2026-01-13-pocket-tts)
+- [paper](https://arxiv.org/abs/2509.06926)
+- [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp)
 - [sentence-transformers with ONNX backend](https://sbert.net/docs/sentence_transformer/usage/efficiency.html)
 - [ONNX benchmark gist](https://gist.github.com/kylediaz/7e8df0a19e2137ef10fc62b5421e4d9a)
 - [BGE-M3 ONNX](https://huggingface.co/Sophia-AI/bge-m3-onnx)
