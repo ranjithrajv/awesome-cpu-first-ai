@@ -1,0 +1,65 @@
+name: 📊 Submit a benchmark result
+description: Contribute a new measured benchmark figure — tokens/sec, latency, cost, or power — for an already-listed runtime or hardware configuration.
+title: "[Benchmark]: <hardware> — <runtime> — <model>"
+labels: ["benchmark", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing real data. Every verified benchmark makes the list more useful and credible. Please follow the [benchmark methodology](https://github.com/ranjithrajv/awesome-cpu-first-ai/blob/master/docs/benchmark-methodology.md) for reproducible runs.
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware
+      description: CPU model, core count, RAM, OS
+      placeholder: "AWS Graviton4 c8g.4xlarge (16 vCPU), 64 GB RAM, Ubuntu 24.04"
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime + version
+      placeholder: "llama.cpp b4321"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model + quantization
+      placeholder: "Llama-3.1-8B Q4_K_M"
+    validations:
+      required: true
+  - type: input
+    id: config
+    attributes:
+      label: Threads & config
+      placeholder: "--threads 16, --threads-batch 16, --numa"
+    validations:
+      required: true
+  - type: input
+    id: metric_pp
+    attributes:
+      label: Prompt processing (pp512)
+      description: tok/s for a 512-token prompt
+      placeholder: "~850 tok/s"
+  - type: input
+    id: metric_tg
+    attributes:
+      label: Token generation (tg128)
+      description: tok/s for 128 output tokens
+      placeholder: "~22 tok/s"
+    validations:
+      required: true
+  - type: input
+    id: ttft
+    attributes:
+      label: Time to first token (TTFT)
+      placeholder: "~180 ms"
+  - type: textarea
+    id: source
+    attributes:
+      label: Reproducible source
+      description: Link to the full output, a gist with the command + result, or the upstream benchmark page. No unverifiable numbers.
+      placeholder: "https://gist.github.com/..."
+    validations:
+      required: true

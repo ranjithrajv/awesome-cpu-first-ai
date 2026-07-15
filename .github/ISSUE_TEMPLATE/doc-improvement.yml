@@ -1,0 +1,40 @@
+name: 📝 Documentation improvement
+description: Suggest a fix, clarification, or addition to the docs — quickstart, troubleshooting, deployment guide, or any companion document.
+title: "[Docs]: <what needs improving>"
+labels: ["documentation", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good docs are what turn a list into a resource. Thanks for helping improve them.
+  - type: input
+    id: file
+    attributes:
+      label: Which file?
+      description: Path to the doc file
+      placeholder: "docs/quickstart.md"
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of improvement?
+      options:
+        - Fix — typo, broken link, or factual error
+        - Clarify — wording is confusing or ambiguous
+        - Expand — missing instructions, example, or configuration
+        - New guide — a topic not yet covered
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the improvement
+      description: What should be changed, added, or removed?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested text (optional)
+      description: Exact wording, code block, or link you'd like to see added.

@@ -1,0 +1,22 @@
+title: ""
+labels: ["general"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Welcome to the Awesome CPU-First AI discussions!
+
+        **Use cases for discussions:**
+        - 🤔 **"Does this tool qualify?"** — Not sure if something belongs on the list? Ask here before opening an issue.
+        - 💡 **Ideas & improvements** — Brainstorm new sections, categories, or features.
+        - 🔄 **CPU-vs-GPU tradeoffs** — Share your experience deploying on CPU in production.
+        - 📢 **Show and tell** — Your CPU inference deployment, benchmark results, or tool you built.
+
+        For specific resource suggestions, link reports, or benchmark disputes, please use the [issue templates](https://github.com/ranjithrajv/awesome-cpu-first-ai/issues/new/choose) instead.
+  - type: textarea
+    id: body
+    attributes:
+      label: Discussion
+      description: What's on your mind?
+    validations:
+      required: true

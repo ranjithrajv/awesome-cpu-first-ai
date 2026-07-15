@@ -1,0 +1,43 @@
+name: ✨ Feature request
+description: Propose a new section, a structural improvement, or a tooling enhancement for this project.
+title: "[Feature]: <what you'd like to see>"
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the list. Feature requests include new sections, better tooling, CI improvements, site enhancements, or anything that makes the list more useful.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: What kind of feature?
+      options:
+        - New section or category in the README
+        - Improvement to existing section
+        - CI / tooling enhancement
+        - GitHub Pages / website improvement
+        - Documentation / guide
+        - Calculator / interactive tool
+        - Community / governance
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the feature
+      description: What should it do, and why does it belong in this project?
+      placeholder: "A section covering <topic> would help because..."
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Why this matters
+      description: How does this serve the CPU-first thesis or help practitioners?
+  - type: textarea
+    id: prior_art
+    attributes:
+      label: Prior art (optional)
+      description: Link to similar features in other awesome lists or projects that do this well.
