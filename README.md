@@ -16,7 +16,7 @@ Most AI practitioners default to GPU for everything because that is where traini
 
 ## What's New
 
-- **2026-07**: [CPU AI Gap Map](#cpu-ai-gap-map) &mdash; a scored assessment of the CPU-first AI tooling landscape across 10 workload categories, grading CPU-nativeness, performance, architecture coverage, and adoption. [Vision on CPU](#vision-on-cpu), [Multimodal CPU Workloads](#multimodal-cpu-workloads), and [Mobile Phone CPUs](#mobile-phone-cpus) sections added &mdash; covering YOLOv8+OpenVINO, CLIP, whisper.cpp, PocketTTS, Apple A19 Pro, Snapdragon 8 Elite, and more.
+- **2026-07**: [Model Selection and Hardware Fit](#model-selection-and-hardware-fit) section added &mdash; hardware-aware model recommenders (llmfit, whichllm, Local AI Master) that read your RAM/CPU/GPU and rank what will actually run. [CPU AI Gap Map](#cpu-ai-gap-map) &mdash; a scored assessment of the CPU-first AI tooling landscape across 10 workload categories, grading CPU-nativeness, performance, architecture coverage, and adoption. [Vision on CPU](#vision-on-cpu), [Multimodal CPU Workloads](#multimodal-cpu-workloads), and [Mobile Phone CPUs](#mobile-phone-cpus) sections added &mdash; covering YOLOv8+OpenVINO, CLIP, whisper.cpp, PocketTTS, Apple A19 Pro, Snapdragon 8 Elite, and more. Added [bitnet.cpp](#runtimes-and-inference-engines) (Microsoft's 1-bit/ternary CPU inference framework) and [ternary / 1-bit model coverage](#quantization-and-model-formats) with Bonsai 27B as a flagship example.
 - **2026-06**: Initial public release with 14 sections covering runtimes, quantization, benchmarks, edge deployment, MoE on CPU, cloud ARM servers, cost economics, and CPU fine-tuning.
 
 See [CHANGELOG](CHANGELOG.md) for the full history.  
@@ -105,6 +105,7 @@ flowchart TD
 - [Mixture-of-Experts on CPU](#mixture-of-experts-on-cpu)
 - [Benchmarks and Evidence](#benchmarks-and-evidence)
 - [CPU AI Gap Map](#cpu-ai-gap-map)
+- [Model Selection and Hardware Fit](#model-selection-and-hardware-fit)
 - [On-Device, Edge, ARM, and SBCs](#on-device-edge-arm-and-sbcs)
 - [Vision on CPU](#vision-on-cpu)
 - [Multimodal CPU Workloads](#multimodal-cpu-workloads)
@@ -126,6 +127,7 @@ flowchart TD
 
 ## Runtimes and Inference Engines
 
+- [bitnet.cpp](https://github.com/microsoft/BitNet) - Microsoft's official inference framework for 1-bit and 1.58-bit ternary LLMs; ternary weights ({−1, 0, +1}) replace multiplications with additions, and its CPU-optimized kernels (x86 and ARM) report 2.4–6.2× speedup with 71.9–82.2% energy reduction on x86 (1.37–5.07× / 55.4–70.0% on ARM) versus llama.cpp, running a 100B b1.58 model on a single CPU at 5–7 tok/s. *(CPU and GPU kernels; NPU support planned.)*
 - [candle](https://github.com/huggingface/candle) - Hugging Face's Rust ML framework; CPU execution is the primary target, with optional CUDA support compiled in separately.
 - [ctransformers](https://github.com/marella/ctransformers) - Python bindings for GGUF models; lets Python callers run quantized models on CPU without touching C++.
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch's on-device inference runtime; designed for mobile and embedded, with CPU kernels for ARM (XNNPACK backend) as the primary deployment target and cross-compilation support for Android, iOS, and Linux. *(Also listed under On-Device, Edge, ARM, and SBCs.)*
@@ -150,6 +152,7 @@ flowchart TD
 | Runtime                     | Native Format     | CPU Arch              | OS                           |
 | --------------------------- | ----------------- | --------------------- | ---------------------------- |
 | llama.cpp                   | GGUF              | x86, ARM, RISC-V      | Linux, macOS, Windows        |
+| bitnet.cpp                  | GGUF (I2_S / TL)  | x86, ARM              | Linux, macOS, Windows        |
 | ONNX Runtime                | ONNX              | x86, ARM, WebAssembly | Linux, macOS, Windows        |
 | OpenVINO                    | OpenVINO IR       | x86                   | Linux, Windows               |
 | ncnn                        | ncnn              | x86, ARM, RISC-V      | Linux, Windows, Android      |
@@ -168,6 +171,7 @@ flowchart TD
 ## Quantization and Model Formats
 
 - [GGUF](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md) - The successor to GGML format; single-file container for quantized weights plus model metadata, designed for memory-mapped loading that avoids RAM copies on CPU.
+- [Ternary / 1-bit models (BitNet b1.58 lineage)](https://arxiv.org/abs/2402.17764) - Weights constrained to {−1, 0, +1} (~1.58 bits) or binary {−1, +1}, turning weight multiplications into additions — a natural fit for CPU, where memory bandwidth rather than FLOPs is the bottleneck. Served via [bitnet.cpp](https://github.com/microsoft/BitNet) or llama.cpp. A recent flagship example is [Bonsai 27B (PrismML, Jul 2026)](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf), a 27B multimodal model (based on Qwen3.6) in 1-bit (~3.9 GB) and 1.58-bit ternary (~5.9 GB) GGUF form that runs on llama.cpp CPU builds under Apache 2.0; PrismML reports ~11 tok/s for the 1-bit variant on an iPhone 17 Pro CPU. *(vendor-reported benchmarks; last verified: 2026-07)*
 - [Intel Neural Compressor](https://github.com/intel/neural-compressor) - Framework-agnostic post-training quantization and pruning toolkit targeting CPU inference; supports ONNX, PyTorch, and TensorFlow backends.
 - [Optimum](https://github.com/huggingface/optimum) - Hugging Face's optimization toolkit; the `optimum[onnxruntime]` and `optimum-intel` paths export and quantize models for CPU inference via ONNX Runtime and OpenVINO respectively.
 - [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ) - GPTQ quantization library. *(Caveat: primarily targets GPU inference; include only when the produced GPTQ checkpoints are subsequently converted to GGUF for CPU use. Do not assume CPU parity.)*
@@ -241,6 +245,16 @@ See the [full CPU AI Gap Map](docs/cpu-ai-gap-map.md) for methodology, per-categ
 
 ---
 
+## Model Selection and Hardware Fit
+
+Tools that read your actual machine — RAM, CPU cores, and any GPU — and rank which models will realistically run and perform well on it, instead of guessing from parameter count. These are the practical first step before pulling a model: they surface CPU-only and unified-memory scenarios rather than assuming VRAM is the only constraint.
+
+- [llmfit](https://github.com/AlexsJones/llmfit) - Terminal tool (MIT) that detects your RAM, CPU, GPU, and backend, then ranks hundreds of models with a single 0–100 Fit score across memory fit, estimated speed, quality, and context length. CPU-aware rather than VRAM-only, launches matched models directly through Ollama or llama.cpp, and includes a simulation mode (`S`) to override RAM/VRAM/core count for upgrade planning.
+- [whichllm](https://github.com/Andyyyy64/whichllm) - CLI (MIT) that auto-detects CPU, RAM, and GPU and ranks the Hugging Face models that actually run on your machine — ordered by real, recency-aware benchmarks rather than parameter count, in one command with no project setup.
+- [Local AI Master — Model Recommender](https://localaimaster.com/tools/model-recommender) - Browser-based recommender: pick a task (chat, coding, reasoning, RAG, vision, audio) and your available RAM/VRAM to get ranked models with quality scores, Q4 memory requirements, tokens/second estimates, and one-line install commands; explicitly covers CPU-only and Apple Silicon unified-memory cases.
+
+---
+
 ## On-Device, Edge, ARM, and SBCs
 
 - [Core ML](https://developer.apple.com/machine-learning/core-ml/) - Apple's on-device inference framework for iOS, macOS, and visionOS; runs models on the CPU (ANE/GPU also supported but optional) with optimized kernels for Apple Silicon M-series chips. Supports model conversion from PyTorch and TensorFlow via [`coremltools`](https://github.com/apple/coremltools).
@@ -293,7 +307,7 @@ Cloud instances where Arm CPUs are the primary inference platform. These are not
 
 ## Mobile Phone CPUs
 
-Modern flagship phones run billion-parameter LLMs on-device — no cloud round-trip, no GPU required. The CPU path is the most portable, vendor-independent option for mobile inference: it works across all devices regardless of NPU vendor lock-in, and for LLMs it often matches or exceeds NPU throughput due to more mature tooling and the memory-bandwidth-bound nature of token generation.
+Modern flagship phones run billion-parameter LLMs on-device — no cloud round-trip, no GPU required. The CPU path is the most portable, vendor-independent option for mobile inference: it works across all devices regardless of NPU vendor lock-in, and for LLMs it often matches or exceeds NPU throughput due to more mature tooling and the memory-bandwidth-bound nature of token generation. Aggressive ternary/1-bit quantization is pushing this further: PrismML reports its 1-bit [Bonsai 27B](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf) (~3.9 GB) running a 27B-class model on an iPhone 17 Pro CPU at ~11 tok/s — see [Ternary / 1-bit models](#quantization-and-model-formats). *(vendor-reported; last verified: 2026-07)*
 
 Key platforms: [Apple A19 Pro](https://www.apple.com/iphone/), [Snapdragon 8 Elite](https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite), [Exynos 2500](https://semiconductor.samsung.com/processor/mobile-processor/exynos-2500/), [Dimensity 9500](https://i.mediatek.com/mediatek-dimensity-ai), [Tensor G5](https://store.google.com/pixel_10).
 

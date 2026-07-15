@@ -4,8 +4,15 @@ All notable additions and changes to awesome-cpu-first-ai.
 
 ---
 
+## 2026-07-15
+
+- **Runtimes**: Added bitnet.cpp — Microsoft's official inference framework for 1-bit / 1.58-bit ternary LLMs, with CPU-optimized x86/ARM kernels (2.4–6.2× speedup, 71.9–82.2% energy reduction on x86 vs llama.cpp; runs a 100B b1.58 model on a single CPU at 5–7 tok/s); added a row to the runtime comparison table
+- **Quantization**: Added "Ternary / 1-bit models (BitNet b1.58 lineage)" entry explaining ternary/binary weights as a CPU-native technique, with Bonsai 27B (PrismML, Jul 2026 — 1-bit ~3.9 GB / 1.58-bit ~5.9 GB GGUF, Apache 2.0, ~11 tok/s on iPhone 17 Pro CPU) as a flagship example. Vendor-reported benchmarks flagged as such
+- **Mobile Phone CPUs**: Noted the Bonsai 27B on-phone-CPU datapoint as evidence of ternary quantization pushing 27B-class models onto phones
+
 ## 2026-07-13
 
+- **Model Selection**: Added new "Model Selection and Hardware Fit" section — tools that read your RAM/CPU/GPU and rank which models will actually run well: llmfit (terminal, 0–100 Fit score, Ollama/llama.cpp launch, simulation mode), whichllm (CLI, benchmark-ranked not param-count), and Local AI Master Model Recommender (browser, CPU-only + Apple Silicon aware)
 - **Runtimes**: Added LiteRT.js — Google AI Edge's in-browser ML runtime (WebAssembly CPU via XNNPACK, WebGPU optional), with a new row in the runtime comparison table
 - **On-Device**: Annotated TensorFlow Lite entry to note LiteRT as its official successor (same `.tflite` format, same XNNPACK CPU backend); expanded XNNPACK entry to cross-link LiteRT/LiteRT.js, ExecuTorch, and ONNX Runtime mobile as consumers
 - **Multimodal**: Added PocketTTS (Kyutai Labs, 100M params, CPU-first TTS with voice cloning, ~6× real-time on M4) and PocketTTS.cpp (single-file C++/ONNX port, 9.2× real-time INT8) to TTS subsection and README key-tools line
