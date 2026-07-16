@@ -4,6 +4,10 @@ All notable additions and changes to awesome-cpu-first-ai.
 
 ---
 
+## 2026-07-16
+
+- **Runtimes**: Added distributed-llama — MIT-licensed tensor-parallel inference that splits a model's compute and RAM across a cluster of ARM/x86 AVX2 CPU nodes (power-of-2 node counts), letting commodity or Raspberry Pi devices jointly run models too large for a single machine; experimental Vulkan GPU support. Added a row to the runtime comparison table
+
 ## 2026-07-15
 
 - **Runtimes**: Added bitnet.cpp — Microsoft's official inference framework for 1-bit / 1.58-bit ternary LLMs, with CPU-optimized x86/ARM kernels (2.4–6.2× speedup, 71.9–82.2% energy reduction on x86 vs llama.cpp; runs a 100B b1.58 model on a single CPU at 5–7 tok/s); added a row to the runtime comparison table
