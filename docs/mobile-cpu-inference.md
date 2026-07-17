@@ -33,6 +33,12 @@ Modern flagship phones run billion-parameter LLMs on-device — no cloud round-t
 - [Qualcomm AI Hub](https://aihub.qualcomm.com/) — Model zoo with pre-optimized INT8/INT4 models for Snapdragon platforms, deployable via LiteRT, ONNX Runtime, and Qualcomm AI Engine Direct SDKs. The Hexagon NPU path delivers 12–25 tok/s on flagship Snapdragon but is Snapdragon-only; CPU fallback is always available for cross-device compatibility. ([QNN SDK](https://developer.qualcomm.com/software/qualcomm-ai-engine-direct-sdk))
 - [Arm SME2 & KleidiAI](https://www.arm.com/technologies/sme2/accelerate-on-device-ai) — Scalable Matrix Extension 2 CPU instructions with the KleidiAI operator library deliver up to 6× faster AI inference on Arm v9.3+ mobile CPUs (iPhone 16/17, vivo X300 series) with no code changes — integrated in XNNPACK, ExecuTorch, ONNX Runtime, llama.cpp, and MNN.
 
+### End-User Apps
+
+- [PocketPal AI](https://github.com/a-ghorbani/pocketpal-ai) — Open-source (MIT, 7.6k★) on-device chat app for iOS and Android built with React Native. Uses llama.cpp via `llama.rn` for GGUF model inference across CPU, GPU (Metal/Adreno), and NPU (Qualcomm Hexagon) with graceful fallback. Features on-device TTS (Kokoro via ONNX Runtime), configurable Pals (personas with custom system prompts), a PalsHub marketplace, Hugging Face model download (including gated models with HF token), tool use (calculator, date/time, HTML rendering), benchmarking with an optional AI Phone Leaderboard, and full offline operation — no account or internet required. ([App Store](https://apps.apple.com/us/app/pocketpal-ai/id6502579498), [Google Play](https://play.google.com/store/apps/details?id=com.pocketpalai))
+- [PocketLFM](https://github.com/Jeevav62/pocketlfm) — Open-source Android app running Liquid AI's LFM2.5 models fully on-device via llama.cpp (GGUF); the first independent app to run LFM2.5 outside Liquid's own tooling. Offline, private, no cloud.
+- [PrivateFoundationModels](https://github.com/john-rocky/PrivateFoundationModels) — Swift package providing a unified API over Apple's FoundationModels, Core ML, and MLX for running on-device LLMs on iOS and macOS; supports CPU, GPU, and Apple Neural Engine backends with the same call site across OS versions.
+
 ---
 
 ## Benchmarks and Deployment Guides

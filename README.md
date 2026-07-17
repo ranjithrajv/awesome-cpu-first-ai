@@ -318,7 +318,9 @@ Modern flagship phones run billion-parameter LLMs on-device — no cloud round-t
 
 Key platforms: [Apple A19 Pro](https://www.apple.com/iphone/), [Snapdragon 8 Elite](https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite), [Exynos 2500](https://semiconductor.samsung.com/processor/mobile-processor/exynos-2500/), [Dimensity 9500](https://i.mediatek.com/mediatek-dimensity-ai), [Tensor G5](https://store.google.com/pixel_10).
 
-See [docs/mobile-cpu-inference.md](docs/mobile-cpu-inference.md) for the full catalogue — chipsets, runtimes (MLC-LLM, Apple Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI), and benchmarks (State of the Union 2026, Beebom, CraftRigs) with tok/s and thermal measurements.
+**On-device apps:** [PocketPal AI](https://github.com/a-ghorbani/pocketpal-ai) — open-source (MIT, 7.6k★) cross-platform chat app running GGUF models on CPU/GPU/NPU with on-device TTS, tool use, and Hugging Face integration; [PocketLFM](https://github.com/Jeevav62/pocketlfm) — Android app for Liquid AI's LFM2.5 models on CPU via llama.cpp; [PrivateFoundationModels](https://github.com/john-rocky/PrivateFoundationModels) — Swift package unifying Apple FoundationModels, Core ML, and MLX for on-device LLMs on iOS/macOS.
+
+See [docs/mobile-cpu-inference.md](docs/mobile-cpu-inference.md) for the full catalogue — chipsets, runtimes (MLC-LLM, Apple Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI), end-user apps, and benchmarks (State of the Union 2026, Beebom, CraftRigs) with tok/s and thermal measurements.
 
 ---
 
