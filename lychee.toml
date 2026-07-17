@@ -25,4 +25,6 @@ exclude = [
   # Wayback Machine / archive links are not in the README but guard against
   # accidental future additions that lychee cannot check reliably.
   "https://web\\.archive\\.org/",
+  # Ubuntu manpages server often times out on CI.
+  "https://manpages\\.ubuntu\\.com/",
 ]

@@ -166,7 +166,7 @@ Plateau means you have hit the memory bandwidth ceiling. Adding cores beyond tha
 **Root cause**: Background processes, kernel tasks, or hypervisor jitter stealing CPU time.
 
 **Fix**:
-- Use [cset shield](https://manpages.ubuntu.com/manpages/focal/man1/cset.1.html) to isolate cores:
+- Use [cset shield](https://github.com/lpechacek/cpuset/wiki/Shield) to isolate cores:
   ```bash
   cset shield --cpu 2-15 --kthread=on
   cset shield --exec -- ./llama-server --threads 14
@@ -291,4 +291,4 @@ kubectl top pod cpu-inference-pod
 
 ## References
 
-- [cset shield](https://manpages.ubuntu.com/manpages/focal/man1/cset.1.html)
+- [cset shield](https://github.com/lpechacek/cpuset/wiki/Shield)
