@@ -81,12 +81,12 @@ The core axis. Only tools scoring ≥ 4 advance a category's maturity stage. Too
 
 Architecture coverage is a matrix, not a single score. Each tool marks which ISAs have hand-optimized or verified kernels (not just "compiles on").
 
-| Symbol | CPU meaning | GPU meaning |
-|---|---|---|---|
-| ✅ | Hand-optimized SIMD kernels (NEON, AVX2, RVV, WASM SIMD) | Production GPU backend (CUDA, Metal, Vulkan) |
-| ✅† | NEON + hand-optimized SVE/SVE2 kernels (Neoverse V1/V2/V3, Cobalt 100/200) | — |
-| ⚠️ | Works but no hand-optimized kernels; relies on generic C/BLAS | Experimental or limited GPU support |
-| ❌ | Not supported or no evidence | No GPU path / CPU-only |
+| Symbol | CPU meaning | GPU meaning | 🧠 NPU meaning |
+|---|---|---|---|---|
+| ✅ | Hand-optimized SIMD kernels (NEON, AVX2, RVV, WASM SIMD) | Production GPU backend (CUDA, Metal, Vulkan) | Production NPU backend (QNN, ANE, Intel NPU, XDNA) |
+| ✅† | NEON + hand-optimized SVE/SVE2 kernels (Neoverse V1/V2/V3, Cobalt 100/200) | — | — |
+| ⚠️ | Works but no hand-optimized kernels; relies on generic C/BLAS | Experimental or limited GPU support | Experimental NPU support or vendor-specific only |
+| ❌ | Not supported or no evidence | No GPU path / CPU-only | No NPU path / CPU-only |
 
 **ISA columns:**
 
@@ -95,6 +95,7 @@ Architecture coverage is a matrix, not a single score. Each tool marks which ISA
 - **RISC-V** — RVV (RISC-V Vector Extension)
 - **WASM** — WebAssembly SIMD, XNNPACK WASM
 - **GPU** — CUDA / Metal / Vulkan / DirectML backend presence and maturity
+- **NPU** — Qualcomm QNN / Apple ANE / Intel NPU / AMD XDNA / MediaTek NeuroPilot backend presence (vendor-locked)
 
 ---
 
@@ -112,6 +113,10 @@ Each category is placed on a maturity stage from 0 (Void) to 5 (Mature). Only to
 | **0** | Void | No usable CPU-native option exists |
 
 The **maturity score** per tool is a weighted blend: `score = (0.4 × CPU_perf + 0.6 × adoption)` for end-user tools, `score = (0.6 × CPU_perf + 0.4 × adoption)` for infrastructure. A tool is "mature" at score ≥ 4.5 — a deliberately demanding bar.
+
+### 🧠 NPU Maturity Note
+
+NPU maturity is assessed separately from CPU maturity. The NPU landscape is fragmented by vendor (Qualcomm Hexagon, Apple ANE, Intel NPU, AMD XDNA, MediaTek NPU, Samsung ENN) with no cross-platform standard — a model compiled for one NPU will not run on another without recompilation through a different SDK. NPU maturity stages in this gap map follow the same 0–5 scale but are **vendor-specific**: an NPU may be Stage 5 on Snapdragon (via QNN) but Stage 0 on everything else. CPU is the only universal deployment target across all vendors.
 
 ---
 
@@ -337,20 +342,20 @@ CPU fine-tuning is possible for small models with PEFT methods but throughput is
 
 ## Summary Dashboard
 
-| # | Category | Stage | Gaps | Mature CPU-native tools | Best CPU-native option | GPU alternative (for contrast) |
-|---|---|---|---|---|---|---|---|
-| 1 | LLM inference (decode) | **5** | — | 7 | llama.cpp | TensorRT-LLM / vLLM |
-| 2 | LLM prompt processing (prefill) | **4** | Architecture | 3 | ONNX Runtime GenAI | TensorRT-LLM |
-| 3 | ASR / STT | **5** | — | 4 | whisper.cpp | NVIDIA Riva / CUDA Whisper |
-| 4 | TTS | **4** | Maturity | 4 | Piper / PocketTTS / qwen3-tts | Tortoise TTS (GPU) |
-| 5 | Embeddings | **5** | — | 3 | sentence-transformers ONNX | — (CPU sufficient) |
-| 6 | Vision — detection & classification | **5** | — | 4 | YOLOv8 + OpenVINO | YOLOv8 + TensorRT |
-| 7 | Vision — segmentation | **3** | Performance, Coverage | 0 | MobileSAM | SAM2 + CUDA |
-| 8 | OCR | **5** | — | 3 | PaddleOCR | — (CPU sufficient) |
-| 9 | Image generation (diffusion) | **2** | Performance, Architecture (non-x86 void) | 0 | OpenVINO Stable Diffusion | SDXL + CUDA / TensorRT |
-| 10 | Fine-tuning (LoRA / QLoRA) | **3** | Performance | 1 | llama.cpp fine-tuning | Unsloth / Axolotl (GPU) |
+| # | Category | CPU Stage | Gaps | Mature CPU tools | Best CPU option | 🧠 NPU Stage | Best NPU option | GPU alt. |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | LLM inference (decode) | **5** | — | 7 | llama.cpp | **3** | QNN (SD8 Elite) | TensorRT |
+| 2 | LLM prompt processing (prefill) | **4** | Architecture | 3 | ONNX Runtime GenAI | **2** | — (NPU prefill weak) | TensorRT |
+| 3 | ASR / STT | **5** | — | 4 | whisper.cpp | **4** | QNN / ANE | Riva |
+| 4 | TTS | **4** | Maturity | 4 | Piper / PocketTTS | **2** | — (NPU TTS rare) | Tortoise |
+| 5 | Embeddings | **5** | — | 3 | sentence-transformers ONNX | **4** | QNN / ANE / Intel NPU | — (CPU suff.) |
+| 6 | Vision — detection & classification | **5** | — | 4 | YOLOv8 + OpenVINO | **5** | QNN / ANE / Intel NPU | TensorRT |
+| 7 | Vision — segmentation | **3** | Performance, Coverage | 0 | MobileSAM | **2** | — (NPU seg. rare) | SAM2 + CUDA |
+| 8 | OCR | **5** | — | 3 | PaddleOCR | **3** | QNN (digit only) | — (CPU suff.) |
+| 9 | Image generation (diffusion) | **2** | Performance, Arch. | 0 | OpenVINO SD | **1** | — (NPU too small) | SDXL + CUDA |
+| 10 | Fine-tuning (LoRA / QLoRA) | **3** | Performance | 1 | llama.cpp fine-tune | **0** | — (NPU train void) | Unsloth |
 
-**At a glance:** 5 of 10 categories are at Stage 5 (mature). 2 categories carry performance gaps (segmentation, diffusion). 1 category has a void for non-x86 architectures (diffusion). Fine-tuning on CPU is viable but slow — the ecosystem needs faster CPU LoRA kernels to close the throughput gap. The `GPU alternative` column provides a contrast reference — categories marked "CPU sufficient" (embeddings, OCR) have no compelling GPU advantage for typical deployment.
+**At a glance:** 5 of 10 categories are at CPU Stage 5 (mature). 2 categories carry CPU performance gaps (segmentation, diffusion). Fine-tuning on CPU is viable but slow. NPU maturity lags CPU across most categories — only vision detection/classification reaches NPU Stage 5 (QNN and ANE production-ready for YOLO/classifiers). LLM decode on NPU is Stage 3 at best: Qualcomm QNN achieves 12–25 tok/s on Snapdragon 8 Elite but the toolchain is Snapdragon-only and trails CPU for generative LLMs. ASR/STT and embeddings reach NPU Stage 4, while diffusion, segmentation, and fine-tuning remain NPU voids. NPU coverage is vendor-specific — consult the `Best NPU option` column with the understanding that it requires that specific vendor's SDK.
 
 ---
 
@@ -364,6 +369,7 @@ CPU fine-tuning is possible for small models with PEFT methods but throughput is
 - **Fine-tuning is borderline.** Unsloth and LoRAX are included in the fine-tuning category despite being GPU-first because their *output* (LoRA adapters) deploys on CPU. Their CPU-nativeness score reflects the training phase, not the inference phase.
 - **CPU-nativeness scoring involves subjective judgment.** The distinction between a 4 ("first-class target") and a 3 ("secondary target") can be ambiguous for tools with mixed GPU/CPU heritage (e.g., ollama, ExecuTorch). Scores were assigned by the maintainer and may differ from a contributor's assessment — open an issue if you disagree with a specific score.
 - **WASM != native CPU performance.** Tools scored in the WASM column (Transformers.js, WebLLM, LiteRT.js) run in a browser sandbox with Wasm SIMD, which typically achieves 40–70% of native CPU throughput. WASM scores are not directly comparable to native x86/ARM scores even within the same category — distinguish "runs in browser on CPU" from "runs on bare-metal CPU" when evaluating deployment options.
+- **🧠 NPU scores are vendor-specific, not cross-platform.** An NPU tool scoring Stage 5 on one vendor's hardware (e.g., QNN on Snapdragon) may be Stage 0 on a different vendor's platform (e.g., Exynos). NPU scores in this map reflect the best-case vendor scenario and should be interpreted as "this is possible on the right hardware" rather than a universal rating. CPU remains the only deployment target that works identically across all vendors.
 
 ---
 

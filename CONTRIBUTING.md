@@ -39,6 +39,7 @@ Follow the existing style exactly:
 ```
 
 - Use an em dash (`—`) between the link and description, with a space on each side.
+- 🧠 prefix entries that are primarily NPU-focused (vendor-specific AI accelerators like QNN, Core ML ANE, Intel NPU). CPU-native entries do not get the prefx — the absence of 🧠 means CPU-first.
 - Keep descriptions to one sentence. If you need a caveat (see AutoGPTQ), add it as a parenthetical `*(Note: ...)*` on the same line.
 - Place the entry in alphabetical order within its section, unless a logical ordering is clearly better.
 - Use `<!-- TODO: ... -->` rather than inventing benchmark numbers or latency figures you cannot verify.

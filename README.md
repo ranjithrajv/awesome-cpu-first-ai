@@ -4,13 +4,17 @@
 
 🌐 **Browse as a website:** <https://ranjithrajv.github.io/awesome-cpu-first-ai/>
 
-A curated list of runtimes, formats, tools, and evidence for running AI inference on CPU — the platform you already have everywhere.
+A curated list of runtimes, formats, tools, and evidence for running AI inference on CPU — the platform you already have everywhere. NPU coverage is also included as a companion on-device alternative where dedicated AI silicon exists (phone NPUs, laptop AI engines), with the caveat that NPUs are vendor-locked while CPU remains the universal fallback.
 
 ---
 
 ## Introduction
 
-Most AI practitioners default to GPU for everything because that is where training lives. But once a model is trained, the inference workload often fits comfortably on a modern CPU: smaller batch sizes, modest throughput requirements, and quantized models that slip inside L3 cache. Independent analysis of the Hugging Face ecosystem finds 40–51% of models are sub-7B and 55–65% are sub-13B parameters — 92% of all downloads go to models under 1B params and the median downloaded model is just 406M params. The vast majority of inference workloads people actually run never needed a GPU. This list is for engineers who want to question that GPU default and reach for the right tool instead of the expensive one. It is aimed at practitioners deploying inference on servers, laptops, edge devices, or serverless functions — anywhere a GPU is absent, costly, or simply overkill. The list is GPU-skeptical, not GPU-hostile; the **When You Actually Do Want a GPU** section below is load-bearing, not decorative.
+Most AI practitioners default to GPU for everything because that is where training lives. But once a model is trained, the inference workload often fits comfortably on a modern CPU: smaller batch sizes, modest throughput requirements, and quantized models that slip inside L3 cache. Independent analysis of the Hugging Face ecosystem finds 40–51% of models are sub-7B and 55–65% are sub-13B parameters — 92% of all downloads go to models under 1B params and the median downloaded model is just 406M params. The vast majority of inference workloads people actually run never needed a GPU.
+
+This list covers CPU inference as the universal deployment target — the platform you already have on every server, laptop, phone, and edge device. It also covers **NPU (Neural Processing Unit) inference** as a companion on-device path: modern phones and laptops ship dedicated AI silicon (Apple Neural Engine, Qualcomm Hexagon, Intel NPU, AMD XDNA) that can run quantized models more efficiently than the CPU. NPU coverage is included with the caveat that NPUs are vendor-locked, have immature LLM tooling, and often underperform CPU on generative workloads due to memory-bandwidth limits — the CPU path remains the most portable and frequently the fastest option for LLM inference on mobile today.
+
+This list is for engineers who want to question that GPU default and reach for the right tool instead of the expensive one. The list is GPU-skeptical, not GPU-hostile; the **When You Actually Do Want a GPU** section below is load-bearing, not decorative. NPU content is marked with a 🧠 icon where applicable.
 
 ---
 
@@ -34,17 +38,18 @@ See [docs/quickstart.md](docs/quickstart.md) for the full walkthroughs with copy
 
 ## When to Opt for CPU vs GPU
 
-| Dimension               | Lean CPU                                                      | Lean GPU                                                   |
-| ----------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- |
-| **Workload type**       | Inference                                                     | Training, fine-tuning                                      |
-| **Model size**          | ≤ 13B params (quantized) — covers ~60% of Hugging Face models | 70B+ params, dense/unquantized — covers < 8% of models     |
-| **Throughput need**     | Low-to-medium (single-digit req/s)                            | High (hundreds of req/s, batched)                          |
-| **Batch size**          | Batch = 1 or small ad-hoc bursts                              | Large, sustained batched serving                           |
-| **Latency SLA**         | Relaxed (100 ms–2 s TTFT tolerable)                           | Tight (< 50 ms TTFT on large models)                       |
-| **Context length**      | Short-to-medium (≤ 8 K tokens)                                | Very long (32 K+ tokens, prefill-heavy)                    |
-| **Deployment target**   | Edge, on-device, serverless, SBC                              | Dedicated inference cluster                                |
-| **Cost / availability** | CPU instances are ubiquitous; no VRAM cap                     | GPU instances cost 5–20× more; VRAM is a hard ceiling      |
-| **Modality**            | Text, embeddings, small audio                                 | Real-time diffusion, video generation, large vision models |
+| Dimension               | Lean CPU                                                      | 🧠 Lean NPU (on-device)                                   | Lean GPU                                                   |
+| ----------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| **Workload type**       | Inference                                                     | Inference (small quantized models)                         | Training, fine-tuning                                      |
+| **Model size**          | ≤ 13B params (quantized) — covers ~60% of HF models           | ≤ 3B params (INT8/INT4) — NPU memory is limited            | 70B+ params, dense/unquantized — covers < 8% of models     |
+| **Throughput need**     | Low-to-medium (single-digit req/s)                            | Low (single-stream, real-time)                             | High (hundreds of req/s, batched)                          |
+| **Batch size**          | Batch = 1 or small ad-hoc bursts                              | Batch = 1 (NPU designed for single-stream)                 | Large, sustained batched serving                           |
+| **Latency SLA**         | Relaxed (100 ms–2 s TTFT tolerable)                           | Low (10–50 ms for small models)                            | Tight (< 50 ms TTFT on large models)                       |
+| **Context length**      | Short-to-medium (≤ 8 K tokens)                                | Short (≤ 2 K tokens on most NPUs)                          | Very long (32 K+ tokens, prefill-heavy)                    |
+| **Deployment target**   | Edge, on-device, serverless, SBC                              | Phone, laptop, IoT (vendor-specific silicon)               | Dedicated inference cluster                                |
+| **Cost / availability** | CPU instances are ubiquitous; no VRAM cap                     | Free (already in device); vendor-locked toolchain          | GPU instances cost 5–20× more; VRAM is a hard ceiling      |
+| **Modality**            | Text, embeddings, small audio                                 | Vision (classification, detection), small ASR              | Real-time diffusion, video generation, large vision models |
+| **Portability**         | Universal — same model runs anywhere                          | Vendor-locked — Qualcomm QNN, Apple ANE, Intel NPU differ  | Cross-vendor (CUDA, ROCm) but hardware-specific            |
 
 ---
 
@@ -70,7 +75,10 @@ flowchart TD
 
     E -- "≤ 8 K tokens" --> F{Deployment\ntarget?}
 
-    F -- "Edge / SBC / mobile\nbrowser / offline" --> CPU_EDGE["✅ CPU\nllama.cpp · ncnn\nExecuTorch · TFLite"]
+    F -- "Edge / SBC / mobile\nbrowser / offline" --> I{NPU available\non device?}
+
+    I -- "Yes (phone / AI PC)" --> NPU["🧠 NPU\nQNN · Core ML ANE\nOpenVINO NPU · ExecuTorch NPU"]
+    I -- "No / vendor lock-in\nconcerns" --> CPU_EDGE["✅ CPU\nllama.cpp · ncnn\nExecuTorch · TFLite"]
 
     F -- "Cloud / on-prem server" --> G{Traffic\npattern?}
 
@@ -82,6 +90,7 @@ flowchart TD
 
     H -- "Busy > 50 % of the time" --> GPU_ECON["⛔ GPU\n$/token favours GPU\nat high sustained load"]
 
+    style NPU fill:#1a237e,color:#fff,stroke:#1a237e
     style CPU_EDGE fill:#1b5e20,color:#fff,stroke:#1b5e20
     style CPU_SLS  fill:#1b5e20,color:#fff,stroke:#1b5e20
     style CPU_IDLE fill:#1b5e20,color:#fff,stroke:#1b5e20
@@ -142,6 +151,10 @@ flowchart TD
 - [llama2.c](https://github.com/karpathy/llama2.c) - Andrej Karpathy's minimal C implementation of LLaMA 2 inference; a pedagogical reference showing that CPU inference requires no ML framework, only a few hundred lines of C.
 - [MNN](https://github.com/alibaba/MNN) - Alibaba's inference engine for mobile and edge; CPU is the primary target, with quantization-aware kernels for ARM NEON and x86 SSE/AVX.
 - [ncnn](https://github.com/Tencent/ncnn) - Mobile and embedded neural network inference framework optimized for ARM and x86 CPUs; no dependencies, builds for Raspberry Pi, Jetson (CPU-only mode), and RISC-V with no OS-level GPU driver requirement.
+- 🧠 [Qualcomm AI Engine Direct (QNN)](https://developer.qualcomm.com/software/qualcomm-ai-engine-direct-sdk) - Qualcomm's NPU SDK for Snapdragon platforms; runs INT8/INT4 models on the Hexagon NPU with CPU fallback. Achieves 12–25 tok/s for 7B INT4 on Snapdragon 8 Elite. Snapdragon-only; CPU fallback for cross-device. ([Qualcomm AI Hub](https://aihub.qualcomm.com/))
+- 🧠 [Apple Core ML (ANE path)](https://developer.apple.com/machine-learning/core-ml/) - Apple's on-device ML framework with explicit Neural Engine deployment path; models compiled via `coremltools` target the ANE for vision and small LLMs. CPU/GPU fallback for unsupported ops. ([Core ML ANE deployment](https://developer.apple.com/videos/play/wwdc2024/10160))
+- 🧠 [Intel OpenVINO NPU plugin](https://docs.openvino.ai/2024/openvino-workflow/running-inference/inference-devices-and-modes/npu-device.html) - OpenVINO's NPU execution provider targeting Intel NPU (Meteor Lake, Arrow Lake, Lunar Lake). Supports INT8/FP16 models compiled for the Intel AI engine; integrated into the standard OpenVINO API with automatic CPU fallback for unsupported operations.
+- 🧠 [AMD Ryzen AI (Vitis AI / XDNA)](https://ryzenai.docs.amd.com/en/latest/) - AMD's NPU inference stack for Ryzen AI PC processors; deploys ONNX models via Vitis AI Execution Provider on the XDNA NPU. Supports INT4/INT8/BF16 with automatic CPU fallback for unsupported operators. ([ONNX Runtime VitisAI EP](https://onnxruntime.ai/docs/execution-providers/Vitis-AI-ExecutionProvider.html))
 - [ONNX Runtime (CPU EP)](https://onnxruntime.ai/docs/execution-providers/) - The CPU Execution Provider in ONNX Runtime; production-grade, supports operator fusion and quantized INT8 models natively on x86 and ARM.
 - [ollama](https://github.com/ollama/ollama) - Local model runner that falls back to full CPU execution when no GPU is present; convenient for development and low-traffic deployments. *(Note: GPU is used when available; included here for its CPU fallback path and single-binary packaging story.)*
 - [OpenVINO](https://github.com/openvinotoolkit/openvino) - Intel's model optimization and inference toolkit; targets x86 CPU as first-class hardware with graph optimization passes specific to Intel µarchs.
@@ -170,6 +183,18 @@ flowchart TD
 | TensorFlow Lite (LiteRT)    | TFLite            | x86, ARM              | Linux, Windows, Android, iOS |
 | Intel Ext. for Transformers | PyTorch, ONNX     | x86                   | Linux, Windows               |
 | whisper.cpp                 | GGUF              | x86, ARM              | Linux, macOS, Windows        |
+
+**🧠 NPU runtimes at a glance**
+
+| Runtime                     | NPU Target           | Format             | OS / Platform                   |
+| --------------------------- | -------------------- | ------------------ | ------------------------------- |
+| Qualcomm QNN                | Hexagon NPU          | QNN C++ / TFLite   | Android (Snapdragon)            |
+| Apple Core ML (ANE)         | Apple Neural Engine  | Core ML (.mlmodel) | iOS, macOS, visionOS            |
+| OpenVINO NPU plugin         | Intel NPU            | OpenVINO IR        | Windows, Linux (Meteor Lake+)   |
+| AMD Vitis AI / XDNA         | AMD XDNA NPU         | ONNX               | Windows (Ryzen AI)              |
+| ExecuTorch (NPU backends)   | Qualcomm / MediaTek  | ExecuTorch         | Android                         |
+| MediaTek NeuroPilot         | MediaTek NPU         | ONNX / TFLite      | Android (Dimensity)             |
+| Samsung ENN                 | Samsung NPU          | ENN                | Android (Exynos)                |
 
 ---
 
@@ -264,7 +289,9 @@ See [docs/cpu-native-models.md](docs/cpu-native-models.md) for a full catalogue 
 
 ## On-Device, Edge, ARM, and SBCs
 
-- [Core ML](https://developer.apple.com/machine-learning/core-ml/) - Apple's on-device inference framework for iOS, macOS, and visionOS; runs models on the CPU (ANE/GPU also supported but optional) with optimized kernels for Apple Silicon M-series chips. Supports model conversion from PyTorch and TensorFlow via [`coremltools`](https://github.com/apple/coremltools).
+- 🧠 [Core ML](https://developer.apple.com/machine-learning/core-ml/) - Apple's on-device inference framework for iOS, macOS, and visionOS; runs models on CPU, GPU, or Apple Neural Engine (ANE). ANE path is optimized for vision and small LLMs via `coremltools` compilation; CPU/GPU fallback for unsupported ops. ([Core ML ANE deployment](https://developer.apple.com/videos/play/wwdc2024/10160))
+- 🧠 [Intel Core Ultra NPU + OpenVINO](https://www.intel.com/content/www/us/en/developer/articles/technical/chatbot-on-your-laptop-phi-2-core-ultra-processors.html) - Intel Meteor Lake/Arrow Lake/Lunar Lake CPUs include a dedicated NPU for on-device AI inference. OpenVINO's NPU plugin deploys INT8/FP16 models compiled for the Intel AI engine via the standard OpenVINO API, with automatic CPU fallback. Phi-2 INT4 runs entirely on the NPU at competitive latencies. ([NPU device docs](https://docs.openvino.ai/2024/openvino-workflow/running-inference/inference-devices-and-modes/npu-device.html))
+- 🧠 [AMD Ryzen AI NPU (XDNA)](https://ryzenai.docs.amd.com/en/latest/) - AMD's Ryzen AI PC processors include an XDNA NPU for on-device AI inference. ONNX models deploy via the Vitis AI Execution Provider with INT4/INT8/BF16 precision and automatic CPU fallback for unsupported operators. ([ONNX Runtime VitisAI EP](https://onnxruntime.ai/docs/execution-providers/Vitis-AI-ExecutionProvider.html))
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch's on-device inference runtime; designed for mobile and embedded, with CPU kernels for ARM (XNNPACK backend) as the primary deployment target.
 - [XNNPACK](https://github.com/google/XNNPACK) - Google's accelerated neural network inference library for ARM and x86; the shared CPU kernel backend behind [TFLite](https://www.tensorflow.org/lite) / [LiteRT](https://github.com/google-ai-edge/LiteRT) (including [LiteRT.js](https://ai.google.dev/edge/litert/web) WebAssembly), [ExecuTorch](https://github.com/pytorch/executorch), and ONNX Runtime's mobile path — hand-tuned for NEON, SSE/AVX, and WASM SIMD.
 - [TensorFlow Lite](https://www.tensorflow.org/lite) - Google's inference runtime for mobile and embedded; the default execution path is CPU (ARM/x86), with delegate APIs for optional hardware accelerators. *(Note: [LiteRT](https://github.com/google-ai-edge/LiteRT) is the official successor to TensorFlow Lite, keeping the same `.tflite` format and XNNPACK CPU backend; the browser target [LiteRT.js](https://ai.google.dev/edge/litert/web) is listed under Runtimes and Inference Engines.)*
@@ -314,9 +341,9 @@ Cloud instances where Arm CPUs are the primary inference platform. These are not
 
 ## Mobile Phone CPUs
 
-Modern flagship phones run billion-parameter LLMs on-device — no cloud round-trip, no GPU required. The CPU path is the most portable, vendor-independent option for mobile inference: it works across all devices regardless of NPU vendor lock-in, and for LLMs it often matches or exceeds NPU throughput due to more mature tooling and the memory-bandwidth-bound nature of token generation. Aggressive ternary/1-bit quantization is pushing this further: PrismML reports its 1-bit [Bonsai 27B](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf) (~3.9 GB) running a 27B-class model on an iPhone 17 Pro CPU at ~11 tok/s — see [Ternary / 1-bit models](#quantization-and-model-formats). *(vendor-reported; last verified: 2026-07)*
+Modern flagship phones run billion-parameter LLMs on-device — no cloud round-trip, no GPU required. The CPU path is the most portable, vendor-independent option for mobile inference: it works across all devices regardless of NPU vendor lock-in, and for LLMs it often matches or exceeds NPU throughput due to more mature tooling and the memory-bandwidth-bound nature of token generation. 🧠 **NPU inference** is available on most flagship SoCs (Apple ANE, Qualcomm Hexagon, MediaTek NPU, Samsung ENN) but is vendor-locked: a model compiled for one NPU SDK (QNN, Core ML ANE, NeuroPilot) will not run on another without recompilation. NPU performance varies significantly — Qualcomm's Hexagon NPU achieves 12–25 tok/s for 7B INT4 on Snapdragon 8 Elite via QNN, while Apple's ANE is primarily optimized for vision and small models. For generative LLMs, CPU frequently matches or beats NPU throughput on current hardware. Aggressive ternary/1-bit quantization is pushing this further: PrismML reports its 1-bit [Bonsai 27B](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf) (~3.9 GB) running a 27B-class model on an iPhone 17 Pro CPU at ~11 tok/s — see [Ternary / 1-bit models](#quantization-and-model-formats). *(vendor-reported; last verified: 2026-07)*
 
-Key platforms: [Apple A19 Pro](https://www.apple.com/iphone/), [Snapdragon 8 Elite](https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite), [Exynos 2500](https://semiconductor.samsung.com/processor/mobile-processor/exynos-2500/), [Dimensity 9500](https://i.mediatek.com/mediatek-dimensity-ai), [Tensor G5](https://store.google.com/pixel_10).
+Key platforms (🧠 = NPU present): 🧠 [Apple A19 Pro](https://www.apple.com/iphone/) (16-core ANE, ~35 TOPS), 🧠 [Snapdragon 8 Elite](https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite) (Hexagon NPU, ~60 TOPS), 🧠 [Exynos 2500](https://semiconductor.samsung.com/processor/mobile-processor/exynos-2500/) (59 TOPS NPU), 🧠 [Dimensity 9500](https://i.mediatek.com/mediatek-dimensity-ai) (NPU 890, ~50 TOPS), 🧠 [Tensor G5](https://store.google.com/pixel_10) (TPU, NPU path experimental).
 
 **On-device apps:** [PocketPal AI](https://github.com/a-ghorbani/pocketpal-ai) — open-source (MIT, 7.6k★) cross-platform chat app running GGUF models on CPU/GPU/NPU with on-device TTS, tool use, and Hugging Face integration; [PocketLFM](https://github.com/Jeevav62/pocketlfm) — Android app for Liquid AI's LFM2.5 models on CPU via llama.cpp; [PrivateFoundationModels](https://github.com/john-rocky/PrivateFoundationModels) — Swift package unifying Apple FoundationModels, Core ML, and MLX for on-device LLMs on iOS/macOS.
 
