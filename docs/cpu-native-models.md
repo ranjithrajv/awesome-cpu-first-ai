@@ -11,6 +11,7 @@ A catalogue of models designed or well-suited for CPU inference — with recomme
 - [Dense Models 8B–13B](#dense-models-8b13b)
 - [MoE Models (high activation sparsity)](#moe-models-high-activation-sparsity)
 - [Ternary / 1-bit Models](#ternary--1-bit-models)
+- [Mobile-Friendly Models](#mobile-friendly-models)
 - [Small Embedding Models](#small-embedding-models)
 - [Vision Models](#vision-models)
 - [ASR / TTS Models](#asr--tts-models)
@@ -87,6 +88,34 @@ Models using {−1, 0, +1} or {−1, +1} weights turn multiply-accumulate into a
 | [Bonsai 27B (PrismML)](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf) | 1-bit / 1.58-bit | ~3.9 GB / ~5.9 GB | llama.cpp, bitnet.cpp | ~11 tok/s (iPhone 17 Pro CPU) | Multimodal; Apache 2.0 |
 | [BitNet b1.58 100B](https://github.com/microsoft/BitNet) | 1.58-bit | ~7 GB | bitnet.cpp | 5–7 tok/s on single CPU | [bitnet.cpp](../README.md#runtimes-and-inference-engines) |
 | [DeepSeek-R1 671B (IQ1_S)](https://huggingface.co/deepseek-ai/DeepSeek-R1) | ~1-bit | ~10 GB | llama.cpp IQ1_S | 2–4 tok/s on 64 GB server | Extreme quantization of MoE |
+
+---
+
+## Mobile-Friendly Models
+
+Models that run well on phone CPUs — balancing size, quantization, and thermal constraints. Phone CPUs have less aggressive cooling than laptops, so sustained throughput is often 40–60% of peak burst. The sweet spot is ≤ 3B params at Q4 (~2 GB), with ternary models pushing much larger effective sizes into phone RAM.
+
+| Model | Params | Quant | RAM Use | Runtime | Mobile Throughput | Notes |
+|---|---|---|---|---|---|---|
+| [Llama 3.2 3B](https://huggingface.co/meta-llama/Llama-3.2-3B) | 3B | Q4_K_M | ~2 GB | MLC-LLM, llama.cpp | 25–38 tok/s (iPhone 15 Pro) | [PocketLLM bake-off](../README.md#talks-papers-and-articles); best quality/size tradeoff |
+| [Llama 3.2 1B](https://huggingface.co/meta-llama/Llama-3.2-1B) | 1B | Q4_K_M | ~0.7 GB | MLC-LLM, ExecuTorch | 50–60+ tok/s (flagship) | Good for classification/rewriting; runs on any phone |
+| [Phi-3.5 Mini](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) | 3.8B | Q4_K_M | ~2.5 GB | MLC-LLM, ONNX Runtime | 12+ tok/s (iPhone 14) | [Microsoft Phi-3 report](../README.md#talks-papers-and-articles); fits 1.8 GB at 4-bit |
+| [Gemma 2 2B](https://huggingface.co/google/gemma-2-2b) | 2B | Q4_K_M | ~1.5 GB | llama.cpp Android | 35–45 tok/s on M-series Mac | Highest tok/s per watt in its class |
+| [Qwen3 4B](https://huggingface.co/Qwen/Qwen3-4B) | 4B | Q4_K_M | ~2.8 GB | MLC-LLM, ExecuTorch | 15–25 tok/s (Snapdragon 8 Elite) | Strong multilingual support; largest comfy on 8 GB phones |
+| [Gemma 3 12B](https://huggingface.co/google/gemma-3-12b-it) | 12B | Q4_K_M | ~8 GB | MLC-LLM, llama.cpp | 3–6 tok/s (A19 Pro) | Fits 12 GB iPhones only; thermal throttling after ~2 min |
+| [TinyLlama 1.1B](https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0) | 1.1B | Q4_K_M | ~0.8 GB | llama.cpp, MLC | 50+ tok/s on any phone | Best for always-on, low-power scenarios |
+| [Bonsai 27B (PrismML)](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf) | 27B | 1-bit / 1.58-bit | ~3.9 GB / ~5.9 GB | llama.cpp, bitnet.cpp | ~11 tok/s (iPhone 17 Pro CPU) | Ternary quantization pushes a 27B model into phone RAM; [vendor-reported](../README.md#quantization-and-model-formats) |
+| [Qwen3 30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B) | 30B total / 3B active | Q4_K_M | ~6 GB | llama.cpp, MLC-LLM | 5–10 tok/s (A19 Pro) | MoE activates only 3B per token; fits 8 GB phones with thermal headroom |
+| [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | 7B | Q4_K_M | ~4.5 GB | llama.cpp Android | 7–12 tok/s (Snapdragon 8 Elite) | Largest dense model that fits 8 GB phones comfortably |
+
+**Key mobile runtimes:** [MLC-LLM](https://github.com/mlc-ai/mlc-llm) (iOS + Android, Metal/OpenCL/Vulkan, 6–12 tok/s for 7B INT4), [llama.cpp Android](https://github.com/ggml-org/llama.cpp/blob/master/docs/android.md) (CPU-only, any GGUF, 9–12 tok/s on SD8 Elite), [ExecuTorch](https://github.com/pytorch/executorch) (PyTorch-native, ARM XNNPACK), [Apple Core AI](https://developer.apple.com/videos/play/wwdc2026/324/) (Swift API, CPU/GPU/ANE, WWDC 2026).
+
+**Mobile-specific caveats:**
+- **Sustained vs burst:** Most phone benchmarks report burst throughput (first 30–60 s). Sustained tok/s after thermal throttling is typically 50–70% of burst. The A19 Pro and Snapdragon 8 Elite Gen 5 have the best sustained performance of current mobile SoCs.
+- **Memory pressure:** iOS uses unified memory (8–12 GB on flagships); Android reserves ~2–3 GB for the OS. A 7B Q4 model (~4.5 GB) leaves < 2 GB headroom on 8 GB phones — expect app kills under load.
+- **NPU fragmentation:** NPU paths (Qualcomm QNN, MediaTek NeuroPilot, Samsung ENN) are vendor-specific, have immature LLM tooling, and often underperform CPU on generative workloads due to memory-bandwidth limits. The CPU path is the most portable and frequently the fastest option for LLM inference on phones today.
+
+See [docs/mobile-cpu-inference.md](mobile-cpu-inference.md) for the full mobile hardware catalogue — chipsets, runtimes, benchmarks, and thermal measurements.
 
 ---
 
