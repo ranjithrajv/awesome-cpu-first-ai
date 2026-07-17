@@ -54,6 +54,7 @@ Speech, audio, text-to-speech, and optical character recognition are among the m
 - [Piper](https://github.com/OHF-Voice/piper1-gpl) — Fast local neural TTS using VITS exported to ONNX; achieves real-time synthesis (RTF 0.15) on a Raspberry Pi 5 with no GPU and roughly 10× real time on desktop CPU. Ships 30+ languages, 100+ voices in quality tiers from x_low (16 kHz, smallest) to high (22 kHz), with a single ONNX file per voice. Default TTS engine in Home Assistant. ([samples](https://rhasspy.github.io/piper-samples/), [Piper TTS Setup Guide 2026](https://localaimaster.com/blog/piper-tts-setup-guide))
 - [Coqui TTS](https://github.com/idiap/coqui-tts) — Open-source TTS with 17+ languages and multi-speaker models including XTTSv2 for voice cloning; provides a CPU-only Docker image (`tts-cpu`) and Python/CLI APIs. XTTSv2 supports streaming inference with <200 ms latency and cross-language voice cloning. ([CPU Docker docs](https://docs.coqui.ai/en/latest/docker_images.html), [XTTS docs](https://docs.coqui.ai/en/stable/models/xtts.html))
 - [PocketTTS](https://github.com/kyutai-labs/pocket-tts) — Lightweight TTS from Kyutai Labs (100M params, MIT); designed from the ground up for CPU — the authors note they "did not observe a speedup" on GPU vs CPU at batch=1. Achieves ~6× real-time on a MacBook Air M4 (2 CPU cores) with ~200 ms to first audio chunk; supports zero-shot voice cloning from a short audio sample and 6 languages (en, fr, de, pt, it, es). [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp) is a single-file C++/ONNX-Runtime port achieving 9.2× real-time (INT8) on a Ryzen 7 3800X with ~30 ms TTFA, an OpenAI-compatible HTTP server, and a WASM build for browser deployment. ([tech report](https://kyutai.org/blog/2026-01-13-pocket-tts), [paper](https://arxiv.org/abs/2509.06926))
+- [qwen3-tts](https://github.com/gabriele-mastrapasqua/qwen3-tts) — Pure C inference engine for Qwen3-TTS text-to-speech models (0.6B and 1.7B). Runs the complete pipeline (BPE tokenization, causal transformer, code predictor, speech decoder) with no Python or PyTorch — just C, BLAS, and memory-mapped safetensors in BF16. Hand-optimized CPU kernels across NEON+SDOT (ARM), AVX2, and AVX-512/VNNI (x86). Achieves sub-realtime on an M1 CPU (RTF 0.52 INT4, 0.69 INT8) and ~0.28 RTF on M4 Metal backend. Supports 10 languages, 9 preset voices, voice cloning, emotion control, and an OpenAI-compatible HTTP server. Optional CUDA and Metal GPU backends are opt-in; CPU is the default. MIT license. ([MODEL.md](https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/main/MODEL.md))
 
 ### Text Embeddings
 
@@ -132,6 +133,8 @@ See also: [Vision on CPU (README)](../README.md#vision-on-cpu) · [Model Convers
 - [tech report](https://kyutai.org/blog/2026-01-13-pocket-tts)
 - [paper](https://arxiv.org/abs/2509.06926)
 - [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp)
+- [qwen3-tts](https://github.com/gabriele-mastrapasqua/qwen3-tts)
+- [MODEL.md](https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/main/MODEL.md)
 - [sentence-transformers with ONNX backend](https://sbert.net/docs/sentence_transformer/usage/efficiency.html)
 - [ONNX benchmark gist](https://gist.github.com/kylediaz/7e8df0a19e2137ef10fc62b5421e4d9a)
 - [BGE-M3 ONNX](https://huggingface.co/Sophia-AI/bge-m3-onnx)

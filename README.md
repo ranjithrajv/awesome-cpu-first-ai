@@ -106,6 +106,7 @@ flowchart TD
 - [Benchmarks and Evidence](#benchmarks-and-evidence)
 - [CPU AI Gap Map](#cpu-ai-gap-map)
 - [Model Selection and Hardware Fit](#model-selection-and-hardware-fit)
+- [CPU-Native Model Catalog](#cpu-native-model-catalog)
 - [On-Device, Edge, ARM, and SBCs](#on-device-edge-arm-and-sbcs)
 - [Vision on CPU](#vision-on-cpu)
 - [Multimodal CPU Workloads](#multimodal-cpu-workloads)
@@ -131,6 +132,7 @@ flowchart TD
 - [candle](https://github.com/huggingface/candle) - Hugging Face's Rust ML framework; CPU execution is the primary target, with optional CUDA support compiled in separately.
 - [ctransformers](https://github.com/marella/ctransformers) - Python bindings for GGUF models; lets Python callers run quantized models on CPU without touching C++.
 - [distributed-llama](https://github.com/b4rtaz/distributed-llama) - Tensor-parallel inference that splits a model's compute and RAM across a cluster of ARM/x86 AVX2 CPU nodes (power-of-2 node counts), letting commodity or Raspberry Pi devices jointly run models too large for a single machine; MIT-licensed and actively maintained, with experimental Vulkan GPU support. <!-- TODO: cite CPU throughput benchmark -->
+- [eLLM](https://github.com/lucienhuangfu/eLLM) - Rust-based LLM inference framework built specifically for CPU servers (Intel Xeon 4th Gen+ with AMX). Uses a static computation graph with dimension-first tensor layout and head-by-head attention to reduce runtime scheduling overhead; targets long-context prefill-heavy workloads where the CPU's larger memory capacity lets it compete with multi-GPU systems. Reports ~1.6× decode speedup vs SGLang CPU baseline (random-parameter benchmarks; alpha). Apache 2.0. <!-- TODO: verify with real model weights once available -->
 - [ExecuTorch](https://github.com/pytorch/executorch) - PyTorch's on-device inference runtime; designed for mobile and embedded, with CPU kernels for ARM (XNNPACK backend) as the primary deployment target and cross-compilation support for Android, iOS, and Linux. *(Also listed under On-Device, Edge, ARM, and SBCs.)*
 - [ggml](https://github.com/ggerganov/ggml) - The tensor library underlying llama.cpp; hand-optimized CPU kernels using SIMD intrinsics for AVX2, AVX-512, NEON, and SVE.
 - [Intel Extension for Transformers](https://github.com/intel/intel-extension-for-transformers) - Drop-in optimization layer for Hugging Face Transformers that applies CPU-specific INT4/INT8 kernels, AMX acceleration, and weight-only quantization.
@@ -160,6 +162,7 @@ flowchart TD
 | MNN                         | MNN               | x86, ARM              | Linux, Windows, Android, iOS |
 | candle                      | GGUF, safetensors | x86, ARM              | Linux, macOS, Windows        |
 | distributed-llama           | Q40 / Q80         | x86, ARM              | Linux, macOS, Windows        |
+| eLLM                        | safetensors       | x86 (AMX required)   | Linux                        |
 | Transformers.js             | ONNX              | WebAssembly           | Browser                      |
 | WebLLM                      | MLC               | WebAssembly, WebGPU   | Browser                      |
 | LiteRT.js                   | TFLite            | WebAssembly, WebGPU   | Browser                      |
@@ -254,6 +257,8 @@ Tools that read your actual machine — RAM, CPU cores, and any GPU — and rank
 - [llmfit](https://github.com/AlexsJones/llmfit) - Terminal tool (MIT) that detects your RAM, CPU, GPU, and backend, then ranks hundreds of models with a single 0–100 Fit score across memory fit, estimated speed, quality, and context length. CPU-aware rather than VRAM-only, launches matched models directly through Ollama or llama.cpp, and includes a simulation mode (`S`) to override RAM/VRAM/core count for upgrade planning.
 - [whichllm](https://github.com/Andyyyy64/whichllm) - CLI (MIT) that auto-detects CPU, RAM, and GPU and ranks the Hugging Face models that actually run on your machine — ordered by real, recency-aware benchmarks rather than parameter count, in one command with no project setup.
 - [Local AI Master — Model Recommender](https://localaimaster.com/tools/model-recommender) - Browser-based recommender: pick a task (chat, coding, reasoning, RAG, vision, audio) and your available RAM/VRAM to get ranked models with quality scores, Q4 memory requirements, tokens/second estimates, and one-line install commands; explicitly covers CPU-only and Apple Silicon unified-memory cases.
+
+See [docs/cpu-native-models.md](docs/cpu-native-models.md) for a full catalogue of models well-suited to CPU inference — including dense ≤ 13B, MoE with high sparsity, ternary/1-bit, embedding, vision, and ASR/TTS models with recommended runtimes and measured performance ranges.
 
 ---
 
@@ -400,6 +405,7 @@ Companion documents for planning, converting, deploying, benchmarking, and troub
 - [Green Inference Cheat Sheet](docs/green-inference-cheat-sheet.md) - One-page quick reference of power, water, and carbon comparison tables for sustainability reporting.
 - [Multimodal CPU Workloads](docs/multimodal-cpu.md) - ASR/STT, TTS, text embeddings, document classification, OCR, image classification/segmentation/generation, background removal, and face analysis on CPU — with baseline latency and throughput figures.
 - [Mobile Phone CPU Inference](docs/mobile-cpu-inference.md) - Apple A19 Pro, Snapdragon 8 Elite, Exynos 2500, Dimensity 9500, Tensor G5; runtimes (MLC-LLM, Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI); benchmarks and deployment guides with tok/s and thermal data.
+- [CPU-Native Model Catalog](docs/cpu-native-models.md) - Catalogue of models well-suited for CPU inference by architecture, size, and quantization, with recommended runtimes and measured performance ranges.
 - [Model Conversion Guide](docs/model-conversion-guide.md) - Practical walkthroughs for converting Hugging Face checkpoints to GGUF (llama.cpp quantize) and PyTorch to ONNX (via Optimum), including INT8 post-training quantization.
 - [Serverless CPU Patterns](docs/serverless-patterns.md) - Recipes for deploying CPU inference on AWS Lambda (arm64), Fly.io, and Modal, with cost-per-invocation worked examples.
 - [Benchmark Methodology](docs/benchmark-methodology.md) - Standardized metrics (pp512, tg128, TTFT, TPOT), reporting template, and run procedure for producing comparable CPU inference benchmarks.

@@ -149,6 +149,7 @@ The strongest category in CPU-first AI. Multiple mature, competitive CPU-native 
 | [OpenVINO](https://github.com/openvinotoolkit/openvino) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 4 (10.5K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 | [candle](https://github.com/huggingface/candle) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 4 (20.6K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 | [ExecuTorch](https://github.com/pytorch/executorch) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ⚠️ | 3 (4.8K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [eLLM](https://github.com/lucienhuangfu/eLLM) | 5 | 3 | ✅ (AMX) | ❌ | ❌ | ❌ | ❌ | 2 (428★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 | [ncnn](https://github.com/Tencent/ncnn) | 4 | 4 | ✅ | ✅ | ✅ | ❌ | ✅ | 4 (23.5K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 | [MNN](https://github.com/alibaba/MNN) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 4 (15.6K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 | [LiteRT.js](https://ai.google.dev/edge/litert/web) | 3 | 3 | ❌ | ❌ | ❌ | ✅ | ❌ | 3 (3K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
@@ -157,7 +158,7 @@ The strongest category in CPU-first AI. Multiple mature, competitive CPU-native 
 | [ctransformers](https://github.com/marella/ctransformers) | 4 | 3 | ✅ | ✅ | ⚠️ | ❌ | ❌ | 3 (1.9K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 | [llamafile](https://github.com/mozilla-ai/llamafile) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 4 (25.4K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 
-**Gap analysis:** No gaps. The ecosystem is mature with ≥ 4 tools scoring CPU-native ≥ 4, strong cross-arch coverage (x86 + ARM + RISC-V via llama.cpp/ncnn), and the WASM path covered by LiteRT.js/WebLLM. The main limitation is prefill throughput (see next category).
+**Gap analysis:** No gaps. The ecosystem is mature with ≥ 8 tools scoring CPU-native ≥ 4, strong cross-arch coverage (x86 + ARM + RISC-V via llama.cpp/ncnn), and the WASM path covered by LiteRT.js/WebLLM. The main limitation is prefill throughput (see next category). eLLM is a promising Rust-based CPU-native addition (AMX-optimized, alpha quality) but limited to Intel Xeon 4th Gen+ and not yet validated with real model weights.
 
 ---
 
@@ -173,6 +174,7 @@ Prefill is more compute-bound than decode (large matrix multiply), making it the
 | [llama.cpp](https://github.com/ggml-org/llama.cpp) | 5 | 4 | ✅ | ✅† | ✅ | ⚠️ | ✅ | 5 (120K★) | [Benchmarks](../README.md#benchmarks-and-evidence) |
 | [ONNX Runtime GenAI](https://onnxruntime.ai) | 4 | 5 | ✅ | ✅† | ⚠️ | ❌ | ✅ | 5 (2.8M dl/day) | [CPU benchmark](../README.md#benchmarks-and-evidence): 137.6 tok/s Phi-3 |
 | [OpenVINO](https://github.com/openvinotoolkit/openvino) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 4 (10.5K★) | [Model Hub benchmarks](../README.md#benchmarks-and-evidence) |
+| [eLLM](https://github.com/lucienhuangfu/eLLM) | 5 | 3 | ✅ (AMX) | ❌ | ❌ | ❌ | ❌ | 2 (428★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 
 **Gap analysis:** OnNX Runtime GenAI outperforms llama.cpp on prefill (137.6 vs 109.5 tok/s for Phi-3), showing optimized prefill kernels matter. OpenVINO is strong on Intel x86 but ARM support is limited. RISC-V prefill kernels exist only in llama.cpp (via the [V-Seek paper](../README.md#on-device-edge-arm-and-sbcs)). The gap is in cross-arch prefill-specific optimizations — most runtimes optimize decode more aggressively than prefill.
 
@@ -212,11 +214,12 @@ TTS has reached real-time CPU synthesis, but the ecosystem is less mature than A
 | [PocketTTS](https://github.com/kyutai-labs/pocket-tts) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | ❌ | 4 (7.4K★) | [TTS](#tts): ~6× real-time on M4, CPU-only by design |
 | [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp) | 5 | 5 | ✅ | ⚠️ | ❌ | ✅ | ❌ | 2 (43★) | [TTS](#tts): 9.2× real-time INT8, OpenAI-compatible API |
 | [Coqui TTS](https://github.com/idiap/coqui-tts) | 4 | 4 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 3 (2.3K★, 5.4K dl/day) | [TTS](#tts): XTTSv2 voice cloning, CPU Docker |
+| [qwen3-tts](https://github.com/gabriele-mastrapasqua/qwen3-tts) | 5 | 4 | ✅ | ✅ | ❌ | ❌ | ⚠️ | 2 (64★) | [TTS](#tts): Pure C, 0.52 RTF INT4 on M1 CPU |
 
-**Gap analysis:** Maturity gap — Piper is production-proven (Home Assistant default) but uses older VITS architecture; PocketTTS has superior quality and is CPU-first by design (the authors explicitly note no GPU speedup at batch=1), but it is new and the ecosystem of integrations is still forming. Coqui TTS maintenance is uncertain (idiap fork, not the original Coqui). The RISC-V WASM path is thin — PocketTTS.cpp has a WASM build but no ARM-optimized kernels yet.
+**Gap analysis:** Maturity gap — Piper is production-proven (Home Assistant default) but uses older VITS architecture; PocketTTS has superior quality and is CPU-first by design (the authors explicitly note no GPU speedup at batch=1), but it is new and the ecosystem of integrations is still forming. Coqui TTS maintenance is uncertain (idiap fork, not the original Coqui). qwen3-tts adds a pure C CPU-native option with 10-language support and hand-tuned NEON/AVX2 kernels — its RTF 0.52 INT4 on M1 CPU is competitive with PocketTTS, though it is newer (64★). The RISC-V WASM path is thin — PocketTTS.cpp has a WASM build but no ARM-optimized kernels yet.
 
-> **Severity:** Low — production needs are met by Piper; PocketTTS quality gap is closing rapidly.  
-> **Recommended action:** Build PocketTTS integration packages (Home Assistant add-on, Ollama plugin, OpenAI-compatible API server). Contribute ARM NEON kernels to PocketTTS.cpp.
+> **Severity:** Low — production needs are met by Piper; the maturity gap is narrowing with multiple CPU-native options (PocketTTS, qwen3-tts).  
+> **Recommended action:** Build integration packages (Home Assistant add-on, Ollama plugin, OpenAI-compatible API server). Validate qwen3-tts benchmark claims with independent hardware testing.
 
 ---
 
@@ -339,7 +342,7 @@ CPU fine-tuning is possible for small models with PEFT methods but throughput is
 | 1 | LLM inference (decode) | **5** | — | 7 | llama.cpp | TensorRT-LLM / vLLM |
 | 2 | LLM prompt processing (prefill) | **4** | Architecture | 3 | ONNX Runtime GenAI | TensorRT-LLM |
 | 3 | ASR / STT | **5** | — | 4 | whisper.cpp | NVIDIA Riva / CUDA Whisper |
-| 4 | TTS | **4** | Maturity | 3 | Piper / PocketTTS | Tortoise TTS (GPU) |
+| 4 | TTS | **4** | Maturity | 4 | Piper / PocketTTS / qwen3-tts | Tortoise TTS (GPU) |
 | 5 | Embeddings | **5** | — | 3 | sentence-transformers ONNX | — (CPU sufficient) |
 | 6 | Vision — detection & classification | **5** | — | 4 | YOLOv8 + OpenVINO | YOLOv8 + TensorRT |
 | 7 | Vision — segmentation | **3** | Performance, Coverage | 0 | MobileSAM | SAM2 + CUDA |

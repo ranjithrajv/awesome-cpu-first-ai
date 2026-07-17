@@ -1,0 +1,150 @@
+# CPU-Native Model Catalog
+
+A catalogue of models designed or well-suited for CPU inference — with recommended runtimes, quantization formats, and measured performance ranges. This is not a list of every model that *can* run on CPU (most can, given enough quantization), but a guide to models whose architecture or size makes them *good* on CPU without GPU compromise.
+
+---
+
+## Contents
+
+- [Why Some Models Fit CPU Better](#why-some-models-fit-cpu-better)
+- [Dense Models ≤ 8B](#dense-models--8b)
+- [Dense Models 8B–13B](#dense-models-8b13b)
+- [MoE Models (high activation sparsity)](#moe-models-high-activation-sparsity)
+- [Ternary / 1-bit Models](#ternary--1-bit-models)
+- [Small Embedding Models](#small-embedding-models)
+- [Vision Models](#vision-models)
+- [ASR / TTS Models](#asr--tts-models)
+- [Model Selection Tools](#model-selection-tools)
+- [See also](#see-also)
+
+---
+
+## Why Some Models Fit CPU Better
+
+CPU inference is **memory-bandwidth-bound** for token generation, and **compute-bound** for prefill. A model is CPU-friendly when:
+
+- **Total size after quantization fits in RAM** — Q4 quantized 7B uses ~4.5 GB; Q4 13B uses ~8 GB. Systems with 16 GB RAM handle either comfortably.
+- **Activation sparsity is high** — MoE models that route each token to a subset of experts (DeepSeek-R1, Qwen3 MoE) activate only 5–15% of total parameters.
+- **KV cache grows predictably** — Recurrent architectures (RWKV, Mamba) use O(1) memory per token; transformers with quantized KV (IQ4, TurboQuant) keep cache fits small.
+- **Embedding or encoder-only** — Single-pass models with no autoregressive decode (BERT, CLIP, Whisper encoder) are naturally CPU-friendly.
+
+---
+
+## Dense Models ≤ 8B
+
+The sweet spot for CPU inference. Q4 quantized these fit in 2–5 GB RAM and run on any modern laptop or server CPU.
+
+| Model | Params | Q4 Size | Recommended Runtime | Reported CPU Throughput | Notes |
+|---|---|---|---|---|---|
+| [Llama 3.2 3B](https://huggingface.co/meta-llama/Llama-3.2-3B) | 3B | ~2 GB | llama.cpp Q4_K_M | 25–38 tok/s (iPhone 15 Pro) | [PocketLLM bake-off](../README.md#talks-papers-and-articles) |
+| [Phi-3.5 Mini](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) | 3.8B | ~2.5 GB | ONNX Runtime, llama.cpp | 137.6 tok/s (ONNX on Xeon) | [ISE benchmark](../README.md#benchmarks-and-evidence) |
+| [Qwen3 4B](https://huggingface.co/Qwen/Qwen3-4B) | 4B | ~2.8 GB | llama.cpp Q4_K_M, eLLM | 20–35 tok/s on desktop CPU | Strong multilingual support |
+| [Gemma 2 2B](https://huggingface.co/google/gemma-2-2b) | 2B | ~1.5 GB | llama.cpp Q4_K_M | 35–45 tok/s on M-series Mac | Highest tok/s in its class |
+| [TinyLlama 1.1B](https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0) | 1.1B | ~0.8 GB | llama.cpp, MLC | 50+ tok/s on any CPU | Minimum viable model for testing |
+| [Llama 3.2 1B](https://huggingface.co/meta-llama/Llama-3.2-1B) | 1B | ~0.7 GB | llama.cpp, ONNX Runtime | 60+ tok/s on modern CPU | Good for classification/rewriting |
+| [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | 7B | ~4.5 GB | llama.cpp Q4_K_M | 18–22 tok/s on Graviton4 | [Arm walkthrough](../README.md#mixture-of-experts-on-cpu) |
+| [Qwen3-Coder-8B](https://qwenlm.github.io/blog/qwen3-coder/) | 8B | ~5 GB | llama.cpp, eLLM | 15–25 tok/s on desktop CPU | Code generation, uses L3 cache well |
+
+---
+
+## Dense Models 8B–13B
+
+Pushes the boundary of comfortable CPU inference. Requires ≥ 16 GB RAM for Q4. Viable for low-throughput serving and batch workloads.
+
+| Model | Params | Q4 Size | Recommended Runtime | Notes |
+|---|---|---|---|---|
+| [Llama 3.1 8B](https://huggingface.co/meta-llama/Llama-3.1-8B) | 8B | ~5.5 GB | llama.cpp, ONNX Runtime | 450 tok/s server, 1,196 tok/s offline (Xeon 6) per MLPerf |
+| [Qwen3 8B](https://huggingface.co/Qwen/Qwen3-8B) | 8B | ~5.5 GB | llama.cpp, eLLM | Good multilingual coverage |
+| [Mistral 7B v0.3](https://huggingface.co/mistralai/Mistral-7B-v0.3) | 7B | ~4.5 GB | llama.cpp, candle | Strong English benchmark performance |
+| [DeepSeek-R1-Distill-Llama-8B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B) | 8B | ~5.5 GB | OpenVINO, llama.cpp | 155.4 tok/s on Xeon via OpenVINO |
+| [Gemma 3 12B](https://huggingface.co/google/gemma-3-12b-it) | 12B | ~8 GB | llama.cpp Q4_K_M | Fits in 16 GB RAM; ~8–12 tok/s on desktop |
+| [Qwen3 14B](https://huggingface.co/Qwen/Qwen3-14B) | 14B | ~9 GB | llama.cpp Q4_K_M | Requires 16 GB+; ~6–10 tok/s |
+
+---
+
+## MoE Models (high activation sparsity)
+
+MoE architectures activate only a fraction of parameters per token, making their *effective* size much smaller than total params. These can run on CPU when aggressively quantized and the working set fits in RAM.
+
+| Model | Total | Active | Q4 RAM Use | Runtime | Notes |
+|---|---|---|---|---|---|
+| [Qwen3 30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B) | 30B | 3B | ~6 GB | llama.cpp, eLLM | ~3B active per token; excellent CPU fit |
+| [Gemma 4 26B-A4B](https://ai.google.dev/gemma) | 26B | 4B | ~5.5 GB | llama.cpp, fucina | 7 tok/s on 2013 Ivy Bridge Xeon |
+| [Inkling 975B-A41B](https://huggingface.co/thinkingmachines/Inkling) | 975B | 41B | ~8 GB (IQ1_S) | llama.cpp | Multimodal; fits with extreme quantization |
+| [DeepSeek-R1 671B](https://huggingface.co/deepseek-ai/DeepSeek-R1) | 671B | 37B | ~10 GB (IQ1_S) | llama.cpp | [MoE on CPU](../README.md#mixture-of-experts-on-cpu) |
+| [GLM-5.2](https://github.com/THUDM/GLM) | 744B | 44B | ~16 GB (INT4) | llama.cpp, fucina | Disk-streamed experts |
+| [MiniMax M2.5](https://github.com/MiniMax-AI/MiniMax-M2.5) | 456B | 46B | varies | eLLM | Prefill-heavy use cases |
+| [DeepSeek V4 Flash 284B-A13B](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash) | 284B | 13B | ~8 GB (Q4_K) | fucina | Native MTP speculative decoding |
+
+---
+
+## Ternary / 1-bit Models
+
+Models using {−1, 0, +1} or {−1, +1} weights turn multiply-accumulate into addition, dramatically reducing memory bandwidth requirements — the dominant bottleneck on CPU.
+
+| Model | Bits | Total Size | Runtime | Reported Throughput | Notes |
+|---|---|---|---|---|---|
+| [Bonsai 27B (PrismML)](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf) | 1-bit / 1.58-bit | ~3.9 GB / ~5.9 GB | llama.cpp, bitnet.cpp | ~11 tok/s (iPhone 17 Pro CPU) | Multimodal; Apache 2.0 |
+| [BitNet b1.58 100B](https://github.com/microsoft/BitNet) | 1.58-bit | ~7 GB | bitnet.cpp | 5–7 tok/s on single CPU | [bitnet.cpp](../README.md#runtimes-and-inference-engines) |
+| [DeepSeek-R1 671B (IQ1_S)](https://huggingface.co/deepseek-ai/DeepSeek-R1) | ~1-bit | ~10 GB | llama.cpp IQ1_S | 2–4 tok/s on 64 GB server | Extreme quantization of MoE |
+
+---
+
+## Small Embedding Models
+
+Embedding models are computationally light — a single forward pass producing a small vector. CPU is the natural deployment target.
+
+| Model | Size | Runtime | Latency | Notes |
+|---|---|---|---|---|
+| [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 22M | ONNX Runtime CPU | single-digit ms on any CPU | Most widely deployed embedding model |
+| [BGE-M3](https://huggingface.co/Sophia-AI/bge-m3-onnx) | 326M | ONNX Runtime CPU | ~15 ms on modern CPU | Multi-lingual, supports dense + sparse |
+| [BGE-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) | 24M | ONNX Runtime CPU | ~5 ms | Fastest viable retrieval embedding |
+| [GTE-small](https://www.alibabacloud.com/blog/the-all-need-for-gte-embedding-model_6020712) | 22M | ONNX Runtime CPU | ~5 ms | Good quality/speed tradeoff |
+
+---
+
+## Vision Models
+
+Detection and classification models achieve high throughput on CPU with modern runtimes.
+
+| Model | Runtime | CPU Throughput | Notes |
+|---|---|---|---|
+| [YOLOv8/v9/v10/v11](https://docs.ultralytics.com/integrations/openvino/) | OpenVINO | 360+ fps (large), ~5000 fps (small) on Xeon | GPUs unnecessary for most video pipelines |
+| [EfficientNet ONNX](https://github.com/zhangchaosd/ModelInferBench) | ONNX Runtime CPU | 12 ms/image (14× over PyTorch CPU) | INT8 quantization support |
+| [MobileNetV3 TFLite](https://www.tensorflow.org/lite) | TFLite XNNPACK | 23 ms INT8 on Pi 4 | Standard for edge vision |
+| [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) | ONNX Runtime CPU | ~3 s/image | Acceptable for batch segmentation |
+
+---
+
+## ASR / TTS Models
+
+Speech workloads are CPU-friendly — most achieve real-time or faster on commodity hardware.
+
+| Model | Runtime | CPU Performance | Notes |
+|---|---|---|---|
+| [Whisper base/small](https://github.com/ggerganov/whisper.cpp) | whisper.cpp | 3–5× real-time on Pi 5 | ARM NEON + x86 AVX paths |
+| [Whisper large-v3](https://github.com/ggerganov/whisper.cpp) | whisper.cpp | ~1× real-time on M-series Mac | Best accuracy, still CPU-viable |
+| [Piper](https://github.com/OHF-Voice/piper1-gpl) | Piper ONNX | RTF 0.15 on Pi 5 | Home Assistant default TTS |
+| [PocketTTS](https://github.com/kyutai-labs/pocket-tts) | PocketTTS | ~6× real-time on M4 CPU | CPU-only by design |
+| [Qwen3-TTS 0.6B/1.7B](https://github.com/gabriele-mastrapasqua/qwen3-tts) | qwen3-tts | RTF 0.52 INT4 on M1 CPU | Pure C engine, 10 languages |
+| [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) | PaddleOCR | ~57 ms detection, ~47 ms recognition | CPU-optimized with MKL-DNN |
+
+---
+
+## Model Selection Tools
+
+Tools that help you choose a model for your specific hardware:
+
+- **[llmfit](https://github.com/AlexsJones/llmfit)** — Detects your RAM/CPU/GPU and ranks hundreds of models by a Fit score (0–100) across memory fit, speed, quality, and context length.
+- **[whichllm](https://github.com/Andyyyy64/whichllm)** — CLI that auto-detects hardware and ranks models by recency-aware benchmarks.
+- **[Local AI Master Model Recommender](https://localaimaster.com/tools/model-recommender)** — Browser-based recommender for RAM/VRAM budget, with Q4 memory requirements and tok/s estimates.
+
+---
+
+## See also
+
+- [Runtimes and Inference Engines](../README.md#runtimes-and-inference-engines) — The runtimes that serve these models
+- [Quantization and Model Formats](../README.md#quantization-and-model-formats) — GGUF, IQ, ternary formats
+- [Benchmarks and Evidence](../README.md#benchmarks-and-evidence) — Measured throughput across hardware
+- [Hardware Reference](hardware-reference.md) — CPU performance by device tier
+- [Model Conversion Guide](model-conversion-guide.md) — Converting HF checkpoints to GGUF/ONNX
