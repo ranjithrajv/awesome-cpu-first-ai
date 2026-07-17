@@ -81,18 +81,20 @@ The core axis. Only tools scoring ≥ 4 advance a category's maturity stage. Too
 
 Architecture coverage is a matrix, not a single score. Each tool marks which ISAs have hand-optimized or verified kernels (not just "compiles on").
 
-| Symbol | Meaning |
-|---|---|
-| ✅ | Hand-optimized kernels (SIMD intrinsics or verified code paths) |
-| ⚠️ | Works but no hand-optimized kernels; relies on generic C/BLAS |
-| ❌ | Not supported or no evidence |
+| Symbol | CPU meaning | GPU meaning |
+|---|---|---|---|
+| ✅ | Hand-optimized SIMD kernels (NEON, AVX2, RVV, WASM SIMD) | Production GPU backend (CUDA, Metal, Vulkan) |
+| ✅† | NEON + hand-optimized SVE/SVE2 kernels (Neoverse V1/V2/V3, Cobalt 100/200) | — |
+| ⚠️ | Works but no hand-optimized kernels; relies on generic C/BLAS | Experimental or limited GPU support |
+| ❌ | Not supported or no evidence | No GPU path / CPU-only |
 
 **ISA columns:**
 
 - **x86** — AVX2, AVX-512, AMX (Intel Xeon Sapphire Rapids+)
-- **ARM** — NEON, SVE, SVE2 (Neoverse V1/V2/V3, Cortex-A76+)
+- **ARM** — NEON (baseline); ✅† indicates additional hand-optimized SVE/SVE2 kernels (Neoverse V1/V2/V3, Cobalt 100/200)
 - **RISC-V** — RVV (RISC-V Vector Extension)
 - **WASM** — WebAssembly SIMD, XNNPACK WASM
+- **GPU** — CUDA / Metal / Vulkan / DirectML backend presence and maturity
 
 ---
 
@@ -140,20 +142,20 @@ A fully mature category carries no gaps.
 
 The strongest category in CPU-first AI. Multiple mature, competitive CPU-native runtimes with hand-optimized kernels across x86 and ARM. This is the category that proved CPU inference is viable.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [llama.cpp](https://github.com/ggml-org/llama.cpp) | 5 | 5 | ✅ | ✅ | ✅ | ⚠️ | 5 (120K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [ONNX Runtime (CPU EP)](https://onnxruntime.ai) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | 5 (2.8M dl/day) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [OpenVINO](https://github.com/openvinotoolkit/openvino) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | 4 (10.5K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [candle](https://github.com/huggingface/candle) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | 4 (20.6K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [ExecuTorch](https://github.com/pytorch/executorch) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | 3 (4.8K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [ncnn](https://github.com/Tencent/ncnn) | 4 | 4 | ✅ | ✅ | ✅ | ❌ | 4 (23.5K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [MNN](https://github.com/alibaba/MNN) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | 4 (15.6K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [LiteRT.js](https://ai.google.dev/edge/litert/web) | 3 | 3 | ❌ | ❌ | ❌ | ✅ | 3 (3K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [WebLLM](https://github.com/mlc-ai/web-llm) | 3 | 3 | ❌ | ❌ | ❌ | ✅ | 4 (18.3K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [ollama](https://github.com/ollama/ollama) | 3 | 3 | ✅ | ✅ | ⚠️ | ❌ | 5 (176K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [ctransformers](https://github.com/marella/ctransformers) | 4 | 3 | ✅ | ✅ | ⚠️ | ❌ | 3 (1.9K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
-| [llamafile](https://github.com/mozilla-ai/llamafile) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | 4 (25.4K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [llama.cpp](https://github.com/ggml-org/llama.cpp) | 5 | 5 | ✅ | ✅† | ✅ | ⚠️ | ✅ | 5 (120K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [ONNX Runtime (CPU EP)](https://onnxruntime.ai) | 4 | 5 | ✅ | ✅† | ⚠️ | ✅ | ✅ | 5 (2.8M dl/day) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [OpenVINO](https://github.com/openvinotoolkit/openvino) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 4 (10.5K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [candle](https://github.com/huggingface/candle) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 4 (20.6K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [ExecuTorch](https://github.com/pytorch/executorch) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ⚠️ | 3 (4.8K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [ncnn](https://github.com/Tencent/ncnn) | 4 | 4 | ✅ | ✅ | ✅ | ❌ | ✅ | 4 (23.5K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [MNN](https://github.com/alibaba/MNN) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 4 (15.6K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [LiteRT.js](https://ai.google.dev/edge/litert/web) | 3 | 3 | ❌ | ❌ | ❌ | ✅ | ❌ | 3 (3K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [WebLLM](https://github.com/mlc-ai/web-llm) | 3 | 3 | ❌ | ❌ | ❌ | ✅ | ✅ | 4 (18.3K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [ollama](https://github.com/ollama/ollama) | 3 | 3 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 5 (176K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [ctransformers](https://github.com/marella/ctransformers) | 4 | 3 | ✅ | ✅ | ⚠️ | ❌ | ❌ | 3 (1.9K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
+| [llamafile](https://github.com/mozilla-ai/llamafile) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 4 (25.4K★) | [Runtimes](../README.md#runtimes-and-inference-engines) |
 
 **Gap analysis:** No gaps. The ecosystem is mature with ≥ 4 tools scoring CPU-native ≥ 4, strong cross-arch coverage (x86 + ARM + RISC-V via llama.cpp/ncnn), and the WASM path covered by LiteRT.js/WebLLM. The main limitation is prefill throughput (see next category).
 
@@ -166,13 +168,16 @@ The strongest category in CPU-first AI. Multiple mature, competitive CPU-native 
 
 Prefill is more compute-bound than decode (large matrix multiply), making it the phase where GPU retains the largest advantage. CPU options are competitive on small models but trail on long contexts.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [llama.cpp](https://github.com/ggml-org/llama.cpp) | 5 | 4 | ✅ | ✅ | ✅ | ⚠️ | 5 (120K★) | [Benchmarks](../README.md#benchmarks-and-evidence) |
-| [ONNX Runtime GenAI](https://onnxruntime.ai) | 4 | 5 | ✅ | ✅ | ⚠️ | ❌ | 5 (2.8M dl/day) | [CPU benchmark](../README.md#benchmarks-and-evidence): 137.6 tok/s Phi-3 |
-| [OpenVINO](https://github.com/openvinotoolkit/openvino) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | 4 (10.5K★) | [Model Hub benchmarks](../README.md#benchmarks-and-evidence) |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [llama.cpp](https://github.com/ggml-org/llama.cpp) | 5 | 4 | ✅ | ✅† | ✅ | ⚠️ | ✅ | 5 (120K★) | [Benchmarks](../README.md#benchmarks-and-evidence) |
+| [ONNX Runtime GenAI](https://onnxruntime.ai) | 4 | 5 | ✅ | ✅† | ⚠️ | ❌ | ✅ | 5 (2.8M dl/day) | [CPU benchmark](../README.md#benchmarks-and-evidence): 137.6 tok/s Phi-3 |
+| [OpenVINO](https://github.com/openvinotoolkit/openvino) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 4 (10.5K★) | [Model Hub benchmarks](../README.md#benchmarks-and-evidence) |
 
 **Gap analysis:** OnNX Runtime GenAI outperforms llama.cpp on prefill (137.6 vs 109.5 tok/s for Phi-3), showing optimized prefill kernels matter. OpenVINO is strong on Intel x86 but ARM support is limited. RISC-V prefill kernels exist only in llama.cpp (via the [V-Seek paper](../README.md#on-device-edge-arm-and-sbcs)). The gap is in cross-arch prefill-specific optimizations — most runtimes optimize decode more aggressively than prefill.
+
+> **Severity:** Medium — affects long-context interactive use cases but avoidable with proper runtime selection (ONNX Runtime GenAI for prefill-heavy workloads).  
+> **Recommended action:** Contribute SVE/MMLA-optimized prefill kernels to llama.cpp or ONNX Runtime. Extend OpenVINO prefill optimizations to ARM via KleidiAI integration. Port V-Seek RVV kernels upstream into llama.cpp mainline.
 
 ---
 
@@ -183,12 +188,12 @@ Prefill is more compute-bound than decode (large matrix multiply), making it the
 
 Speech-to-text is one of the most CPU-friendly AI workloads. Multiple mature CPU-native engines with real-time or faster-than-real-time throughput on commodity hardware.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [whisper.cpp](https://github.com/ggerganov/whisper.cpp) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | 5 (51.7K★) | [Runtimes](../README.md#runtimes-and-inference-engines): 3–5× RT on Pi 5 |
-| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | 4 | 5 | ✅ | ✅ | ⚠️ | ❌ | 5 (252K dl/day) | [ASR/STT](#asr--stt): 4× faster than openai/whisper |
-| [transcribe.cpp](https://github.com/handy-computer/transcribe.cpp) | 5 | 4 | ✅ | ⚠️ | ⚠️ | ⚠️ | 2 (168★) | [ASR/STT](#asr--stt): 16+ model families, tinyBLAS CPU |
-| [Vosk](https://alphacephei.com/vosk/) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | 4 (14.9K★, 19K dl/day) | [ASR/STT](#asr--stt): 50 MB models, Pi/Android |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [whisper.cpp](https://github.com/ggerganov/whisper.cpp) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ | 5 (51.7K★) | [Runtimes](../README.md#runtimes-and-inference-engines): 3–5× RT on Pi 5 |
+| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | 4 | 5 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 5 (252K dl/day) | [ASR/STT](#asr--stt): 4× faster than openai/whisper |
+| [transcribe.cpp](https://github.com/handy-computer/transcribe.cpp) | 5 | 4 | ✅ | ⚠️ | ⚠️ | ⚠️ | ❌ | 2 (168★) | [ASR/STT](#asr--stt): 16+ model families, tinyBLAS CPU |
+| [Vosk](https://alphacephei.com/vosk/) | 4 | 4 | ✅ | ✅ | ⚠️ | ❌ | ⚠️ | 4 (14.9K★, 19K dl/day) | [ASR/STT](#asr--stt): 50 MB models, Pi/Android |
 
 **Gap analysis:** No gaps. whisper.cpp and faster-whisper both deliver > real-time on commodity CPU. transcribe.cpp extends coverage to 16+ ASR model families beyond Whisper (Parakeet, Canary, Moonshine, Voxtral) — the breadth gap it fills was the single-model limitation of whisper.cpp. Vosk covers streaming and offline on resource-constrained ARM.
 
@@ -201,14 +206,17 @@ Speech-to-text is one of the most CPU-friendly AI workloads. Multiple mature CPU
 
 TTS has reached real-time CPU synthesis, but the ecosystem is less mature than ASR. Piper leads on edge/embedded; PocketTTS leads on quality + voice cloning but is new (2026).
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [Piper](https://github.com/OHF-Voice/piper1-gpl) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | 4 (4.8K★, 25K dl/day) | [TTS](#tts): RTF 0.15 on Pi 5 |
-| [PocketTTS](https://github.com/kyutai-labs/pocket-tts) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | 4 (7.4K★) | [TTS](#tts): ~6× real-time on M4, CPU-only by design |
-| [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp) | 5 | 5 | ✅ | ⚠️ | ❌ | ✅ | 2 (43★) | [TTS](#tts): 9.2× real-time INT8, OpenAI-compatible API |
-| [Coqui TTS](https://github.com/idiap/coqui-tts) | 4 | 4 | ✅ | ⚠️ | ❌ | ❌ | 3 (2.3K★, 5.4K dl/day) | [TTS](#tts): XTTSv2 voice cloning, CPU Docker |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [Piper](https://github.com/OHF-Voice/piper1-gpl) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | ❌ | 4 (4.8K★, 25K dl/day) | [TTS](#tts): RTF 0.15 on Pi 5 |
+| [PocketTTS](https://github.com/kyutai-labs/pocket-tts) | 5 | 5 | ✅ | ✅ | ⚠️ | ⚠️ | ❌ | 4 (7.4K★) | [TTS](#tts): ~6× real-time on M4, CPU-only by design |
+| [PocketTTS.cpp](https://github.com/VolgaGerm/PocketTTS.cpp) | 5 | 5 | ✅ | ⚠️ | ❌ | ✅ | ❌ | 2 (43★) | [TTS](#tts): 9.2× real-time INT8, OpenAI-compatible API |
+| [Coqui TTS](https://github.com/idiap/coqui-tts) | 4 | 4 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 3 (2.3K★, 5.4K dl/day) | [TTS](#tts): XTTSv2 voice cloning, CPU Docker |
 
 **Gap analysis:** Maturity gap — Piper is production-proven (Home Assistant default) but uses older VITS architecture; PocketTTS has superior quality and is CPU-first by design (the authors explicitly note no GPU speedup at batch=1), but it is new and the ecosystem of integrations is still forming. Coqui TTS maintenance is uncertain (idiap fork, not the original Coqui). The RISC-V WASM path is thin — PocketTTS.cpp has a WASM build but no ARM-optimized kernels yet.
+
+> **Severity:** Low — production needs are met by Piper; PocketTTS quality gap is closing rapidly.  
+> **Recommended action:** Build PocketTTS integration packages (Home Assistant add-on, Ollama plugin, OpenAI-compatible API server). Contribute ARM NEON kernels to PocketTTS.cpp.
 
 ---
 
@@ -219,11 +227,11 @@ TTS has reached real-time CPU synthesis, but the ecosystem is less mature than A
 
 Embedding inference is computationally light — a single forward pass producing a small vector. CPU is the natural deployment target and the ecosystem is well-served.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [sentence-transformers ONNX](https://sbert.net) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | 5 (928K dl/day) | [Text Embeddings](#text-embeddings): 1.4× speedup, 3× with INT8 |
-| [BGE-M3 ONNX](https://huggingface.co/Sophia-AI/bge-m3-onnx) | 4 | 4 | ✅ | ✅ | ⚠️ | ✅ | 3 | [Text Embeddings](#text-embeddings) |
-| [all-MiniLM-L6-v2 ONNX](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | 5 (most deployed embedding model) | [Text Embeddings](#text-embeddings): single-digit ms on any CPU |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [sentence-transformers ONNX](https://sbert.net) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 5 (928K dl/day) | [Text Embeddings](#text-embeddings): 1.4× speedup, 3× with INT8 |
+| [BGE-M3 ONNX](https://huggingface.co/Sophia-AI/bge-m3-onnx) | 4 | 4 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 3 | [Text Embeddings](#text-embeddings) |
+| [all-MiniLM-L6-v2 ONNX](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 5 (most deployed embedding model) | [Text Embeddings](#text-embeddings): single-digit ms on any CPU |
 
 **Gap analysis:** No gaps. The ONNX Runtime CPU backend delivers production-grade embedding inference with INT8 quantization (AVX-512 VNNI). all-MiniLM-L6-v2 is the most widely deployed embedding model and runs in single-digit milliseconds on any modern CPU via ONNX export. The WASM path is well-covered via Transformers.js + ONNX Runtime Web.
 
@@ -236,12 +244,12 @@ Embedding inference is computationally light — a single forward pass producing
 
 Vision detection/classification on CPU is well-served by OpenVINO and ONNX Runtime, with throughput reaching thousands of fps for small models.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [YOLOv8 + OpenVINO](https://docs.ultralytics.com/integrations/openvino/) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | 4 (via Ultralytics) | [Vision on CPU](../README.md#vision-on-cpu): 360+ fps large, ~5000 fps small |
-| [EfficientNet ONNX Runtime](https://github.com/zhangchaosd/ModelInferBench) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | 3 | [Image Classification](#image-classification): 12 ms/image, 14× over PyTorch |
-| [MobileNetV3 TFLite](https://tildalice.io/mobilenetv3-vs-efficientnet-lite-arm-latency/) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | 4 | [Image Classification](#image-classification): 23 ms INT8 on Pi 4 |
-| [DFN5B-CLIP INT8 ONNX](https://huggingface.co/pritam-scientiaai/Quantized_DFN5B-CLIP-ViT-H-14-378_ONNX_INT8) | 4 | 4 | ✅ | ⚠️ | ❌ | ❌ | 2 | [Vision on CPU](../README.md#vision-on-cpu): 405 ms/image, 2.3× faster |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [YOLOv8 + OpenVINO](https://docs.ultralytics.com/integrations/openvino/) | 4 | 5 | ✅ | ⚠️ | ❌ | ❌ | ⚠️ | 4 (via Ultralytics) | [Vision on CPU](../README.md#vision-on-cpu): 360+ fps large, ~5000 fps small |
+| [EfficientNet ONNX Runtime](https://github.com/zhangchaosd/ModelInferBench) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 3 | [Image Classification](#image-classification): 12 ms/image, 14× over PyTorch |
+| [MobileNetV3 TFLite](https://tildalice.io/mobilenetv3-vs-efficientnet-lite-arm-latency/) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | 4 | [Image Classification](#image-classification): 23 ms INT8 on Pi 4 |
+| [DFN5B-CLIP INT8 ONNX](https://huggingface.co/pritam-scientiaai/Quantized_DFN5B-CLIP-ViT-H-14-378_ONNX_INT8) | 4 | 4 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 2 | [Vision on CPU](../README.md#vision-on-cpu): 405 ms/image, 2.3× faster |
 
 **Gap analysis:** No gaps for practical deployment. OpenVINO delivers enterprise-grade throughput on Intel x86; TFLite + XNNPACK covers ARM mobile/embedded; ONNX Runtime Web covers browser. RISC-V vision kernels are emerging but not yet a blocker — vision workloads on RISC-V typically use generic ONNX Runtime or ncnn without hand-tuned RVV kernels.
 
@@ -254,12 +262,15 @@ Vision detection/classification on CPU is well-served by OpenVINO and ONNX Runti
 
 Segmentation is more compute-intensive than classification. MobileSAM makes CPU inference possible but at ~3 s/image — viable for batch, marginal for real-time.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) | 4 | 3 | ✅ | ✅ | ⚠️ | ⚠️ | 4 (5.8K★) | [Image Segmentation](#image-segmentation): ~3 s/image on CPU |
-| [SAM2 ONNX](https://github.com/pagarcia/sam2-onnx-cpp) | 4 | 3 | ✅ | ⚠️ | ❌ | ❌ | 1 (18★) | [Image Segmentation](#image-segmentation): ~2 s INT8 encoder |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) | 4 | 3 | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ | 4 (5.8K★) | [Image Segmentation](#image-segmentation): ~3 s/image on CPU |
+| [SAM2 ONNX](https://github.com/pagarcia/sam2-onnx-cpp) | 4 | 3 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 1 (18★) | [Image Segmentation](#image-segmentation): ~2 s INT8 encoder |
 
 **Gap analysis:** Performance gap — both options work but latency is 2–3 seconds per image, which is acceptable for batch document processing or offline pipelines but not for real-time video segmentation. The full SAM2 model is significantly heavier; no CPU-native port achieves sub-second latency. The category needs either a more aggressive quantization path or a smaller distilled model to reach real-time on CPU. Coverage gap: ARM kernels for SAM2 are unverified, and RISC-V/WASM paths don't exist.
+
+> **Severity:** Medium — blocks real-time video segmentation on CPU but offline/batch use cases are viable.  
+> **Recommended action:** Quantize MobileSAM to INT8 with XNNPACK and validate ARM NEON throughput. Explore distillation of SAM2's image encoder to ~100 MB (MobileSAM-scale) while retaining mask decoder quality. Port the resulting model to ONNX Runtime for cross-arch deployment.
 
 ---
 
@@ -270,11 +281,11 @@ Segmentation is more compute-intensive than classification. MobileSAM makes CPU 
 
 OCR has been CPU-native for decades. Deep learning models now match or exceed traditional engines while running on commodity hardware.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [Tesseract](https://github.com/tesseract-ocr/tesseract) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | 5 (75.3K★) | [OCR](#ocr): CPU-native since v4, 100+ languages |
-| [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) | 4 | 5 | ✅ | ✅ | ⚠️ | ❌ | 5 (85.3K★, 94K dl/day) | [OCR](#ocr): ~57 ms detection, ~47 ms recognition |
-| [Surya OCR 2](https://github.com/datalab-to/surya) | 4 | 3 | ✅ | ⚠️ | ❌ | ❌ | 4 (21.1K★) | [OCR](#ocr): 83.3% olmOCR-bench, ~0.1 pages/s via llama.cpp |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [Tesseract](https://github.com/tesseract-ocr/tesseract) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | ❌ | 5 (75.3K★) | [OCR](#ocr): CPU-native since v4, 100+ languages |
+| [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) | 4 | 5 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 5 (85.3K★, 94K dl/day) | [OCR](#ocr): ~57 ms detection, ~47 ms recognition |
+| [Surya OCR 2](https://github.com/datalab-to/surya) | 4 | 3 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 4 (21.1K★) | [OCR](#ocr): 83.3% olmOCR-bench, ~0.1 pages/s via llama.cpp |
 
 **Gap analysis:** No gaps. Tesseract is the classical CPU-native baseline; PaddleOCR adds deep learning accuracy with CPU-optimized inference (MKL-DNN/OneDNN, OpenVINO). Surya OCR 2 is the strongest multilingual VLM-based OCR but is slower on CPU (~0.1 pages/s) — suitable for batch, not real-time. The ecosystem covers traditional LSTM (Tesseract), optimized DL (PaddleOCR), and VLM-based (Surya) tiers.
 
@@ -287,11 +298,14 @@ OCR has been CPU-native for decades. Deep learning models now match or exceed tr
 
 Stable Diffusion on CPU is computationally heavy — each denoising step is a large U-Net forward pass. OpenVINO makes it possible but throughput is far below interactive.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [OpenVINO Stable Diffusion](https://huggingface.co/docs/optimum-intel/openvino/tutorials/diffusers) | 4 | 2 | ✅ | ⚠️ | ❌ | ❌ | 3 | [Image Generation](#image-generation): INT8 weight compression |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [OpenVINO Stable Diffusion](https://huggingface.co/docs/optimum-intel/openvino/tutorials/diffusers) | 4 | 2 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 3 | [Image Generation](#image-generation): INT8 weight compression |
 
 **Gap analysis:** Performance gap — OpenVINO enables Stable Diffusion on Intel Xeon CPU with INT8 compression and static reshaping, but throughput is measured in minutes per image for SD 1.5 and tens of minutes for SDXL. This is acceptable for batch generation or testing but not for any interactive or real-time workflow. This is the one category where the [README's "When You Actually Do Want a GPU"](../README.md#when-you-actually-do-want-a-gpu) section explicitly calls out that "CPU throughput is too low for any real-time or near-real-time requirement." No ARM, RISC-V, or WASM paths exist. Void gap for non-x86 architectures.
+
+> **Severity:** High — fundamentally blocks this entire workload class on CPU; the least CPU-amenable category.  
+> **Recommended action:** Investigate latent consistency models (LCM) or adversarial diffusion distillation (ADD) for 1–4 step generation, which reduces the U-Net passes from 20–50 to 1–4. Port the distilled model to ONNX Runtime with INT8 quantization for x86 and ARM. If 2–4 tok/s throughput can be achieved at 4-step generation, interactive (5–15 s per image) becomes viable on high-end CPU.
 
 ---
 
@@ -302,35 +316,38 @@ Stable Diffusion on CPU is computationally heavy — each denoising step is a la
 
 CPU fine-tuning is possible for small models with PEFT methods but throughput is significantly lower than GPU. The value proposition is offline/no-cloud, not speed.
 
-| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | Adoption | Source |
-|---|---|---|---|---|---|---|---|---|
-| [llama.cpp fine-tuning](https://github.com/ggml-org/llama.cpp/tree/master/examples/training) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | 5 (via llama.cpp) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): LoRA on CPU, no GPU at any stage |
-| [PEFT](https://github.com/huggingface/peft) | 3 | 2 | ✅ | ✅ | ⚠️ | ❌ | 5 (358K dl/day) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): 10–50× slower than GPU |
-| [LlamaFactory](https://github.com/hiyouga/LLaMAFactory) | 3 | 2 | ✅ | ⚠️ | ❌ | ❌ | 5 (73.2K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): CPU mode with CUDA_VISIBLE_DEVICES="" |
-| [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) | 3 | 2 | ✅ | ⚠️ | ❌ | ❌ | 4 (12.2K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): ZeRO-3 CPU offload for optimizer states |
-| [Unsloth](https://github.com/unslothai/unsloth) | 2 | 1 | ✅ | ❌ | ❌ | ❌ | 5 (68K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): GPU-accelerated; produces GGUF adapters for CPU |
-| [LoRAX](https://github.com/predibase/lorax) | 2 | 2 | ✅ | ⚠️ | ❌ | ❌ | 3 (3.8K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): pre-merge adapters for CPU serving |
+| Tool | CPU-native | CPU perf | x86 | ARM | RISC-V | WASM | GPU | Adoption | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [llama.cpp fine-tuning](https://github.com/ggml-org/llama.cpp/tree/master/examples/training) | 5 | 4 | ✅ | ✅ | ⚠️ | ❌ | ❌ | 5 (via llama.cpp) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): LoRA on CPU, no GPU at any stage |
+| [PEFT](https://github.com/huggingface/peft) | 3 | 2 | ✅ | ✅ | ⚠️ | ❌ | ✅ | 5 (358K dl/day) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): 10–50× slower than GPU |
+| [LlamaFactory](https://github.com/hiyouga/LLaMAFactory) | 3 | 2 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 5 (73.2K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): CPU mode with CUDA_VISIBLE_DEVICES="" |
+| [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) | 3 | 2 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 4 (12.2K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): ZeRO-3 CPU offload for optimizer states |
+| [Unsloth](https://github.com/unslothai/unsloth) | 2 | 1 | ✅ | ❌ | ❌ | ❌ | ✅ | 5 (68K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): GPU-accelerated; produces GGUF adapters for CPU |
+| [LoRAX](https://github.com/predibase/lorax) | 2 | 2 | ✅ | ⚠️ | ❌ | ❌ | ✅ | 3 (3.8K★) | [CPU Fine-Tuning](../README.md#cpu-fine-tuning): pre-merge adapters for CPU serving |
 
 **Gap analysis:** Performance gap — llama.cpp is the only truly CPU-native fine-tuning path (designed for CPU, no GPU dependency at any stage). PEFT, LlamaFactory, and Axolotl work on CPU but are 10–50× slower than a single GPU; their value is offline/no-cloud, not throughput. Unsloth is GPU-only for training but is included because it produces CPU-deployable LoRA adapters (the training *event* is GPU; the inference *lifecycle* is CPU). The category needs faster CPU LoRA kernels to close the gap — current options rely on generic PyTorch CPU backward passes without hand-tuned gradients.
+
+> **Severity:** Medium — does not block CPU fine-tuning (llama.cpp works for small models at 6–12h for 1K examples) but limits iteration speed for larger datasets.  
+> **Recommended action:** Implement hand-tuned LoRA backward pass kernels in llama.cpp using AVX-512/AMX and NEON/SVE, targeting 2–5× speedup over the current generic implementation. Add QLoRA (4-bit base model frozen, LoRA in FP16) to the llama.cpp training path to reduce memory pressure and enable larger base models on the same hardware.
 
 ---
 
 ## Summary Dashboard
 
-| # | Category | Stage | Gaps | Mature CPU-native tools | Best CPU-native option |
-|---|---|---|---|---|---|
-| 1 | LLM inference (decode) | **5** | — | 7 | llama.cpp |
-| 2 | LLM prompt processing (prefill) | **4** | Architecture | 3 | ONNX Runtime GenAI |
-| 3 | ASR / STT | **5** | — | 4 | whisper.cpp |
-| 4 | TTS | **4** | Maturity | 3 | Piper / PocketTTS |
-| 5 | Embeddings | **5** | — | 3 | sentence-transformers ONNX |
-| 6 | Vision — detection & classification | **5** | — | 4 | YOLOv8 + OpenVINO |
-| 7 | Vision — segmentation | **3** | Performance, Coverage | 0 | MobileSAM |
-| 8 | OCR | **5** | — | 3 | PaddleOCR |
-| 9 | Image generation (diffusion) | **2** | Performance, Architecture (non-x86 void) | 0 | OpenVINO Stable Diffusion |
-| 10 | Fine-tuning (LoRA / QLoRA) | **3** | Performance | 1 | llama.cpp fine-tuning |
+| # | Category | Stage | Gaps | Mature CPU-native tools | Best CPU-native option | GPU alternative (for contrast) |
+|---|---|---|---|---|---|---|---|
+| 1 | LLM inference (decode) | **5** | — | 7 | llama.cpp | TensorRT-LLM / vLLM |
+| 2 | LLM prompt processing (prefill) | **4** | Architecture | 3 | ONNX Runtime GenAI | TensorRT-LLM |
+| 3 | ASR / STT | **5** | — | 4 | whisper.cpp | NVIDIA Riva / CUDA Whisper |
+| 4 | TTS | **4** | Maturity | 3 | Piper / PocketTTS | Tortoise TTS (GPU) |
+| 5 | Embeddings | **5** | — | 3 | sentence-transformers ONNX | — (CPU sufficient) |
+| 6 | Vision — detection & classification | **5** | — | 4 | YOLOv8 + OpenVINO | YOLOv8 + TensorRT |
+| 7 | Vision — segmentation | **3** | Performance, Coverage | 0 | MobileSAM | SAM2 + CUDA |
+| 8 | OCR | **5** | — | 3 | PaddleOCR | — (CPU sufficient) |
+| 9 | Image generation (diffusion) | **2** | Performance, Architecture (non-x86 void) | 0 | OpenVINO Stable Diffusion | SDXL + CUDA / TensorRT |
+| 10 | Fine-tuning (LoRA / QLoRA) | **3** | Performance | 1 | llama.cpp fine-tuning | Unsloth / Axolotl (GPU) |
 
-**At a glance:** 5 of 10 categories are at Stage 5 (mature). 2 categories carry performance gaps (segmentation, diffusion). 1 category has a void for non-x86 architectures (diffusion). Fine-tuning on CPU is viable but slow — the ecosystem needs faster CPU LoRA kernels to close the throughput gap.
+**At a glance:** 5 of 10 categories are at Stage 5 (mature). 2 categories carry performance gaps (segmentation, diffusion). 1 category has a void for non-x86 architectures (diffusion). Fine-tuning on CPU is viable but slow — the ecosystem needs faster CPU LoRA kernels to close the throughput gap. The `GPU alternative` column provides a contrast reference — categories marked "CPU sufficient" (embeddings, OCR) have no compelling GPU advantage for typical deployment.
 
 ---
 
@@ -342,6 +359,8 @@ CPU fine-tuning is possible for small models with PEFT methods but throughput is
 - **Architecture coverage is documentation-based.** Kernel support is determined from tool docs and build flags, not always verified by running tests on each ISA.
 - **Scores are point-in-time.** The ecosystem moves fast — scores should be re-validated quarterly. See the [Roadmap](../ROADMAP.md) for the cadence.
 - **Fine-tuning is borderline.** Unsloth and LoRAX are included in the fine-tuning category despite being GPU-first because their *output* (LoRA adapters) deploys on CPU. Their CPU-nativeness score reflects the training phase, not the inference phase.
+- **CPU-nativeness scoring involves subjective judgment.** The distinction between a 4 ("first-class target") and a 3 ("secondary target") can be ambiguous for tools with mixed GPU/CPU heritage (e.g., ollama, ExecuTorch). Scores were assigned by the maintainer and may differ from a contributor's assessment — open an issue if you disagree with a specific score.
+- **WASM != native CPU performance.** Tools scored in the WASM column (Transformers.js, WebLLM, LiteRT.js) run in a browser sandbox with Wasm SIMD, which typically achieves 40–70% of native CPU throughput. WASM scores are not directly comparable to native x86/ARM scores even within the same category — distinguish "runs in browser on CPU" from "runs on bare-metal CPU" when evaluating deployment options.
 
 ---
 
