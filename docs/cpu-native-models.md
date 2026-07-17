@@ -128,7 +128,7 @@ Embedding models are computationally light — a single forward pass producing a
 | [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 22M | ONNX Runtime CPU | single-digit ms on any CPU | Most widely deployed embedding model |
 | [BGE-M3](https://huggingface.co/Sophia-AI/bge-m3-onnx) | 326M | ONNX Runtime CPU | ~15 ms on modern CPU | Multi-lingual, supports dense + sparse |
 | [BGE-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) | 24M | ONNX Runtime CPU | ~5 ms | Fastest viable retrieval embedding |
-| [GTE-small](https://www.alibabacloud.com/blog/the-all-need-for-gte-embedding-model_6020712) | 22M | ONNX Runtime CPU | ~5 ms | Good quality/speed tradeoff |
+| [GTE-small](https://arxiv.org/abs/2402.17035) | 22M | ONNX Runtime CPU | ~5 ms | Good quality/speed tradeoff |
 
 ---
 
