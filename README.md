@@ -10,7 +10,7 @@ A curated list of runtimes, formats, tools, and evidence for running AI inferenc
 
 ## Introduction
 
-Most AI practitioners default to GPU for everything because that is where training lives. But once a model is trained, the inference workload often fits comfortably on a modern CPU: smaller batch sizes, modest throughput requirements, and quantized models that slip inside L3 cache. Independent analysis of the Hugging Face ecosystem finds 40–51% of models are sub-7B and 55–65% are sub-13B parameters — 92% of all downloads go to models under 1B params and the median downloaded model is just 406M params. The vast majority of inference workloads people actually run never needed a GPU.
+Most AI practitioners default to GPU for everything because that is where training lives. But once a model is trained, the inference workload often fits comfortably on a modern CPU: smaller batch sizes, modest throughput requirements, and quantized models that slip inside L3 cache. A live crawl of the 2.9M-model Hugging Face Hub bears this out: **two-thirds of model downloads go to models ≤1B parameters and ~78% to ≤7B**, the 15 most-downloaded models are almost all sub-1B embedding and encoder models, and CPU-native tasks (embeddings, ASR, classification) account for nearly half of all downloads. The vast majority of inference workloads people actually run never needed a GPU — see [The CPU-First Case, in Hub Data](docs/ecosystem-evidence.md) for every figure with its reproducible query.
 
 This list covers CPU inference as the universal deployment target — the platform you already have on every server, laptop, phone, and edge device. It also covers **NPU (Neural Processing Unit) inference** as a companion on-device path: modern phones and laptops ship dedicated AI silicon (Apple Neural Engine, Qualcomm Hexagon, Intel NPU, AMD XDNA) that can run quantized models more efficiently than the CPU. NPU coverage is included with the caveat that NPUs are vendor-locked, have immature LLM tooling, and often underperform CPU on generative workloads due to memory-bandwidth limits — the CPU path remains the most portable and frequently the fastest option for LLM inference on mobile today.
 
@@ -201,7 +201,7 @@ flowchart TD
 ## Quantization and Model Formats
 
 - [GGUF](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md) - The successor to GGML format; single-file container for quantized weights plus model metadata, designed for memory-mapped loading that avoids RAM copies on CPU.
-- [Ternary / 1-bit models (BitNet b1.58 lineage)](https://arxiv.org/abs/2402.17764) - Weights constrained to {−1, 0, +1} (~1.58 bits) or binary {−1, +1}, turning weight multiplications into additions — a natural fit for CPU, where memory bandwidth rather than FLOPs is the bottleneck. Served via [bitnet.cpp](https://github.com/microsoft/BitNet) or llama.cpp. A recent flagship example is [Bonsai 27B (PrismML, Jul 2026)](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf), a 27B multimodal model (based on Qwen3.6) in 1-bit (~3.9 GB) and 1.58-bit ternary (~5.9 GB) GGUF form that runs on llama.cpp CPU builds under Apache 2.0; PrismML reports ~11 tok/s for the 1-bit variant on an iPhone 17 Pro CPU. *(vendor-reported benchmarks; last verified: 2026-07)*
+- [Ternary / 1-bit models (BitNet b1.58 lineage)](https://arxiv.org/abs/2402.17764) - Weights constrained to {−1, 0, +1} (~1.58 bits) or binary {−1, +1}, turning weight multiplications into additions — a natural fit for CPU, where memory bandwidth rather than FLOPs is the bottleneck. Served via [bitnet.cpp](https://github.com/microsoft/BitNet) or llama.cpp. The first open-source native 1-bit LLM is [BitNet b1.58 2B4T](https://huggingface.co/microsoft/bitnet-b1.58-2B-4T) (Microsoft, Apr 2025, MIT), a 2B-parameter model trained from scratch with ternary weights on 4T tokens — its non-embedding weights use only ~0.4 GB. A recent multimodal flagship is [Bonsai 27B (PrismML, Jul 2026)](https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf), a 27B model in 1-bit (~3.9 GB) and 1.58-bit ternary (~5.9 GB) GGUF form running on llama.cpp CPU builds under Apache 2.0 (~11 tok/s on iPhone 17 Pro CPU). See [docs/cpu-native-models.md](docs/cpu-native-models.md) for the full ternary model catalog, a cost-advantage analysis of ≤3B/ternary models, and a coming-soon tracker for in-development ternary projects (BitNet v2, larger native ternary models, NPU backends, TWLA). *(vendor-reported benchmarks; last verified: 2026-07)*
 - [Intel Neural Compressor](https://github.com/intel/neural-compressor) - Framework-agnostic post-training quantization and pruning toolkit targeting CPU inference; supports ONNX, PyTorch, and TensorFlow backends.
 - [Optimum](https://github.com/huggingface/optimum) - Hugging Face's optimization toolkit; the `optimum[onnxruntime]` and `optimum-intel` paths export and quantize models for CPU inference via ONNX Runtime and OpenVINO respectively.
 - [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ) - GPTQ quantization library. *(Caveat: primarily targets GPU inference; include only when the produced GPTQ checkpoints are subsequently converted to GGUF for CPU use. Do not assume CPU parity.)*
@@ -425,26 +425,51 @@ Fine-tuning adapts a pre-trained model to a specific domain or task. While full-
 
 ## Docs
 
-Companion documents for planning, converting, deploying, benchmarking, and troubleshooting CPU inference:
+Companion documents for planning, converting, deploying, benchmarking, and troubleshooting CPU inference.
+
+### Getting started
 
 - [Quick Start Guide](docs/quickstart.md) - Full walkthroughs with copy-paste commands and sample code for llamafile, ollama, and WebLLM.
-- [CPU Inference Deployment Guide](docs/cpu-inference-deployment.md) - Docker CPU tuning, Kubernetes NUMA-aware scheduling, system optimization (numactl, frequency scaling, SMT), and serving patterns for real-time and batch workloads.
+
+### Choosing CPU vs GPU
+
+- [The CPU-First Case, in Hub Data](docs/ecosystem-evidence.md) - Empirical backing for the thesis, from a live crawl of 2.9M Hugging Face models: two-thirds of downloads go to models ≤1B params, the top-15 leaderboard is almost all embeddings/encoders, and the task mix is dominated by CPU-native work. Every figure ships with its reproducible DuckDB query.
+- [CPU vs NVIDIA Decision Framework](docs/cpu-vs-nvidia-decision-framework.md) - Structured comparison and decision matrix for CPU vs NVIDIA GPU inference, covering batch workloads, total cost, and migration steps.
 - [Cost Calculator](docs/cost-calculator.md) - Reusable TCO methodology with a break-even analysis for comparing CPU vs GPU inference costs across cloud instances. Includes an interactive [Streamlit app](calculator/cost-calculator.py) (`uv run streamlit run calculator/cost-calculator.py`).
-- [Green Inference Guide](docs/green-inference.md) - Power-per-inference comparisons (Ampere Altra: 3.6× vs A10, 5.6× vs T4 on Whisper), TDP reference table, data-center PUE arithmetic, water consumption (WUE) analysis, carbon footprint by grid region, CO₂ measurement with CodeCarbon and Cloud Carbon Footprint, and CPU power-management tuning (cpufreq governor, RAPL caps, turbo settings). Includes an interactive [power calculator](calculator/power-calculator.py) (`uv run streamlit run calculator/power-calculator.py`).
-- [Green Inference Cheat Sheet](docs/green-inference-cheat-sheet.md) - One-page quick reference of power, water, and carbon comparison tables for sustainability reporting.
-- [Multimodal CPU Workloads](docs/multimodal-cpu.md) - ASR/STT, TTS, text embeddings, document classification, OCR, image classification/segmentation/generation, background removal, and face analysis on CPU — with baseline latency and throughput figures.
-- [Mobile Phone CPU Inference](docs/mobile-cpu-inference.md) - Apple A19 Pro, Snapdragon 8 Elite, Exynos 2500, Dimensity 9500, Tensor G5; runtimes (MLC-LLM, Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI); benchmarks and deployment guides with tok/s and thermal data.
+- [Serverless CPU Cost Dashboard](docs/serverless-cost-dashboard.md) - *Proposal.* Interactive dashboard comparing per-1M-token cost across AWS Lambda, Fly.io, Modal, and GPU serverless under one traffic-aware cost model.
+
+### Models & conversion
+
 - [CPU-Native Model Catalog](docs/cpu-native-models.md) - Catalogue of models well-suited for CPU inference by architecture, size, and quantization, with recommended runtimes and measured performance ranges.
+- [Reference Stack — 8 GB CPU-Only AI OS](docs/cpu-ai-os-reference-stack.md) - A memory-budgeted model suite (STT, TTS, speech-to-speech, OCR, LLM, embeddings) for building an AI OS in 8 GB across x86 and ARM, with a portable two-runtime layer, an Android/NPU variant, and a model-manager manifest.
+- [Multimodal CPU Workloads](docs/multimodal-cpu.md) - ASR/STT, TTS, text embeddings, document classification, OCR, image classification/segmentation/generation, background removal, and face analysis on CPU — with baseline latency and throughput figures.
 - [Model Conversion Guide](docs/model-conversion-guide.md) - Practical walkthroughs for converting Hugging Face checkpoints to GGUF (llama.cpp quantize) and PyTorch to ONNX (via Optimum), including INT8 post-training quantization.
+
+### Deployment & operations
+
+- [CPU Inference Deployment Guide](docs/cpu-inference-deployment.md) - Docker CPU tuning, Kubernetes NUMA-aware scheduling, system optimization (numactl, frequency scaling, SMT), and serving patterns for real-time and batch workloads.
 - [Serverless CPU Patterns](docs/serverless-patterns.md) - Recipes for deploying CPU inference on AWS Lambda (arm64), Fly.io, and Modal, with cost-per-invocation worked examples.
+- [Edge & Mobile CPU Inference Playbook](docs/edge-mobile-playbook.md) - Definitive reference for deploying open-weight models on phones, tablets, laptops, and SBCs — entirely on CPU with no GPU dependency.
+- [Mobile Phone CPU Inference](docs/mobile-cpu-inference.md) - Apple A19 Pro, Snapdragon 8 Elite, Exynos 2500, Dimensity 9500, Tensor G5; runtimes (MLC-LLM, Core AI, llama.cpp Android, Qualcomm AI Hub, Arm SME2/KleidiAI); benchmarks and deployment guides with tok/s and thermal data.
+- [Troubleshooting](docs/troubleshooting.md) - Diagnosis and fixes for common CPU inference issues: OOM, low throughput, NUMA misconfiguration, thread oversubscription, thermal throttling, and container/Kubernetes problems.
+
+### Benchmarking & hardware
+
 - [Benchmark Methodology](docs/benchmark-methodology.md) - Standardized metrics (pp512, tg128, TTFT, TPOT), reporting template, and run procedure for producing comparable CPU inference benchmarks.
 - [Hardware Reference](docs/hardware-reference.md) - Canonical hardware performance catalogue for mobile, laptop, SBC, and server CPU inference — single source of truth for throughput figures across all device tiers.
 - [Benchmark Suite Proposal](docs/benchmark-suite-proposal.md) - Proposal for a community-maintained, standardized CPU inference benchmark suite to reduce fragmentation across runtimes and architectures.
-- [Edge & Mobile CPU Inference Playbook](docs/edge-mobile-playbook.md) - Definitive reference for deploying open-weight models on phones, tablets, laptops, and SBCs — entirely on CPU with no GPU dependency.
-- [CPU vs NVIDIA Decision Framework](docs/cpu-vs-nvidia-decision-framework.md) - Structured comparison and decision matrix for CPU vs NVIDIA GPU inference, covering batch workloads, total cost, and migration steps.
-- [Community Hackathon](docs/community-hackathon.md) - Structured, sponsor-backed hackathon to generate real-world CPU inference examples, benchmarks, and deployment patterns.
+- [CPU Fine-Tuning Benchmarks](docs/cpu-finetuning-benchmarks.md) - *Proposal.* Standardized LoRA/QLoRA fine-tuning throughput and cost benchmarks on CPU (1B–8B), targeting the fine-tuning gap in the CPU AI Gap Map.
+- [State of CPU Inference Report](docs/state-of-cpu-inference-report.md) - *Proposal.* Periodic public report aggregating benchmark suite and hackathon results into tok/s, $/token, and W/token across architectures.
+
+### Sustainability
+
+- [Green Inference Guide](docs/green-inference.md) - Power-per-inference comparisons (Ampere Altra: 3.6× vs A10, 5.6× vs T4 on Whisper), TDP reference table, data-center PUE arithmetic, water consumption (WUE) analysis, carbon footprint by grid region, CO₂ measurement with CodeCarbon and Cloud Carbon Footprint, and CPU power-management tuning (cpufreq governor, RAPL caps, turbo settings). Includes an interactive [power calculator](calculator/power-calculator.py) (`uv run streamlit run calculator/power-calculator.py`).
+- [Green Inference Cheat Sheet](docs/green-inference-cheat-sheet.md) - One-page quick reference of power, water, and carbon comparison tables for sustainability reporting.
+
+### Project & community
+
 - [Roadmap](ROADMAP.md) - Quarterly milestones aligned with enterprise inference adoption cycles.
-- [Troubleshooting](docs/troubleshooting.md) - Diagnosis and fixes for common CPU inference issues: OOM, low throughput, NUMA misconfiguration, thread oversubscription, thermal throttling, and container/Kubernetes problems.
+- [Community Hackathon](docs/community-hackathon.md) - Structured, sponsor-backed hackathon to generate real-world CPU inference examples, benchmarks, and deployment patterns.
 
 ---
 

@@ -72,25 +72,14 @@ At batch ≤ 8, CPU delivers 70%+ of GPU throughput. The GPU advantage emerges p
 
 *(pricing snapshot: 2026-07 — always verify current cloud pricing before deciding)*
 
-### Cost comparison at batch = 1 (1 req/s average)
+### Cost at batch = 1 and batch = 4
 
-| Instance | $/hr | Tokens/hr | $/1M tokens | Annual cost |
-|---|---|---|---|---|
-| CPU: c7g.4xlarge | $0.58 | 115,200 | $5.03 | $5,081 |
-| CPU: c7i.4xlarge | $0.68 | 108,000 | $6.30 | $5,957 |
-| GPU: g5.xlarge | $1.01 | 162,000 | $6.23 | $8,848 |
-| GPU: g6.xlarge (L40S) | $1.44 | 169,000 | $8.52 | $12,614 |
+The dollar figures for these scenarios — $/hr pricing, $/1M-token math, and the annual TCO worked example — live in one place: the [Cost Calculator](cost-calculator.md#production-worked-example-llama-3-8b-us-east-1-june-2026), the canonical source for all cost numbers in this list. The decision-relevant conclusions:
 
-CPU is cheaper than GPU at this traffic level on every instance type tested. At low utilization, the gap widens further because GPU cost is floor-constrained by the minimum instance price.
+- **Batch = 1 (≈1 req/s):** CPU is cheaper than GPU on every instance type tested (c7g/c7i vs g5/g6). At low utilization the gap widens, because GPU cost is floor-constrained by the minimum instance price.
+- **Batch = 4 (≈10 req/s sustained):** CPU still wins on $/1M tokens. The cross-over happens at roughly 20–30 req/s sustained, where GPU utilization reaches 40–50%.
 
-### Cost comparison at batch = 4 (10 req/s sustained)
-
-| Instance | $/hr | Tokens/hr | $/1M tokens | Annual cost |
-|---|---|---|---|---|
-| CPU: c7g.4xlarge | $0.58 | 352,800 | $1.64 | $5,081 |
-| GPU: g5.xlarge | $1.01 | 504,000 | $2.00 | $8,848 |
-
-CPU still wins on $/1M tokens at moderate traffic. The cross-over happens at approximately 20–30 req/s sustained, where GPU utilization reaches 40–50%.
+Plug in your own pricing and throughput with the [interactive Cost Calculator](cost-calculator.md#calculator-app).
 
 ---
 

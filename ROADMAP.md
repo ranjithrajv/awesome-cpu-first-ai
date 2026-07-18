@@ -36,7 +36,7 @@ Quarterly milestones for Awesome CPU-First AI, aligned with enterprise inference
 |---|---|---|
 | **Benchmark suite v1.0** | Release v1.0 of the suite with 20+ hardware/software combinations published in the results repository | Oct |
 | **Community spotlight** | Publish winning hackathon projects in a new `## Community Submissions` README section | Oct |
-| **"State of CPU Inference" report** | Aggregate all hackathon and benchmark results into a public report covering tok/s, $/token, and W/token across architectures | Nov |
+| **"State of CPU Inference" report** | Publish the [State of CPU Inference Report](docs/state-of-cpu-inference-report.md) aggregating hackathon and benchmark results into tok/s, $/token, and W/token across architectures | Nov |
 | **Green inference expansion** | Add per-model CO₂ estimates (g/query) to the [Power Calculator](calculator/power-calculator.py), using benchmark suite power measurements | Nov |
 | **vLLM CPU backend** | If the [vLLM CPU backend](https://github.com/vllm-project/vllm/issues/10856) reaches production stability, add a dedicated section with deployment guide | Dec |
 | **Release v2.0 of the list** | Tagged release with changelog, incorporating all Q3–Q4 additions | Dec |
@@ -53,10 +53,10 @@ Quarterly milestones for Awesome CPU-First AI, aligned with enterprise inference
 | Theme | Deliverable | Target |
 |---|---|---|
 | **Hackathon v2** | Second edition focused on edge / mobile / RISC-V | Mar |
-| **CPU fine-tuning benchmarks** | Add LoRA/QLoRA fine-tuning throughput and cost benchmarks on CPU (3B, 7B models) | Mar |
+| **CPU fine-tuning benchmarks** | Execute the [CPU Fine-Tuning Benchmarks](docs/cpu-finetuning-benchmarks.md) proposal — LoRA/QLoRA throughput and cost on CPU (1B–8B models) | Mar |
 | **Automated nightly benchmarks** | GitHub Actions workflow running the suite on sponsored hardware, publishing results automatically | Apr |
 | **Multimodal benchmark expansion** | Extend benchmark suite to cover whisper.cpp, Piper TTS, and YOLO/OpenVINO inference | May |
-| **Serverless cost comparison dashboard** | Interactive dashboard comparing per-1M-token cost across Lambda, Fly.io, Modal, and GPU serverless | Jun |
+| **Serverless cost comparison dashboard** | Ship the [Serverless CPU Cost Dashboard](docs/serverless-cost-dashboard.md) — interactive per-1M-token cost across Lambda, Fly.io, Modal, and GPU serverless | Jun |
 | **Release v2.1** | Tagged release with H1 additions | Jun |
 
 **Exit criteria for H1 2027:**

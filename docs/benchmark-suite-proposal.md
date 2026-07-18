@@ -44,14 +44,7 @@ Additional workloads (vision, multimodal, speech) are added in a second phase.
 
 ### Reference Hardware Tiers
 
-| Tier | Form Factor | Example Hardware | Expected tg128 (3B Q4) |
-|---|---|---|---|
-| S (laptop) | x86 laptop | Intel Core Ultra 7, AMD Ryzen 7 8840U | 18–30 tok/s |
-| M (server x86) | Xeon / EPYC | c7i.4xlarge (Intel), m7a.4xlarge (AMD) | 30–55 tok/s |
-| A (server ARM) | Neoverse V2/V3 | c8g.4xlarge (Graviton4), Cobalt 100 | 30–55 tok/s |
-| E (edge ARM) | Cortex-A76/A78 | Raspberry Pi 5, Orange Pi 5 | 3–8 tok/s |
-
-See [Hardware Reference](hardware-reference.md) for the full performance catalogue across all tiers, including mobile chipsets, laptops, SBCs, and server instances with pricing.
+The suite runs against the abstract S/M/A/E tiers defined in [Hardware Reference](hardware-reference.md#hardware-tiers) — the single source of truth for tier definitions and expected throughput, covering mobile chipsets, laptops, SBCs, and server instances with pricing.
 
 ---
 

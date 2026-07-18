@@ -81,19 +81,7 @@ See [Model Conversion Guide](model-conversion-guide.md) for quantization procedu
 
 ## Hardware Targets
 
-See [Hardware Reference](hardware-reference.md) for the authoritative performance catalogue for all devices — mobile chipsets, laptops, SBCs, and server instances with throughput figures and pricing.
-
-Quick-reference summary tables for the hardware tiers most relevant to edge/mobile:
-
-| Tier | Example Devices | 3B Q4 (tok/s) | 7B Q4 (tok/s) |
-|---|---|---|---|
-| Flagship phone | Apple A19 Pro, Snapdragon 8 Elite | 18–38 | 7–12 |
-| Mid-range phone | Snapdragon 8 Gen 3, Exynos 2500 | 14–22 | 5–9 |
-| Laptop (Apple Silicon) | M3, M4, M4 Pro/Max | 30–50 | 12–22 |
-| Laptop (x86) | Intel Core Ultra 7, AMD Ryzen 7 | 18–28 | 7–14 |
-| SBC | Raspberry Pi 5, Orange Pi 5 | 3–8 | — |
-
-Full benchmarks: [Hardware Reference](hardware-reference.md) · [Mobile Phone CPU Inference](mobile-cpu-inference.md)
+See [Hardware Reference](hardware-reference.md) for the authoritative performance catalogue for all edge/mobile devices — mobile chipsets ([Mobile Phones](hardware-reference.md#mobile-phones)), [laptops](hardware-reference.md#laptops--edge-servers), and [SBCs](hardware-reference.md#single-board-computers) — with throughput figures and pricing. Per-chipset detail and benchmark sources live in [Mobile Phone CPU Inference](mobile-cpu-inference.md).
 
 ---
 

@@ -130,7 +130,7 @@ CPU saves **$5,740/yr** on this workload. At 5 req/s peak the gap narrows but do
 
 ---
 
-See also: [Serverless CPU Patterns](serverless-patterns.md) · [Green Inference Guide](green-inference.md) · [CPU Inference Deployment Guide](cpu-inference-deployment.md)
+See also: [CPU vs NVIDIA Decision Framework](cpu-vs-nvidia-decision-framework.md) · [Serverless CPU Patterns](serverless-patterns.md) · [Green Inference Guide](green-inference.md) · [CPU Inference Deployment Guide](cpu-inference-deployment.md)
 
 ---
 

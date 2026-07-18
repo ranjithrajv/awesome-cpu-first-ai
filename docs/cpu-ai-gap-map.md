@@ -33,7 +33,7 @@ Inspired by the [AI Potluck Open Source AI Gap Map](https://www.aipotluck.org/ma
 
 ## Methodology
 
-Every tool currently listed in this awesome list is scored on four axes. Scores are assigned from primary sources — benchmark figures already documented in this repo, tool READMEs, and adoption registries (GitHub, PyPI). The scored set is the tools in this list, not a census; the long tail of unlisted tools is not graded.
+Every tool currently listed in this awesome list is scored on four axes. Scores are assigned from primary sources — benchmark figures already documented in this repo, tool READMEs, and adoption registries (GitHub, PyPI). Model-level adoption and ecosystem signals (download volume, size distribution, task mix) come from the [HF Landscape](https://huggingface.co/spaces/ranjithraj/hf-landscape) weekly Hub crawl; see [The CPU-First Case, in Hub Data](ecosystem-evidence.md) for the reproducible queries behind those figures. The scored set is the tools in this list, not a census; the long tail of unlisted tools is not graded.
 
 The CPU-nativeness framework descends from this list's [CONTRIBUTING.md](../CONTRIBUTING.md) criterion #4: *"Not a GPU framework that runs on CPU only as a slow fallback."* The gap map makes that criterion quantitative.
 
@@ -239,9 +239,9 @@ Embedding inference is computationally light — a single forward pass producing
 |---|---|---|---|---|---|---|---|---|---|---|
 | [sentence-transformers ONNX](https://sbert.net) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 5 (928K dl/day) | [Text Embeddings](#text-embeddings): 1.4× speedup, 3× with INT8 |
 | [BGE-M3 ONNX](https://huggingface.co/Sophia-AI/bge-m3-onnx) | 4 | 4 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 3 | [Text Embeddings](#text-embeddings) |
-| [all-MiniLM-L6-v2 ONNX](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 5 (most deployed embedding model) | [Text Embeddings](#text-embeddings): single-digit ms on any CPU |
+| [all-MiniLM-L6-v2 ONNX](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 4 | 5 | ✅ | ✅ | ⚠️ | ✅ | ✅ | 5 (#1 model on the Hub, 253M dl/30d) | [Text Embeddings](#text-embeddings): single-digit ms on any CPU |
 
-**Gap analysis:** No gaps. The ONNX Runtime CPU backend delivers production-grade embedding inference with INT8 quantization (AVX-512 VNNI). all-MiniLM-L6-v2 is the most widely deployed embedding model and runs in single-digit milliseconds on any modern CPU via ONNX export. The WASM path is well-covered via Transformers.js + ONNX Runtime Web.
+**Gap analysis:** No gaps. The ONNX Runtime CPU backend delivers production-grade embedding inference with INT8 quantization (AVX-512 VNNI). all-MiniLM-L6-v2 is the single most-downloaded model on the entire Hub (253M downloads in 30 days — see [The CPU-First Case, in Hub Data](ecosystem-evidence.md)) and runs in single-digit milliseconds on any modern CPU via ONNX export. The WASM path is well-covered via Transformers.js + ONNX Runtime Web.
 
 ---
 
@@ -363,7 +363,7 @@ CPU fine-tuning is possible for small models with PEFT methods but throughput is
 
 - **Curated, not census.** The scored set is the tools currently in this awesome list, not an exhaustive survey. Unlisted tools are not graded.
 - **Within-category scores.** CPU performance grades are comparable *within* a category, not across categories. A 4 in LLM decode ≠ a 4 in TTS.
-- **Adoption is a proxy.** Download counts and GitHub stars measure *interest*, not *CPU-specific deployment*. A tool with high adoption may be deployed primarily on GPU.
+- **Adoption is a proxy.** Download counts and GitHub stars measure *interest*, not *CPU-specific deployment*. A tool with high adoption may be deployed primarily on GPU. Model-download figures are sourced from the reproducible [HF Landscape dataset](ecosystem-evidence.md), but downloads still measure reach — not the production CPU-vs-GPU serving mix.
 - **Architecture coverage is documentation-based.** Kernel support is determined from tool docs and build flags, not always verified by running tests on each ISA.
 - **Scores are point-in-time.** The ecosystem moves fast — scores should be re-validated quarterly. See the [Roadmap](../ROADMAP.md) for the cadence.
 - **Fine-tuning is borderline.** Unsloth and LoRAX are included in the fine-tuning category despite being GPU-first because their *output* (LoRA adapters) deploys on CPU. Their CPU-nativeness score reflects the training phase, not the inference phase.
@@ -379,6 +379,7 @@ CPU fine-tuning is possible for small models with PEFT methods but throughput is
 - [Runtime comparison table](../README.md#runtimes-and-inference-engines) — Format × CPU arch × OS matrix
 - [Benchmarks and Evidence](../README.md#benchmarks-and-evidence) — Primary benchmark sources
 - [Hardware Reference](hardware-reference.md) — Throughput figures by device tier
+- [The CPU-First Case, in Hub Data](ecosystem-evidence.md) — Reproducible adoption/size/task figures from the HF Landscape crawl
 - [Benchmark Suite Proposal](benchmark-suite-proposal.md) — Standardized benchmark methodology
 - [Cost Calculator](cost-calculator.md) — TCO comparison tool
 - [CPU vs NVIDIA Decision Framework](cpu-vs-nvidia-decision-framework.md) — Workload-level decision matrix
