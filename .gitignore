@@ -11,3 +11,6 @@ __pycache__/
 
 # Playwright MCP scratch
 .playwright-mcp/
+
+# Local editor / MCP config
+opencode.jsonc
