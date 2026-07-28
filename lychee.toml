@@ -27,4 +27,6 @@ exclude = [
   "https://web\\.archive\\.org/",
   # Ubuntu manpages server often times out on CI.
   "https://manpages\\.ubuntu\\.com/",
+  # TechZine returns 403 to automated scanners (bot protection).
+  "https://www\\.techzine\\.eu/",
 ]
