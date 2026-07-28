@@ -25,6 +25,7 @@ WRONG_BINARIES = {
 LANGUAGE_TAGS = {
     "bash",
     "python",
+    "sql",
     "yaml",
     "dockerfile",
     "toml",
