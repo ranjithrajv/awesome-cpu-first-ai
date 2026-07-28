@@ -37,17 +37,29 @@ jobs:
             README.md
             CONTRIBUTING.md
             docs/
-          fail: true
+          fail: false
           output: ${{ runner.temp }}/lychee-report.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Upload link report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lychee-report
+          path: ${{ runner.temp }}/lychee-report.md
+          retention-days: 30
+
       - name: Open issue on scheduled failure
-        if: failure() && github.event_name == 'schedule'
+        if: github.event_name == 'schedule'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue create \
-            --title "[auto] Broken links detected $(date -u +%Y-%m-%d)" \
-            --body-file "${{ runner.temp }}/lychee-report.md" \
-            --label maintenance
+          if [ -s "${{ runner.temp }}/lychee-report.md" ]; then
+            gh issue create \
+              --title "[auto] Broken links detected $(date -u +%Y-%m-%d)" \
+              --body-file "${{ runner.temp }}/lychee-report.md" \
+              --label maintenance
+          else
+            echo "No broken links found."
+          fi

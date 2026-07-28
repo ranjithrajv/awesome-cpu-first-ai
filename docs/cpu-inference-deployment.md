@@ -11,6 +11,7 @@ Best practices for deploying CPU inference in production — covering Docker, Ku
 - [System Tuning](#system-tuning)
 - [NUMA and Multi-Socket](#numa-and-multi-socket)
 - [Serving Patterns](#serving-patterns)
+- [Proprietary CPU Inference Runtimes](#proprietary-cpu-inference-runtimes)
 - [See also](#see-also)
 - [References](#references)
 
@@ -288,6 +289,18 @@ def generate(prompt: str) -> str:
     )
     return result.stdout
 ```
+
+---
+
+## Proprietary CPU Inference Runtimes
+
+Some CPU inference runtimes are proprietary — source code is not publicly available. These are excluded from the main list (which requires a public source repository or verifiable download) but are relevant context for teams evaluating deployment options. Commercial and open-source are orthogonal: many open-source runtimes (llama.cpp, ONNX Runtime, OpenVINO) have commercial support and enterprise deployments, while some proprietary runtimes are available as hosted services.
+
+**Kompact AI (Ziroh Labs)** — Closed-source CPU inference runtime for LLMs up to 50B parameters on Intel CPUs (AMD/ARM/Ampere planned). Claims full-accuracy inference without quantization or distillation via an optimized CPU engine. OpenAI-compatible REST API and SDKs (Go, Python, Java, .NET, JavaScript). Multi-tenant with RBAC, SSO, and observability (OpenTelemetry). Partners include Ampere, Qualcomm, Intel, MediaTek, Samsung, and AMD. Launched April 2025 at IIT Madras. SOC 2 Type 2 and ISO 27001 certified.
+
+> **⚠️ Unverifiable claims.** All performance and capability claims are vendor-reported. As of Jul 2026: no public benchmarks exist (the FAQ states benchmarks are "planned"), no downloadable runtime is available ( gated behind "Contact Us"), and no independent third-party validation has been published. The claim of running models "without quantization or distillation" on CPU is technically unusual and should be independently validated before citing. The claim of supporting "600+ models" is not backed by a published model list or registry. Treat all figures as unverified marketing until reproducible benchmarks or a downloadable runtime become available.
+
+See [README — Runtimes and Inference Engines](../README.md#runtimes-and-inference-engines) for the full open-source runtime catalog, which includes projects with commercial backing and enterprise support.
 
 ---
 

@@ -8,6 +8,11 @@ All notable additions and changes to awesome-cpu-first-ai.
 
 - **Runtimes**: Added distributed-llama — MIT-licensed tensor-parallel inference that splits a model's compute and RAM across a cluster of ARM/x86 AVX2 CPU nodes (power-of-2 node counts), letting commodity or Raspberry Pi devices jointly run models too large for a single machine; experimental Vulkan GPU support. Added a row to the runtime comparison table
 
+## 2026-07-28
+
+- **Runtimes**: Added ArcLight — many-core CPU inference framework for NUMA systems with tensor parallelism (OpenBMB, MIT, 46% higher throughput than llama.cpp). Added cpubrrr — from-scratch NEON/SME kernels in Rust for MoE inference on Apple M4 (Apache 2.0, claims 110 tok/s for gpt-oss:20b). Added Ferrite — CPU-native Rust inference engine with pure Rust SIMD, no GPU code paths (Apache 2.0). Added MojoLlama — high-throughput CPU inference engine built on Modular MAX with Mojo backend, MoE-optimized (Apache 2.0). Added Project Zero — pure C BitNet inference engine requiring no SIMD, ~1,000 tok/s on 1.58-bit models (MIT). Added Reame — CPU-first inference server on llama.cpp with disk KV cache and self-regulating speculation (MIT). Updated runtime comparison table with all six entries.
+- **Papers**: Added FairyFuse — multiplication-free ternary inference on CPU, 3.6× speedup over GGML (arXiv:2607.17751). Added AdaptiveSD — speculative decoding for CPU-only inference, 1.9× speedup (arXiv:2603.19254). Added SMEPilot — ARM SME instruction optimization for CPU inference (arXiv:2607.11141).
+
 ## 2026-07-15
 
 - **Runtimes**: Added bitnet.cpp — Microsoft's official inference framework for 1-bit / 1.58-bit ternary LLMs, with CPU-optimized x86/ARM kernels (2.4–6.2× speedup, 71.9–82.2% energy reduction on x86 vs llama.cpp; runs a 100B b1.58 model on a single CPU at 5–7 tok/s); added a row to the runtime comparison table
