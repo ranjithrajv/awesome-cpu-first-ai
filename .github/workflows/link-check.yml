@@ -50,16 +50,16 @@ jobs:
           path: ${{ runner.temp }}/lychee-report.md
           retention-days: 30
 
-      - name: Open issue on scheduled failure
-        if: github.event_name == 'schedule'
+      - name: Warn about inactive URLs
+        if: steps.lychee.outputs.exit_code != '0'
+        run: echo "::warning::Inactive or broken URLs detected. See the lychee-report artifact for details."
+
+      - name: Open issue on scheduled detection of broken links
+        if: github.event_name == 'schedule' && steps.lychee.outputs.exit_code != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -s "${{ runner.temp }}/lychee-report.md" ]; then
-            gh issue create \
-              --title "[auto] Broken links detected $(date -u +%Y-%m-%d)" \
-              --body-file "${{ runner.temp }}/lychee-report.md" \
-              --label maintenance
-          else
-            echo "No broken links found."
-          fi
+          gh issue create \
+            --title "[auto] Broken links detected $(date -u +%Y-%m-%d)" \
+            --body-file "${{ runner.temp }}/lychee-report.md" \
+            --label maintenance
