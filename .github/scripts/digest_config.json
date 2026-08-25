@@ -1,0 +1,15 @@
+{
+  "list_description": "Awesome CPU-First AI curates tools, runtimes, models, and research for running AI inference on CPUs: llama.cpp and forks, GGUF quantization, CPU-optimized runtimes (ONNX Runtime, OpenVINO), small language models, edge inference, embedding search on CPU, and performance tuning for x86/ARM without GPUs.",
+  "hn_queries": ["llama.cpp", "CPU inference", "GGUF", "local LLM", "small language model"],
+  "github_queries": ["cpu inference llm", "gguf quantization", "llama.cpp alternative", "onnx runtime cpu optimization"],
+  "rss_feeds": [
+    "https://huggingface.co/blog/feed.xml",
+    "https://dev.to/feed/tag/llm",
+    "https://dev.to/feed/tag/machinelearning"
+  ],
+  "keywords": ["cpu inference", "llama.cpp", "gguf", "quantization", "small language model", "onnx", "openvino", "edge ai"],
+  "min_hn_points": 10,
+  "min_github_stars": 20,
+  "days_back": 14,
+  "max_llm_candidates": 25
+}
