@@ -36,7 +36,7 @@ jobs:
 
       - name: Upload digest artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: research-digest
           path: ${{ runner.temp }}/digest.md
