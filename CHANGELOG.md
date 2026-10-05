@@ -4,6 +4,10 @@ All notable additions and changes to awesome-cpu-first-ai.
 
 ---
 
+## 2026-10-05
+
+- **Volunteer Computing**: Added a new "Volunteer Computing and Idle-CPU Grids" section framing volunteer computing as the CPU-first thesis at planetary scale — pooling idle commodity CPUs already deployed into a virtual supercomputer at zero marginal hardware cost, where throughput is bounded by availability rather than VRAM and the same quantized, CPU-native workload runs on every heterogeneous volunteer machine. Links [Awesome Volunteer Computing](https://github.com/ranjithrajv/awesome-volunteer-computing) alongside BOINC and Folding@home as the canonical CPU-harvesting infrastructure. Added the section to the README Contents and *What's New*.
+
 ## 2026-08-14
 
 - **On-Device**: Added Off Grid AI (OGAM) — an MIT-licensed cross-platform offline AI suite (Android, iOS, macOS; React Native) that runs any GGUF model via llama.cpp on CPU (15–30 tok/s on flagship) with optional OpenCL (Adreno) / Metal (Apple Silicon) GPU and experimental Snapdragon Hexagon NPU acceleration behind automatic backend detection, plus on-device vision (SmolVLM, Qwen3-VL), Whisper speech-to-text, Stable Diffusion image generation, tool calling, MCP integration, a project knowledge base with on-device embeddings, and local-network OpenAI-compatible server support. Fully offline, no account or API key; per-model RAM management with lean/balanced/aggressive loading policies. Added to the On-device apps listing under Mobile Phone CPUs and to the End-User Apps subsection of docs/mobile-cpu-inference.md.

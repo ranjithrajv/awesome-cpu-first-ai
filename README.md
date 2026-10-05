@@ -22,6 +22,7 @@ This list is for engineers who want to question that GPU default and reach for t
 
 ## What's New
 
+- **2026-10**: Added [Volunteer Computing and Idle-CPU Grids](#volunteer-computing-and-idle-cpu-grids) — a new section framing volunteer computing as the CPU-first thesis at planetary scale, where idle commodity CPUs already deployed everywhere are pooled into a virtual supercomputer at zero marginal hardware cost, and the same quantized, CPU-native workload runs on every heterogeneous volunteer machine. Links [Awesome Volunteer Computing](https://github.com/ranjithrajv/awesome-volunteer-computing) plus [BOINC](https://boinc.berkeley.edu/) and [Folding@home](https://foldingathome.org/) as the canonical CPU-harvesting infrastructure.
 - **2026-08 (mid)**: Added [RunAnywhere SDKs](#on-device-edge-arm-and-sbcs) (production cross-device local-AI SDK toolkit over one C++ core) and [cactus](#on-device-edge-arm-and-sbcs) (low-latency edge-cloud engine for phones/wearables) to [On-Device, Edge, ARM, and SBCs](#on-device-edge-arm-and-sbcs) — both flagged with non-OSI commercial-gated license caveats. Added [TinyChatEngine](#runtimes-and-inference-engines) (MIT Han Lab, MLSys 2024 Best Paper, AWQ W4A16 on x86/ARM) to [Runtimes](#runtimes-and-inference-engines) and the runtime comparison table. Added [Qualcomm GenieX](#runtimes-and-inference-engines) (community GENIE, any GGUF on Hexagon NPU / Adreno GPU / CPU) to [Runtimes](#runtimes-and-inference-engines), the NPU runtime table, and [On-Device](#on-device-edge-arm-and-sbcs).
 - **2026-08 (mid)**: Added [Off Grid AI (OGAM)](#mobile-phone-cpus) — an MIT-licensed cross-platform offline AI suite (Android, iOS, macOS) running GGUF LLMs via llama.cpp on CPU with optional OpenCL/Metal GPU and experimental Snapdragon NPU acceleration, plus on-device vision, Whisper STT, Stable Diffusion image generation, tool calling, MCP, and local-network OpenAI-compatible servers; added to the [On-device apps](#mobile-phone-cpus) listing.
 - **2026-08 (mid)**: Added [BigMoeOnEdge](#on-device-edge-arm-and-sbcs) — an Android/desktop engine built on llama.cpp's public API that streams only the experts each token routes to from flash storage, running DeepSeek V4 Flash 0731 (284B, ~91 GB) on a 12 GB phone CPU at ~1 tok/s with byte-identical output; added to [On-Device, Edge, ARM, and SBCs](#on-device-edge-arm-and-sbcs), cross-listed under [Mixture-of-Experts on CPU](#mixture-of-experts-on-cpu), and mapped in the [R&D ideas playbook](docs/cpu-first-rd-ideas.md).
@@ -133,6 +134,7 @@ flowchart TD
 - [CPU Fine-Tuning](#cpu-fine-tuning)
 - [Talks, Papers, and Articles](#talks-papers-and-articles)
 - [Docs](#docs)
+- [Volunteer Computing and Idle-CPU Grids](#volunteer-computing-and-idle-cpu-grids)
 
 ---
 
@@ -530,6 +532,16 @@ Companion documents for planning, converting, deploying, benchmarking, and troub
 
 - [Roadmap](ROADMAP.md) - Quarterly milestones aligned with enterprise inference adoption cycles.
 - [Community Hackathon](docs/community-hackathon.md) - Structured, sponsor-backed hackathon to generate real-world CPU inference examples, benchmarks, and deployment patterns.
+
+---
+
+## Volunteer Computing and Idle-CPU Grids
+
+Volunteer computing is the CPU-first thesis at planetary scale. Instead of provisioning accelerators, it pools the idle CPUs already sitting in homes, offices, and data centers into a virtual supercomputer — the literal version of this list's premise that the platform you need is the one you already have everywhere. The economics rhyme exactly: the marginal cost of an idle core is zero, so throughput is bounded by availability rather than VRAM, and each node runs whatever its heterogeneous hardware can execute. That is the same bet as quantized, CPU-native inference — a model that runs on one laptop runs on thousands of them. The current wave of distributed LLM projects (Petals, Exo, hivemind, and this list's own [distributed-llama](#runtimes-and-inference-engines)) pushes the idea from scientific batch jobs toward serving sharded models across the devices contributors already own.
+
+- [Awesome Volunteer Computing](https://github.com/ranjithrajv/awesome-volunteer-computing) - Curated list of platforms, projects, research, and developer tools for donating idle compute to scientific and humanitarian research (BOINC, Folding@home, Petals, and more); the natural CPU-first companion for turning spare CPU cycles into capacity at scale.
+- [BOINC](https://boinc.berkeley.edu/) - Open-source volunteer-computing middleware behind dozens of research projects; runs on commodity x86 and ARM CPUs and is the canonical way to harvest spare CPU cycles for large batch workloads.
+- [Folding@home](https://foldingathome.org/) - Distributed protein-folding research platform and the best-known proof of volunteer computing's scale; runs CPU work units alongside GPU and has drawn on millions of volunteer machines.
 
 ---
 
