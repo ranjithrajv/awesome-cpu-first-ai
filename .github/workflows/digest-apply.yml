@@ -18,4 +18,5 @@ jobs:
     uses: ranjithrajv/awesome-enhancer/.github/workflows/digest-apply.yml@main
     with:
       issue-number: ${{ github.event.issue.number }}
+      base-branch: master
     secrets: inherit
