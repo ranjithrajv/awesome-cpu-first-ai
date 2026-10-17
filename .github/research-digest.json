@@ -1,0 +1,39 @@
+{
+  "list_description": "Awesome CPU-First AI curates tools, runtimes, models, and research for running AI inference on CPUs: llama.cpp and forks, GGUF quantization, CPU-optimized runtimes (ONNX Runtime, OpenVINO), small language models, edge inference, embedding search on CPU, and performance tuning for x86/ARM without GPUs.",
+  "keywords": ["cpu inference", "llama.cpp", "gguf", "quantization", "small language model", "onnx", "openvino", "edge ai"],
+
+  "days_back": 14,
+  "max_llm_candidates": 25,
+  "max_per_source": 10,
+  "per_source_caps": { "Reddit": 6, "RSS": 8 },
+  "source_weights": { "RSS": 0.8, "arXiv": 0.9 },
+  "half_life_days": 14,
+  "default_section": "Runtimes and Inference Engines",
+
+  "hn_queries": ["llama.cpp", "CPU inference", "GGUF", "local LLM", "small language model"],
+  "min_hn_points": 10,
+
+  "github_queries": ["cpu inference llm", "gguf quantization", "llama.cpp alternative", "onnx runtime cpu optimization"],
+  "github_topics": ["llama-cpp", "gguf", "cpu-inference", "onnxruntime", "local-llm"],
+  "min_github_stars": 20,
+
+  "reddit_subreddits": ["LocalLLaMA", "llama_cpp", "MachineLearning"],
+
+  "lobsters_tags": ["ai", "ml"],
+  "min_lobsters_score": 5,
+
+  "arxiv_queries": ["cat:cs.LG AND all:\"quantization\"", "all:\"llama.cpp\""],
+
+  "mastodon_instances": ["fosstodon.org"],
+  "mastodon_tags": ["llm", "localai"],
+
+  "bluesky_queries": ["llama.cpp", "local LLM"],
+
+  "rss_feeds": [
+    "https://huggingface.co/blog/feed.xml",
+    "https://dev.to/feed/tag/llm",
+    "https://dev.to/feed/tag/machinelearning"
+  ],
+
+  "producthunt": true
+}
