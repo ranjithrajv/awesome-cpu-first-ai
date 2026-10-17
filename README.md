@@ -233,6 +233,8 @@ flowchart TD
 | Samsung ENN                 | Samsung NPU          | ENN                | Android (Exynos)                |
 
 ---
+- [Llama.cpp on a jailbroken PS5: run any GGUF model natively on the console](https://github.com/cobanov/PS5LM)
+- [getumbrel/llama-gpt](https://github.com/getumbrel/llama-gpt) - A self-hosted, offline, ChatGPT-like chatbot. Powered by Llama 2. 100% private, with no data leaving your device. New: Code Llama support!
 
 ## Quantization and Model Formats
 
