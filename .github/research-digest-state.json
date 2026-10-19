@@ -1,0 +1,177 @@
+{
+  "https://arxiv.org/abs/2610.19743v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Discriminative Score Function: Turning Pretrained Models into Functional Generative Priors"
+  },
+  "https://arxiv.org/abs/2610.20136v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Seeing at the Edge: Energy Characterization of Vision-Language Model Inference on Edge Platforms"
+  },
+  "https://arxiv.org/abs/2610.20303v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "SpectrumQuant: Spectrum Alignment for LLM Quantization"
+  },
+  "https://arxiv.org/abs/2610.20353v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Beyond Expert Rankings: Contrast Calibration for Mixed-Precision MoE Quantization"
+  },
+  "https://arxiv.org/abs/2610.21810v2": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "N-Gram Memories at Two Bits: Quantizing Lookup Tables in Large Language Models"
+  },
+  "https://arxiv.org/abs/2610.22435v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "TRACE: Transformer Residual Activation Codebook Encoding for Communication-efficient Distributed Edge Inference"
+  },
+  "https://arxiv.org/abs/2610.22621v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Noise-shaped Sampling and Annealing for Scalable On-the-edge Training of Binary and Ternary AI Models"
+  },
+  "https://arxiv.org/abs/2610.22771v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Reusing Calibration Gains across Model Representations"
+  },
+  "https://arxiv.org/abs/2610.23265v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "ADT: All-Atom Diffusion Tokenizer for 3D Molecular Structures"
+  },
+  "https://arxiv.org/abs/2610.23338v1": {
+    "first_seen": "2026-10-19",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "SETAREH Transform: A Sorting-Assisted Haar-Wavelet Sparsification Method for Approximate Inner-Product Computation"
+  },
+  "https://dev.to/ai_maya_063fc568e157562fd/ling-31-flash-and-the-71-hybrid-how-much-kv-cache-does-a-560b-model-need-at-1m-tokens-4oah": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Ling-3.1-flash and the 7:1 hybrid: how much KV cache does a 560B model need at 1M tokens?"
+  },
+  "https://github.com/open-multi-agent/open-multi-agent": {
+    "first_seen": "2026-10-19",
+    "last_score": 700.5,
+    "status": "new",
+    "times_seen": 1,
+    "title": "open-multi-agent/open-multi-agent"
+  },
+  "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQY1g4S0xRRVV6Wkx6TU1SamRtQ2NJSFllRmtza29VeGVGNWpyOGVkLUVrMUkyS19xWjF0TzE1QXRmc2E0TVItU3dhV1E2SzJxa3RuRzcxSXdCSXBkNG1Ca0N3dU1fOUdBMk5KMFZrMFRWcF95NWYyX2JFS0ZFV1NPNzM0eVZDSXotRHVwV0tYV3dScmxNTWVGb3VHeFdqWGJpTmtYVGVraGRHUTZZYUp5aFd6UHcwdFhEN0dibFYtNVJMaUwtUlY4bzNKY3NuQ284SjBnS3k2cWI0LWhDbkI0?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Intel OpenVINO 2026.1 integrates llama.cpp with Wildcat Lake and - igor\u00b4sLAB"
+  },
+  "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5yTzdYeUZTS0hNUGpvVWp6OHRnemE0QUczVjZkckFtTkpMMXBBZUJrazl3VVZOb2RfaS1Jdy1YcTdIa3ZMcS03TlpyNDFIcGVQbG9HbWRGTk0xMGtEOXc?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp Tutorial: Run a Local LLM in 12 Steps [2026] - https://tech-insider.org/"
+  },
+  "https://news.google.com/rss/articles/CBMiZEFVX3lxTE93cDN4aVVSYUEwZ3diazk3YlprZEZyakZFN0lndEVBRHRvX3lQWUJLSHp4RkVJR3Vqc3UwdjNTWDBRanJCTmcxOXBnamVRSzNiSUQ0Vk56OVhrajlWVHhxc2pyNEY?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Intel Releases OpenVINO 2026.1 With Backend For Llama.cpp, New Hardware Support - Phoronix"
+  },
+  "https://news.google.com/rss/articles/CBMiakFVX3lxTE9leW92VWN1eC01NTViUTN2b2RpX0d4Z3F5cmxURVFycFJIb250TXZjRkVQTEg3NVRYWlRfQXVMaFJGU2JHa1JMdEJMY2MwNlRHdHdYNG5POThWY1hiVTVsa21rVGdEeWNac2c?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "What else is included in the 'GGUF' file format used by llama.cpp for AI language models, besides weights? - GIGAZINE"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXdXMmhSNVFGZWk5amVEbWF3RlNLTWtoMWpzMnlYMlBUWV8weVEzWTNERHhYTE5abXdROFlHMjhRb05wcUZYRXNueEM1VnI3cVIzdWowY0JHUUlvMlpPMVFoQXVqYTJTV3lKS1Jad1BfenY0VEhIN2JOU0Q4bkhtbHlpSndJZnZxUTFCTQ?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Most people use Ollama or llama.cpp for local LLMs, but these are the tools I switch to when it gets serious - XDA"
+  },
+  "https://news.google.com/rss/articles/CBMimgFBVV95cUxPcXA5UlZncHR5U1NDUTBHRmlDbVJ5eTNOMmhKblkyYm5zQVBDUVRIaUF4NzhLRlg5OWduVHVQVXpyQ1dPX0ZEOXdrTlUwQVZKQkxUQUdSME1wWGFrUG1zbEtiRlpudTFTMDl3NG02R0NiZ0RVa3ZtWHNHam1WNjN5TWhjb21oRmc4ZVZlSE9zMHF4SzdTcl9rcnJn?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Bleeding Llama: Malicious GGUF Drains Your Local LLM Memory - Pasquale Pillitteri"
+  },
+  "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOdHpQWE1RQnBiR1g1M0xCem5BWkkya3pfMHRrTnlLR3V1WDR3WlVKUHZLVXBUYmhwZ015NHZ3aGhmMjF0SkVlckxpV2YyVkRqVkx2NDBEWEFxSGp3NUROLXpaT3dpREFYNzhrMGtCT1RVcDluRkdMdGRqbFVZTndLY2czdnNHR3I1a29iR0pjSWpFNGdzemcwNm9sUmhoOHdVYnlEZEpmRGc?oc=5": {
+    "first_seen": "2026-10-19",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "I moved my local models from Ollama to llama.cpp, and the reason I stayed has nothing to do with speed - XDA"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1x9d23j/72_hours_four_big_open_weights_drops_the_only_one": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "72 hours, four big open weights drops. The only one that fits in 24GB came from NVIDIA, of all companies."
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1x9mitw/calling_all_gpus_help_us_benchmark_sonicboom_v003": {
+    "first_seen": "2026-10-19",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Calling all GPUs: help us benchmark SonicBoom v0.0.3 \u2014 a compiler-first AI runtime that beats llama.cpp on decode"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1x9mwmz/dont_sleep_on_nemotron_35_super_vl": {
+    "first_seen": "2026-10-19",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Don't sleep on Nemotron 3.5 Super VL"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1x9pzt0/kapitsa_opensource_apple_silicon_optimized_metal": {
+    "first_seen": "2026-10-19",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Kapitsa: open-source Apple Silicon optimized Metal engine built for Qwen and Nemotron. See benchmarks of Qwen 27B, Nemot"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1x9tzf1/qwen3827b_and_flashnext_on_consumer_hardware": {
+    "first_seen": "2026-10-19",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Qwen3.8-27B and Flash-Next on consumer hardware: engine numbers I could verify, and what they cost with 2026 RAM prices"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1x9xm89/herbert_plays_snake_open_jev": {
+    "first_seen": "2026-10-19",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Herbert plays snake (open Jev)"
+  }
+}
