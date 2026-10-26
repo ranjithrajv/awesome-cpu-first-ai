@@ -69,12 +69,89 @@
     "times_seen": 1,
     "title": "SETAREH Transform: A Sorting-Assisted Haar-Wavelet Sparsification Method for Approximate Inner-Product Computation"
   },
+  "https://arxiv.org/abs/2610.31309v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Extreme Compression of Per-Layer Embeddings via Cross-Layer Latent Vector Quantization"
+  },
+  "https://arxiv.org/abs/2610.31412v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "SQuAT: Spherical Lattice Vector Quantization-Aware Training"
+  },
+  "https://arxiv.org/abs/2610.31479v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Evaluating the Applicability of LLM Inference Optimizations on Apple Silicon"
+  },
+  "https://arxiv.org/abs/2610.31633v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "BeNice! Closing Looping's Inference-Memory Gap via KV-Sharing"
+  },
+  "https://arxiv.org/abs/2610.31913v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Decode Late, Multiply Once: Rethinking the Dot Product for Quantized Weights"
+  },
+  "https://arxiv.org/abs/2610.31931v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Every Weight Is a Path of Shared Discrete Decisions"
+  },
+  "https://arxiv.org/abs/2610.32127v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "MPQ: A Message-Passing View of Post-Training Quantization"
+  },
+  "https://arxiv.org/abs/2610.32243v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "BiLoCo: Binary Low-Rank Corrections for Post-Training Quantization"
+  },
+  "https://arxiv.org/abs/2610.32465v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Sharpness-aware Orthogonalized Momentum Algorithms"
+  },
+  "https://arxiv.org/abs/2610.32674v1": {
+    "first_seen": "2026-10-26",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "EMG Tokenization Preserves Movement Information at a Fraction of the Bitrate"
+  },
   "https://dev.to/ai_maya_063fc568e157562fd/ling-31-flash-and-the-71-hybrid-how-much-kv-cache-does-a-560b-model-need-at-1m-tokens-4oah": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
     "status": "new",
     "times_seen": 1,
     "title": "Ling-3.1-flash and the 7:1 hybrid: how much KV cache does a 560B model need at 1M tokens?"
+  },
+  "https://github.com/ARahim3/DigUp": {
+    "first_seen": "2026-10-26",
+    "last_score": 583.8,
+    "status": "new",
+    "times_seen": 1,
+    "title": "ARahim3/DigUp"
   },
   "https://github.com/open-multi-agent/open-multi-agent": {
     "first_seen": "2026-10-19",
@@ -97,6 +174,13 @@
     "times_seen": 1,
     "title": "llama.cpp Tutorial: Run a Local LLM in 12 Steps [2026] - https://tech-insider.org/"
   },
+  "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5ycURvUHE2ZFRTS29SazNIYWI3QzRYd2tYbkNwMGVwako0UENoUVJMNUZjYjBCZUdFOElkWTVzbmU1WXI2ekZvV2d3NXZ4MTdEM0Z6WXozS1NNdENYUzQzckd3?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "AMD ROCm vs. Vulkan Performance For Lemonade Local AI Server With Llama.cpp - Phoronix"
+  },
   "https://news.google.com/rss/articles/CBMiZEFVX3lxTE93cDN4aVVSYUEwZ3diazk3YlprZEZyakZFN0lndEVBRHRvX3lQWUJLSHp4RkVJR3Vqc3UwdjNTWDBRanJCTmcxOXBnamVRSzNiSUQ0Vk56OVhrajlWVHhxc2pyNEY?oc=5": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
@@ -111,12 +195,40 @@
     "times_seen": 1,
     "title": "What else is included in the 'GGUF' file format used by llama.cpp for AI language models, besides weights? - GIGAZINE"
   },
+  "https://news.google.com/rss/articles/CBMid0FVX3lxTE9FR3VEdlZPT21QWlo1ZVg1cVNUdzM1dEVuelRaNTFuSWkxYzV4MWduOG84NHFHZDVYVTFOOWVpYzZwbDMxMEtJZmlSOS1nQnNDLThKbTZHZWhJSGRMU3ZfMHhkc0dOeVNsVEIyRk9MTU1JUVVneUFv?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Llama - llama.cpp's local AI, no command line required - Korben"
+  },
+  "https://news.google.com/rss/articles/CBMid0FVX3lxTFAxMjlrdGVqN1VyU1lVQ2ktUl9lRGN6SzZFcGw5NmliMVdPcjVwa1RRQ0FYcW5HNU02UDdGUWpsdzdhazczWXlMQ0JQTlc5Z1lmalo1akcyWmdTc1R0cVVhbXE5U1lraVg1WVFUTEZDdF9Lek95blJv?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp and Open WebUI: 12 Steps, 60 Min [2026] - shattered.io"
+  },
+  "https://news.google.com/rss/articles/CBMidEFVX3lxTE5SRDdNaGcxWEtfVVFrQUVid1RKLVlhSUVfQ3Zwc19UZDJKUGZFNUtYUFFvOXU2aHFlNVBnQWtDdGRRRWF4ejdNaGp1R0o5TFI2ck5JQjFfOXRPZndjQ1FHcGxlLUNLRlBTLWhNMi1reFdWS2l4?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "LM Studio vs Ollama vs llama.cpp: $0 to $500 [2026] - tech-insider.org"
+  },
   "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXdXMmhSNVFGZWk5amVEbWF3RlNLTWtoMWpzMnlYMlBUWV8weVEzWTNERHhYTE5abXdROFlHMjhRb05wcUZYRXNueEM1VnI3cVIzdWowY0JHUUlvMlpPMVFoQXVqYTJTV3lKS1Jad1BfenY0VEhIN2JOU0Q4bkhtbHlpSndJZnZxUTFCTQ?oc=5": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
     "status": "new",
     "times_seen": 1,
     "title": "Most people use Ollama or llama.cpp for local LLMs, but these are the tools I switch to when it gets serious - XDA"
+  },
+  "https://news.google.com/rss/articles/CBMimAFBVV95cUxPRElxalZKZFUyV0VnYUtlalJBeDdXdlY1VDRwc0VSNHJIcXhaNGt1ZkMwWVpLcUxhOG1TMTY0cDVGZXVXaWdwWmxWRDRTLUlJMHF6SG9TSDBtb3A4R3hpWG9VLTdNUkJaMWJxdmw5Z2FkREtlUWduVlo3Z2I3TVNwdVAzM0kwVFE4b25Ob1I4UHgwZ1NXVTljSg?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Accelerate llama.cpp on AMD EPYC: ZenDNN Delivers Up to 4.5x the Prompt Processing - AMD"
   },
   "https://news.google.com/rss/articles/CBMimgFBVV95cUxPcXA5UlZncHR5U1NDUTBHRmlDbVJ5eTNOMmhKblkyYm5zQVBDUVRIaUF4NzhLRlg5OWduVHVQVXpyQ1dPX0ZEOXdrTlUwQVZKQkxUQUdSME1wWGFrUG1zbEtiRlpudTFTMDl3NG02R0NiZ0RVa3ZtWHNHam1WNjN5TWhjb21oRmc4ZVZlSE9zMHF4SzdTcl9rcnJn?oc=5": {
     "first_seen": "2026-10-19",
@@ -131,6 +243,27 @@
     "status": "new",
     "times_seen": 1,
     "title": "I moved my local models from Ollama to llama.cpp, and the reason I stayed has nothing to do with speed - XDA"
+  },
+  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQeEJ4aV9QaE94bk16SU93TlNmbjd1cFRoQXBNSjZONzYzNmJwcUZyeExsUkJ1V0ozSUhHeTU4ZW1TX1dybkg0bzBtYy1Nbl92Tk4wbk5VMjFzejVCMWNZcFNZUTBlRkRGNl9wRG54dHlEUTNGRlVYRmdxc0FhWkxtbUV5Z1FJekR5VFBPZVRIZm9nZjFDVEZXOEN2TkVPWUk5a0hORWNvdDktaVk?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Deploy decision models with llama.cpp on Amazon SageMaker AI - Amazon Web Services (AWS)"
+  },
+  "https://news.google.com/rss/articles/CBMirgFBVV95cUxNanZJTTFOUFh1ck1vVm1HY05qTFphVkhTOFczenpDV1c5QWpmTGxuWEFmclpTb01SZV9fS3ljcFBoSVdQODZuRkRoeFRJbmo1aG5LY1VfYVlqRW53V3NSc0N5d0E3ay12bldqWHVfenlmMHlpVnBiYUU4M2FqWHgwMm5hekxqdU1KUkZfU3N5SkpaQzJXOWlucVladWJhVlUzVUs5aDM2dFFKNHRKWHc?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "I switched from LM Studio to llama.cpp, and I'm never going back to a bloated wrapper - How-To Geek"
+  },
+  "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOdVdkakJFT1BXRUtyaTdLYi13R3lucXlZeVlzMjVTM25KR2ZuYzh5eGgxaFdFRGp0YmhleERTZXo5ME9GMGpTY2NuREJSaHZrMUQ4N21qQWlObXJLUDBFTnpkWTliM0dVM1hjWjNjdnd2d2hMZ0NMd3czeklsVlpWcmtBQnBaNkJDdndDS3NWSUxtREJZcTZYVjZOSDRicjdRN05BQVpobVpHV056eEJGQ0dRNjlsNmJJdVAxSVB6Q0M?oc=5": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "I changed one llama.cpp flag, and my 8GB laptop GPU now runs a 35B model faster than I can read - XDA"
   },
   "https://reddit.com/r/LocalLLaMA/comments/1x9d23j/72_hours_four_big_open_weights_drops_the_only_one": {
     "first_seen": "2026-10-19",
@@ -173,5 +306,47 @@
     "status": "new",
     "times_seen": 1,
     "title": "Herbert plays snake (open Jev)"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xfeho8/nanbeige4333b_quantised_gguf": {
+    "first_seen": "2026-10-26",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Nanbeige4.3-33B Quantised GGUF"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xfizft/psa_llamacpp_cve2026116096": {
+    "first_seen": "2026-10-26",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "PSA: llama.cpp CVE-2026-116096"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xfqi2d/boro64ternarynemotron35lightning30ba3bgguf": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "boro64/Ternary-Nemotron-3.5-Lightning-30B-A3B-GGUF \u00b7 Hugging Face"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xfrek0/qwen38flashnext_swift_15_vs_unsloth_on_strix_halo": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Qwen3.8-Flash-Next: Swift 1.5 vs Unsloth on Strix Halo (Halogen, gufo, llama.cpp, UD-Q4_K_XL and IQ4_XS)"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xfrgt5/tencenthysimulmt30ba3b_hugging_face": {
+    "first_seen": "2026-10-26",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "tencent/Hy-SimulMT-30B-A3B \u00b7 Hugging Face"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xft2ae/have_8_gb_of_vram_and_32_gb_of_ram_you_can_run": {
+    "first_seen": "2026-10-26",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Have 8 GB of VRAM and 32 GB of RAM? You can run Qwen 3.8 Flash Next at up to 900 t/s PP and 30 t/s TG!"
   }
 }
