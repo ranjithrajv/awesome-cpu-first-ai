@@ -139,6 +139,76 @@
     "times_seen": 1,
     "title": "EMG Tokenization Preserves Movement Information at a Fraction of the Bitrate"
   },
+  "https://arxiv.org/abs/2610.38681v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Weaken to Strengthen: Weakening-Induced On-Policy Self-Distillation for Large Reasoning Models"
+  },
+  "https://arxiv.org/abs/2610.39114v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "From Local Recovery to Unified Generation: Discovering Triple Set in Knowledge Graphs via Observation-Anchored Latent Di"
+  },
+  "https://arxiv.org/abs/2610.39418v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "LinQuant: Functional Invariances for Low-Precision Linear Recurrences"
+  },
+  "https://arxiv.org/abs/2610.39931v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Low-Bit GDN Recurrent-State Quantization: Global Gradient-aware Allocation and Pure-Write Sliding Windows"
+  },
+  "https://arxiv.org/abs/2610.40055v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "One Vector or Many? Clustered Optimal-Transport Steering under Quantization"
+  },
+  "https://arxiv.org/abs/2610.40345v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "A Unified Hessian-Guided Framework for Post-Training Quantization"
+  },
+  "https://arxiv.org/abs/2610.41055v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Communication-Efficient Private Federated Reinforcement Learning with Post-Quantum Authentication for Vehicular Networks"
+  },
+  "https://arxiv.org/abs/2610.41366v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "What We Keep of What We Forget: Replacement Operators and Routing Semantics in Training-Free MoE Expert Pruning"
+  },
+  "https://arxiv.org/abs/2610.41408v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "SACQ: Structure-Aware Codebook Quantization for Ultra-Low-Bit Vision-Language-Action Models"
+  },
+  "https://arxiv.org/abs/2610.41822v1": {
+    "first_seen": "2026-11-02",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Trainable Vector Quantization for Large Language Models"
+  },
   "https://dev.to/ai_maya_063fc568e157562fd/ling-31-flash-and-the-71-hybrid-how-much-kv-cache-does-a-560b-model-need-at-1m-tokens-4oah": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
@@ -146,12 +216,26 @@
     "times_seen": 1,
     "title": "Ling-3.1-flash and the 7:1 hybrid: how much KV cache does a 560B model need at 1M tokens?"
   },
+  "https://dev.to/spicykim/what-a-32gb-gpu-actually-lets-you-run-locally-4bgc": {
+    "first_seen": "2026-11-02",
+    "last_score": 10.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "What a 32GB GPU actually lets you run locally"
+  },
   "https://github.com/ARahim3/DigUp": {
     "first_seen": "2026-10-26",
     "last_score": 583.8,
     "status": "new",
     "times_seen": 1,
     "title": "ARahim3/DigUp"
+  },
+  "https://github.com/FrigadeHQ/hob": {
+    "first_seen": "2026-11-02",
+    "last_score": 177.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT"
   },
   "https://github.com/open-multi-agent/open-multi-agent": {
     "first_seen": "2026-10-19",
@@ -223,6 +307,20 @@
     "times_seen": 1,
     "title": "Most people use Ollama or llama.cpp for local LLMs, but these are the tools I switch to when it gets serious - XDA"
   },
+  "https://news.google.com/rss/articles/CBMilwFBVV95cUxNOVlDc2R6Mkd2dVROMExBNGxyUnkyakVaOXNXYWxBdXJnZElBOXJXc3piQXZGZHNZQzZGeEU2WURUQW5nYUhuTGFrSEM1cFd4TDlnd1c5SHJsRVJWZXZPRXdkb3VjcHFHU01WZFpqSWxYTXRna0xVa3lwSkFUYkFqZnQwek9ZVGZ1NGVXOGk4Qmd2bmJoekZZ?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Run the Mythos Enhanced Coding Model Locally with llama.cpp and Pi - KDnuggets"
+  },
+  "https://news.google.com/rss/articles/CBMimAFBVV95cUxOaEowQkR4YTljaVN1bUk1Z1BNTlRWNzVPY2xTa21Wc3d6S21XVVdyWjdYMDFBdGdhTVlONHVGc0x3TGhUM2M3LUlaWG8wVmdrenJjVk4tWDZDRGZDYUFfajRISF9ncjFqLVpBODl5YWxTbWN1UFVpclBsTmlLOVozaWVmVy1mM2xUN0pQVkNoWE5vclFabmdGcg?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Run Muse Glimmer for Local Vibe Coding with llama.cpp, DFlash, and Pi - KDnuggets"
+  },
   "https://news.google.com/rss/articles/CBMimAFBVV95cUxPRElxalZKZFUyV0VnYUtlalJBeDdXdlY1VDRwc0VSNHJIcXhaNGt1ZkMwWVpLcUxhOG1TMTY0cDVGZXVXaWdwWmxWRDRTLUlJMHF6SG9TSDBtb3A4R3hpWG9VLTdNUkJaMWJxdmw5Z2FkREtlUWduVlo3Z2I3TVNwdVAzM0kwVFE4b25Ob1I4UHgwZ1NXVTljSg?oc=5": {
     "first_seen": "2026-10-26",
     "last_score": 4.0,
@@ -237,12 +335,33 @@
     "times_seen": 1,
     "title": "Bleeding Llama: Malicious GGUF Drains Your Local LLM Memory - Pasquale Pillitteri"
   },
+  "https://news.google.com/rss/articles/CBMimwFBVV95cUxPZC1tOWlPeUVhREdPZ3lCTnVuV25ycGlZQkxPVkV0LUZzTl8wV01DWnctdWZwMnpqWmxMc2lHN1BfZjFOQ0MtTTdrUDNfeWREUDBYSTBDUk9uMGJuOFdfdmZlNmxzVkhVQ2VJRVJHOWl5MzhkYXUtSHhPY1NwVnJTcE9KMk5mY281ek15NllPZDA1X1RtWTRka2hKaw?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "A free 42x speedup for llama.cpp reveals the real 2026 AI cost lever - Startup Fortune"
+  },
+  "https://news.google.com/rss/articles/CBMinwFBVV95cUxOa0lrYjhnRm5jY2RCM0dfRG03TkZhZlM0SG5QTS13YTNCQ2I5dTFsSTd1SmJodGVkb2t3OXNiQjlPcE03SUV6cHNacFJkS280RUVJQ0NJY2RMc0ltZGtHLVhRYXRMS0hWbjZRSU53RGtIN1p1aC0wOTQtdGxOYWZWVnhadTdoQnN6OXlLWUNaTW1wcF9NTjJqRm8tQ2ttMFk?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "I finally ditched Ollama after using llama.cpp's WebUI, and I'm not going back anytime soon - XDA"
+  },
   "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOdHpQWE1RQnBiR1g1M0xCem5BWkkya3pfMHRrTnlLR3V1WDR3WlVKUHZLVXBUYmhwZ015NHZ3aGhmMjF0SkVlckxpV2YyVkRqVkx2NDBEWEFxSGp3NUROLXpaT3dpREFYNzhrMGtCT1RVcDluRkdMdGRqbFVZTndLY2czdnNHR3I1a29iR0pjSWpFNGdzemcwNm9sUmhoOHdVYnlEZEpmRGc?oc=5": {
     "first_seen": "2026-10-19",
     "last_score": 4.0,
     "status": "new",
     "times_seen": 1,
     "title": "I moved my local models from Ollama to llama.cpp, and the reason I stayed has nothing to do with speed - XDA"
+  },
+  "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNeXpydThvTE9jS3pjNEpPc2d2ZFczajExR2UwbHVQRXRaM0VZZVVwYWFnRjZpa3p4ZkJzcFItQWxvTU04d3picGVlR3ZWUGYtODl3UkI2QWRmbDl0bHhjU2pkMmRZRzVpcmY5MnNmZ0lFZjdRdHdJczcweVZOS1NZZjRscmwwRmV2OUREUU1aWjBKTzRnU3pSZ1pNTVlEaWtfQlVBbWtUdWJlZw?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Amazon SageMaker llama.cpp Deployment Turns Chat Models Into Decision Infrastructure - remio"
   },
   "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQeEJ4aV9QaE94bk16SU93TlNmbjd1cFRoQXBNSjZONzYzNmJwcUZyeExsUkJ1V0ozSUhHeTU4ZW1TX1dybkg0bzBtYy1Nbl92Tk4wbk5VMjFzejVCMWNZcFNZUTBlRkRGNl9wRG54dHlEUTNGRlVYRmdxc0FhWkxtbUV5Z1FJekR5VFBPZVRIZm9nZjFDVEZXOEN2TkVPWUk5a0hORWNvdDktaVk?oc=5": {
     "first_seen": "2026-10-26",
@@ -258,12 +377,26 @@
     "times_seen": 1,
     "title": "I switched from LM Studio to llama.cpp, and I'm never going back to a bloated wrapper - How-To Geek"
   },
+  "https://news.google.com/rss/articles/CBMisgFBVV95cUxNcldseERzcm8xTG1qLXBicmpQa2dYZVp0YWZZSmlJdWp6SkNMWGpXTFoyUURZMkRtUV92WGM3bWNybUd5ZldGOTdyaW03aXFmQ0NCeFhoYzlaZndLWXI1OV9CTFJ6b3VYMGRzMEFXbGRTQlhjTlVoeHJnY0h5NjJGUWtuWU9jaEdvMmZvak9IeFgtSkY1OTZGYXA0Y0FjbUpkd3otVUtqakZUYWV3QWtET0ln?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "A wave of narrow AI inference engines is beating vLLM and llama.cpp at their own game - Startup Fortune"
+  },
   "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOdVdkakJFT1BXRUtyaTdLYi13R3lucXlZeVlzMjVTM25KR2ZuYzh5eGgxaFdFRGp0YmhleERTZXo5ME9GMGpTY2NuREJSaHZrMUQ4N21qQWlObXJLUDBFTnpkWTliM0dVM1hjWjNjdnd2d2hMZ0NMd3czeklsVlpWcmtBQnBaNkJDdndDS3NWSUxtREJZcTZYVjZOSDRicjdRN05BQVpobVpHV056eEJGQ0dRNjlsNmJJdVAxSVB6Q0M?oc=5": {
     "first_seen": "2026-10-26",
     "last_score": 4.0,
     "status": "new",
     "times_seen": 1,
     "title": "I changed one llama.cpp flag, and my 8GB laptop GPU now runs a 35B model faster than I can read - XDA"
+  },
+  "https://news.google.com/rss/articles/CBMiywFBVV95cUxPdENUZzlMeWVUeldjOUNtU21TaXZxSjFqWExieS1GNFZVTkdzMF9oRDRZd1AxdnNYM05IV0pwd3lyY1UwdVM3emZENlZvRGxBbFc4S05DSWlvSFFTV1lpMTVORWthZjlXclY1QXRKTmdGSm1JblJjVjV1M2dYNkM5bzBydmQwVDFVWENlbzNBQjZ3N01lMm9aNUlfVUMyd3oxdnJOREt5MEx3bHgxcEd4dER4bmxXanhHUWRTYlZlZnkxMWhWUnB3ZE9jaw?oc=5": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Stop Paying the Token Tax: What llama.cpp is and Why Every AI Engineer Needs to Understand It - Medium"
   },
   "https://reddit.com/r/LocalLLaMA/comments/1x9d23j/72_hours_four_big_open_weights_drops_the_only_one": {
     "first_seen": "2026-10-19",
@@ -348,5 +481,47 @@
     "status": "new",
     "times_seen": 1,
     "title": "Have 8 GB of VRAM and 32 GB of RAM? You can run Qwen 3.8 Flash Next at up to 900 t/s PP and 30 t/s TG!"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xlec67/getting_incredible_results_with_a_single_rtx": {
+    "first_seen": "2026-11-02",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Getting incredible results with a single RTX 3090ti and 128gb of ram. Deepseek-V4.1-Flash-1017 (35 tok/s decode) and Qwe"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xln8f2/jetbrainsmellum2112ba25bthinkingmtp_hugging_face": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP \u00b7 Hugging Face"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xlxnpc/we_released_kvark_sparkle_10_a_qwen3827bbased": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "We released KVARK Sparkle 1.0 \u2013 a Qwen3.8-27B-based model with up to 67% fewer thinking tokens"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xlys6k/release_ista_deepseekv41flash1017_gsqrco_coder_a": {
+    "first_seen": "2026-11-02",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "[Release] ISTA DeepSeek-V4.1-Flash-1017 GSQ-RCO Coder: a 763B model at 1 bit per parameter"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xm0b7r/builders_got_minimax_m31_flashs_open_weights_from": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Builders got MiniMax M3.1 Flash's open weights from 252.4 GB down to 93 GB in 10 days, and the lab thanked them by name"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xm0uy0/running_uncensored_deepseekv41flash1017_on_a_12": {
+    "first_seen": "2026-11-02",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Running UNCENSORED DeepSeek-V4.1-Flash-1017 on a 12 Gb VRAM"
   }
 }
