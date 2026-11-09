@@ -216,6 +216,13 @@
     "times_seen": 1,
     "title": "Ling-3.1-flash and the 7:1 hybrid: how much KV cache does a 560B model need at 1M tokens?"
   },
+  "https://dev.to/kohei_wada/only-the-design-of-a-local-llm-eval-harness-survives-rebuilding-it-for-qwen38-27b-24ic": {
+    "first_seen": "2026-11-09",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Only the Design of a Local LLM Eval Harness Survives \u2014 Rebuilding It for Qwen3.8 27B"
+  },
   "https://dev.to/spicykim/what-a-32gb-gpu-actually-lets-you-run-locally-4bgc": {
     "first_seen": "2026-11-02",
     "last_score": 10.0,
@@ -230,6 +237,13 @@
     "times_seen": 1,
     "title": "ARahim3/DigUp"
   },
+  "https://github.com/AienTech/dossier": {
+    "first_seen": "2026-11-09",
+    "last_score": 490.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "AienTech/dossier"
+  },
   "https://github.com/FrigadeHQ/hob": {
     "first_seen": "2026-11-02",
     "last_score": 177.0,
@@ -237,12 +251,82 @@
     "times_seen": 1,
     "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT"
   },
+  "https://github.com/LearningCircuit/local-deep-research": {
+    "first_seen": "2026-11-09",
+    "last_score": 955.4,
+    "status": "new",
+    "times_seen": 1,
+    "title": "LearningCircuit/local-deep-research"
+  },
+  "https://github.com/Michael-A-Kuykendall/shimmy": {
+    "first_seen": "2026-11-09",
+    "last_score": 601.5,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Michael-A-Kuykendall/shimmy"
+  },
+  "https://github.com/Osmantic/ODS": {
+    "first_seen": "2026-11-09",
+    "last_score": 780.2,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Osmantic/ODS"
+  },
+  "https://github.com/QwenAudio/SenseVoice": {
+    "first_seen": "2026-11-09",
+    "last_score": 972.2,
+    "status": "new",
+    "times_seen": 1,
+    "title": "QwenAudio/SenseVoice"
+  },
+  "https://github.com/RapidAI/RapidOCR": {
+    "first_seen": "2026-11-09",
+    "last_score": 848.8,
+    "status": "new",
+    "times_seen": 1,
+    "title": "RapidAI/RapidOCR"
+  },
+  "https://github.com/dograh-hq/dograh": {
+    "first_seen": "2026-11-09",
+    "last_score": 604.7,
+    "status": "new",
+    "times_seen": 1,
+    "title": "dograh-hq/dograh"
+  },
+  "https://github.com/lemonade-sdk/lemonade": {
+    "first_seen": "2026-11-09",
+    "last_score": 616.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "lemonade-sdk/lemonade"
+  },
+  "https://github.com/maziyarpanahi/openmed": {
+    "first_seen": "2026-11-09",
+    "last_score": 579.7,
+    "status": "new",
+    "times_seen": 1,
+    "title": "maziyarpanahi/openmed"
+  },
   "https://github.com/open-multi-agent/open-multi-agent": {
     "first_seen": "2026-10-19",
     "last_score": 700.5,
     "status": "new",
     "times_seen": 1,
     "title": "open-multi-agent/open-multi-agent"
+  },
+  "https://github.com/xorbitsai/inference": {
+    "first_seen": "2026-11-09",
+    "last_score": 964.9,
+    "status": "new",
+    "times_seen": 1,
+    "title": "xorbitsai/inference"
+  },
+  "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPMlNJdnBmOE02Q2M2RlJxbVdKZFhEbHlzTTlMZmZSVF9MUnE3X09XdzZvTkFFN0tieWdxdzNRRURuSGJqTGpVck1kOHNaeURPbm50V3VXeTRVaVlHY0JKWjBxRUtOUHhSejU0MjVpSDFidV9KSkg4YnZSOEhBYXV6UTFablM2c3pBWmlRY3ZNX0ZrQ3NfNFk3Q3QyTVlsR2wybkptQ1RYc0dabW5QMXFMcVJ5a0dDMVM1N2hNUkJlMXR1eF82NkhLN0loUUlsVnBsSkRFR2F3d9IB1wFBVV95cUxPMlNJdnBmOE02Q2M2RlJxbVdKZFhEbHlzTTlMZmZSVF9MUnE3X09XdzZvTkFFN0tieWdxdzNRRURuSGJqTGpVck1kOHNaeURPbm50V3VXeTRVaVlHY0JKWjBxRUtOUHhSejU0MjVpSDFidV9KSkg4YnZSOEhBYXV6UTFablM2c3pBWmlRY3ZNX0ZrQ3NfNFk3Q3QyTVlsR2wybkptQ1RYc0dabW5QMXFMcVJ5a0dDMVM1N2hNUkJlMXR1eF82NkhLN0loUUlsVnBsSkRFR2F3dw?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Liquid AI Ships LFM2.5-230M with llama.cpp, MLX, vLLM, SGLang, and ONNX Support for On-Device Inference - MarkTechPost"
   },
   "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQY1g4S0xRRVV6Wkx6TU1SamRtQ2NJSFllRmtza29VeGVGNWpyOGVkLUVrMUkyS19xWjF0TzE1QXRmc2E0TVItU3dhV1E2SzJxa3RuRzcxSXdCSXBkNG1Ca0N3dU1fOUdBMk5KMFZrMFRWcF95NWYyX2JFS0ZFV1NPNzM0eVZDSXotRHVwV0tYV3dScmxNTWVGb3VHeFdqWGJpTmtYVGVraGRHUTZZYUp5aFd6UHcwdFhEN0dibFYtNVJMaUwtUlY4bzNKY3NuQ284SjBnS3k2cWI0LWhDbkI0?oc=5": {
     "first_seen": "2026-10-19",
@@ -300,12 +384,33 @@
     "times_seen": 1,
     "title": "LM Studio vs Ollama vs llama.cpp: $0 to $500 [2026] - tech-insider.org"
   },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxNd012RG1oaFE4SDBmM0lVRGpvVV9NLUtLcHNZNU5Yb1hxLXE3c2I3ZlUzU0pDOTY1SGp2VDBjdThtY3htdlowMWItZ1JzRXlUVkNCWlBjUU1uVEpLOHhLTzdlYmNkQnFhZjEyLVdHNmdoa2N6enhDb2N4STk1ZGVXbHNvSmo?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp checkpoint fix speeds local coding agents - Startup Fortune"
+  },
+  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOa0tfdkRIUXJHNTR3VEdGRWRqU213VnFucmh4bm1KSEI5dHBDVDlkc0o1bE84bkVDdXpJU0l4MTdBcjVXcEROOEhJTlY1MGdlSTY2XzZnSDlYeHdPZEtST0lTTGs1MU5PT09hdjZtVEVTSzVCWWx1dXpVcFJWSDBKVXhUS0JxV0ls?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Nvidia Buys Hugging Face for $12.9 Billion and Gets llama.cpp Too - Pasquale Pillitteri"
+  },
   "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXdXMmhSNVFGZWk5amVEbWF3RlNLTWtoMWpzMnlYMlBUWV8weVEzWTNERHhYTE5abXdROFlHMjhRb05wcUZYRXNueEM1VnI3cVIzdWowY0JHUUlvMlpPMVFoQXVqYTJTV3lKS1Jad1BfenY0VEhIN2JOU0Q4bkhtbHlpSndJZnZxUTFCTQ?oc=5": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
     "status": "new",
     "times_seen": 1,
     "title": "Most people use Ollama or llama.cpp for local LLMs, but these are the tools I switch to when it gets serious - XDA"
+  },
+  "https://news.google.com/rss/articles/CBMilAFBVV95cUxNU3dFOTdCMEd4SU0zSC1SaEJOUkxFVURUYkFJNFlaXzk1T2xPV2FsNXZhX01kSFItUjRUTmg5dkJsckZXMVBBQmdTWGQ5X1dMeER1bUNYTTRDYXdkWTRIb1QzVFpnRE01Z3F6eElOU2VMMVEzb2xQbnFyVTc5NzBobmxrTklQbW5FclF2TDZ5VTJuM2pp?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Quantize Llama models with GGUF and llama.cpp - Towards Data Science"
   },
   "https://news.google.com/rss/articles/CBMilwFBVV95cUxNOVlDc2R6Mkd2dVROMExBNGxyUnkyakVaOXNXYWxBdXJnZElBOXJXc3piQXZGZHNZQzZGeEU2WURUQW5nYUhuTGFrSEM1cFd4TDlnd1c5SHJsRVJWZXZPRXdkb3VjcHFHU01WZFpqSWxYTXRna0xVa3lwSkFUYkFqZnQwek9ZVGZ1NGVXOGk4Qmd2bmJoekZZ?oc=5": {
     "first_seen": "2026-11-02",
@@ -349,6 +454,13 @@
     "times_seen": 1,
     "title": "I finally ditched Ollama after using llama.cpp's WebUI, and I'm not going back anytime soon - XDA"
   },
+  "https://news.google.com/rss/articles/CBMioAFBVV95cUxOSU1tbDJUMjRHOC1Kc2t3bGNISFdyc25UYk1tR2tlSWtEbzJOTHZvMC1IWmVSd1BCMm02X0dFT2ZtTmY3RU56WUhhZmxJNUhSdFRmeHJRaXB1cjFtVV9XcHRhelZPdzhZWjlkUmFoTGVtMGdseW5DZjQ3OGl1Z2lHQkZ2MXRLYTNrMGhuLVBFekVtM2x5X1NIVXBGRTdBcjdV?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Scaling llama.cpp On Neoverse N2: Solving Cross-NUMA Performance Issues - Semiconductor Engineering"
+  },
   "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOdHpQWE1RQnBiR1g1M0xCem5BWkkya3pfMHRrTnlLR3V1WDR3WlVKUHZLVXBUYmhwZ015NHZ3aGhmMjF0SkVlckxpV2YyVkRqVkx2NDBEWEFxSGp3NUROLXpaT3dpREFYNzhrMGtCT1RVcDluRkdMdGRqbFVZTndLY2czdnNHR3I1a29iR0pjSWpFNGdzemcwNm9sUmhoOHdVYnlEZEpmRGc?oc=5": {
     "first_seen": "2026-10-19",
     "last_score": 4.0,
@@ -383,6 +495,20 @@
     "status": "new",
     "times_seen": 1,
     "title": "A wave of narrow AI inference engines is beating vLLM and llama.cpp at their own game - Startup Fortune"
+  },
+  "https://news.google.com/rss/articles/CBMivAFBVV95cUxPMWdteUxLTTR1eko1QlZNNWo0MXZXTGh0dHlsNGxHdm1xYzFFSVVDVXp6bHBHXzJPcFlSSVIweGNrd0VMLVc4aThtZjhSWVJOM3ZyRWNVOGZzUW9CODA5cDdYYUdOaGtrRnpkb0FKM0haWmxRbDUtRnMxUTVlUy1xZnVzTHdxRHItWTVtSWdIU0lUV0ZCakJNU3U5bDRsNDd3emdUektmb05oTW8wLXlZRGY5Q1BfeklVVjRZQw?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Advancing Low Latency CPU Inference on AMD EPYC\u2122 Processors: - AMD"
+  },
+  "https://news.google.com/rss/articles/CBMivwFBVV95cUxPc2ttcWxrTW1wa2YySUhPd0NxX1lCUXVTUHR5dUNKMHlyYmM5dzBKOTByYm9rZER3UzZ3Zy1Mc2NsdGJSdlJ6WGZiRUx6UW9SdEdzc2luWkpHZkxtSXZNb3NBWnk2ZkxUYTNDakE5bUhPOUwzZEFOUi1reU1ramc4UVllSzZ0YUVSVzJEWXoxQmpvZDFETDZTMlBLbjUyVUw5NGxabDJLVjhjWWhsVkNqd2htS1F5S25RUjJXUENkTQ?oc=5": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Open-Source + AI ggml joins Hugging Face, llama.cpp stays open\u2026 local AI\u2019s long-term home - Adafruit"
   },
   "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOdVdkakJFT1BXRUtyaTdLYi13R3lucXlZeVlzMjVTM25KR2ZuYzh5eGgxaFdFRGp0YmhleERTZXo5ME9GMGpTY2NuREJSaHZrMUQ4N21qQWlObXJLUDBFTnpkWTliM0dVM1hjWjNjdnd2d2hMZ0NMd3czeklsVlpWcmtBQnBaNkJDdndDS3NWSUxtREJZcTZYVjZOSDRicjdRN05BQVpobVpHV056eEJGQ0dRNjlsNmJJdVAxSVB6Q0M?oc=5": {
     "first_seen": "2026-10-26",
@@ -523,5 +649,47 @@
     "status": "new",
     "times_seen": 1,
     "title": "Running UNCENSORED DeepSeek-V4.1-Flash-1017 on a 12 Gb VRAM"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xr777l/kimik31procoder_28t_177_tb_775_gb_56_368_tps": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Kimi-K3.1-Pro-Coder (2.8T) | 1.77 TB -> 775 GB (-56%) | 36.8 TPS (Batch) / 10.8 TPS on 1x Blackwell | 96.7% on both AIME"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xr78s5/intel_arc_pro_b70_32gb_1299_vs_nvidia_rtx_5090": {
+    "first_seen": "2026-11-09",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Intel Arc Pro B70 32GB ($1,299) vs NVIDIA RTX 5090 ($6,500+) on Qwen3.8-27B: about 1/2 speed gen (1/3 speed prefill) for"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xrarta/nous_research_arete27b_gguf_quants": {
+    "first_seen": "2026-11-09",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Nous Research Arete-27B GGUF quants"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xrspiy/neteaseyoudaoconfucius4r2t2_hugging_face": {
+    "first_seen": "2026-11-09",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "netease-youdao/Confucius4-R2T2 \u00b7 Hugging Face"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xrv2ae/anyone_else_feeling_like_qwen4s_release_happens": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Anyone else feeling like Qwen4's release happens in slow-motion?"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xrw6uv/rustingstrata_vs_llamacpp_deepseekv41flash_q2_249": {
+    "first_seen": "2026-11-09",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "RustingStrata vs llama.cpp, DeepSeek-V4.1-Flash Q2 (249 GB) on a single RTX 3060 12 GB with 30 GB RAM"
   }
 }
