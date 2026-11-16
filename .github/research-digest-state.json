@@ -209,12 +209,89 @@
     "times_seen": 1,
     "title": "Trainable Vector Quantization for Large Language Models"
   },
+  "https://arxiv.org/abs/2611.15270v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Communication-Efficient Federated Multi-View Clustering via View-Aware Quantization"
+  },
+  "https://arxiv.org/abs/2611.15569v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "TraceKV: Policy-Preserving Low-Rank KV Cache Compression for Reasoning Vision-Language Models"
+  },
+  "https://arxiv.org/abs/2611.15671v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "The Noise Floor of a Quantization Comparison: Engine, restart, batch and kernel drift, measured against 8-bit and 4-bit "
+  },
+  "https://arxiv.org/abs/2611.16426v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "SoScale: Second-Order Scale Search for FP4 Quantization"
+  },
+  "https://arxiv.org/abs/2611.16789v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "ScrewSense: Mapping the Invisible - Anomaly Detection and Error Classification in Screwdriving Processes"
+  },
+  "https://arxiv.org/abs/2611.16928v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "STEALTH: Steganographic Text Encoding Agnostic to Low-Level Tensor Hardware"
+  },
+  "https://arxiv.org/abs/2611.17526v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "User-Schedulable Approximations for Quantized Tensor Programs"
+  },
+  "https://arxiv.org/abs/2611.17605v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Choosing Quantized Code LLMs by File Size and Energy per Solved Task"
+  },
+  "https://arxiv.org/abs/2611.17780v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "LuthorSQL: A One-Pass Text-to-SQL Model as System 1 for a Slower LLM Agent"
+  },
+  "https://arxiv.org/abs/2611.18239v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Neural Classifiers as Error-Correcting Codes"
+  },
   "https://dev.to/ai_maya_063fc568e157562fd/ling-31-flash-and-the-71-hybrid-how-much-kv-cache-does-a-560b-model-need-at-1m-tokens-4oah": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
     "status": "new",
     "times_seen": 1,
     "title": "Ling-3.1-flash and the 7:1 hybrid: how much KV cache does a 560B model need at 1M tokens?"
+  },
+  "https://dev.to/gpunz/a-coding-agent-on-your-own-model-opencode-qwen-code-and-more-2l34": {
+    "first_seen": "2026-11-16",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "A coding agent on your own model: OpenCode, Qwen Code and more"
   },
   "https://dev.to/kohei_wada/only-the-design-of-a-local-llm-eval-harness-survives-rebuilding-it-for-qwen38-27b-24ic": {
     "first_seen": "2026-11-09",
@@ -250,6 +327,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT"
+  },
+  "https://github.com/FrigadeHQ/yogurt": {
+    "first_seen": "2026-11-16",
+    "last_score": 305.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Show HN: Yogurt \u2013 Free, private, open-source alternative to Granola"
   },
   "https://github.com/LearningCircuit/local-deep-research": {
     "first_seen": "2026-11-09",
@@ -321,6 +405,13 @@
     "times_seen": 1,
     "title": "xorbitsai/inference"
   },
+  "https://huggingface.co/blog/ggml-org/llama-cpp-v1": {
+    "first_seen": "2026-11-16",
+    "last_score": 26.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Llama.cpp hits v1.0 with a native app for macOS"
+  },
   "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPMlNJdnBmOE02Q2M2RlJxbVdKZFhEbHlzTTlMZmZSVF9MUnE3X09XdzZvTkFFN0tieWdxdzNRRURuSGJqTGpVck1kOHNaeURPbm50V3VXeTRVaVlHY0JKWjBxRUtOUHhSejU0MjVpSDFidV9KSkg4YnZSOEhBYXV6UTFablM2c3pBWmlRY3ZNX0ZrQ3NfNFk3Q3QyTVlsR2wybkptQ1RYc0dabW5QMXFMcVJ5a0dDMVM1N2hNUkJlMXR1eF82NkhLN0loUUlsVnBsSkRFR2F3d9IB1wFBVV95cUxPMlNJdnBmOE02Q2M2RlJxbVdKZFhEbHlzTTlMZmZSVF9MUnE3X09XdzZvTkFFN0tieWdxdzNRRURuSGJqTGpVck1kOHNaeURPbm50V3VXeTRVaVlHY0JKWjBxRUtOUHhSejU0MjVpSDFidV9KSkg4YnZSOEhBYXV6UTFablM2c3pBWmlRY3ZNX0ZrQ3NfNFk3Q3QyTVlsR2wybkptQ1RYc0dabW5QMXFMcVJ5a0dDMVM1N2hNUkJlMXR1eF82NkhLN0loUUlsVnBsSkRFR2F3dw?oc=5": {
     "first_seen": "2026-11-09",
     "last_score": 6.0,
@@ -334,6 +425,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "Intel OpenVINO 2026.1 integrates llama.cpp with Wildcat Lake and - igor\u00b4sLAB"
+  },
+  "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9SWUVqR3FmWS00ZDdhUEpqa1N0cDd0V0hnZjdfd3FOS1ZVNzVCaUhPc2RXMS1kLWZkTEtORzhrbWZPSEhaUmJVNFNPYzh6ZnJzN2lMN0hTYTdjZmhG?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp reaches version 1.0 for local AI tools - Tbreak UAE"
   },
   "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5yTzdYeUZTS0hNUGpvVWp6OHRnemE0QUczVjZkckFtTkpMMXBBZUJrazl3VVZOb2RfaS1Jdy1YcTdIa3ZMcS03TlpyNDFIcGVQbG9HbWRGTk0xMGtEOXc?oc=5": {
     "first_seen": "2026-10-19",
@@ -384,6 +482,34 @@
     "times_seen": 1,
     "title": "LM Studio vs Ollama vs llama.cpp: $0 to $500 [2026] - tech-insider.org"
   },
+  "https://news.google.com/rss/articles/CBMidEFVX3lxTE9QMjV2MFh0Z0M1M19ySXhDbjBERU0zNGZoc1hTQk16UXNCZHN6ZV85WDlXTElibmtrc3NPRm5SMk1zcVdDQktoRUpoTGRtU0ZBNzBvcUlSNWxjWkh6dEpPUGlxMEYzZkNNTVJFaHNMRUhjM1JC?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp and ggml 1.0: API version boundaries - CASRAI"
+  },
+  "https://news.google.com/rss/articles/CBMidkFVX3lxTE0xZ09VWWZWblJoc1NkSGpZeTMyVXo2UnRWbndSRVhETk1QcWx0Vk4ySkZmWUVKTGhiREpSNC05XzRKX1M3bGFVcVFZRDR5QV9yWk81ZHl0T0hhUWs0cHNoNy1lQVNTRWVxNW9pWndXdzJwell6UXc?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Local AI Foundation llama.cpp Reaches First v1.0.0, Signaling API Stability After 3.5 Years - BigGo Finance"
+  },
+  "https://news.google.com/rss/articles/CBMifkFVX3lxTE1vTWZkMzQzWHpvTkxBdzRTb3Q5STNqYzFzM2pxeE9XRkpSWWRyNFhzbGV6WE1mRTNqX3NzZmxuLWdWdFdYX3lqUUlnaGlCd0poczhfckwzTnVxaWtZME94VUNSb01EY1p1QnBGYkJmZWIxUnZQRjVqY21xSFVGZw?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp vs Ollama: v1.0, $0 vs $20 Cloud Tier [2026] - shattered.io"
+  },
+  "https://news.google.com/rss/articles/CBMifkFVX3lxTE9wRkJsamF5VGR0NVRNRV9wYXY1WFctZ25LNGZQNjFwYXBIcHh1QWpGakVkUlQ2N1R1anBwWm8zWGhJaXN5NUFuQUhRc0RZcmtsYTdNalZLYnJJc2YzcXNtLTBGQ2pnMVpacUFkYmJ0Q04ySnlTWWN1Q0U1bGVvdw?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp 1.0 arrives with a stable API and 35 fewer deprecated functions - Pasquale Pillitteri"
+  },
   "https://news.google.com/rss/articles/CBMihAFBVV95cUxNd012RG1oaFE4SDBmM0lVRGpvVV9NLUtLcHNZNU5Yb1hxLXE3c2I3ZlUzU0pDOTY1SGp2VDBjdThtY3htdlowMWItZ1JzRXlUVkNCWlBjUU1uVEpLOHhLTzdlYmNkQnFhZjEyLVdHNmdoa2N6enhDb2N4STk1ZGVXbHNvSmo?oc=5": {
     "first_seen": "2026-11-09",
     "last_score": 4.0,
@@ -397,6 +523,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "Nvidia Buys Hugging Face for $12.9 Billion and Gets llama.cpp Too - Pasquale Pillitteri"
+  },
+  "https://news.google.com/rss/articles/CBMiigFBVV95cUxPRk9tMVNfX01hZzFhZGkteDMyR3QyREdxWmpfM3kybVRRTTEwYUtyczVCaE15dGFEOHROM1dOTTZONkJ0NVVTci0zSUZsN1BFVk9DOE5XdlhyRlVSTU10M21lX3FqNUxMYkZTZUZZWWVpVnpIcDB3TmF4Ny1haVdnN2d0U3ZNdDByMFE?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Llama.cpp V1.0.0 Sets API Stability Rules for Local AI Tools - Unite.AI"
   },
   "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeXdXMmhSNVFGZWk5amVEbWF3RlNLTWtoMWpzMnlYMlBUWV8weVEzWTNERHhYTE5abXdROFlHMjhRb05wcUZYRXNueEM1VnI3cVIzdWowY0JHUUlvMlpPMVFoQXVqYTJTV3lKS1Jad1BfenY0VEhIN2JOU0Q4bkhtbHlpSndJZnZxUTFCTQ?oc=5": {
     "first_seen": "2026-10-19",
@@ -460,6 +593,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "Scaling llama.cpp On Neoverse N2: Solving Cross-NUMA Performance Issues - Semiconductor Engineering"
+  },
+  "https://news.google.com/rss/articles/CBMiowFBVV95cUxNeENwbzMwWkFqaVBZSzRTVU9ReUdCeXdONkdxYjdrazVhV3RucUI3RjZ6SzBkQ2JqSW14S3d1bmtIbXZBVzVxVFJiYlpZd0NFUS1QLUJ4ZUE5NkRNekttaXc4ZlRBLUoycXc4UXZZQUFOT3pMSlFCbXJ5T0E3ODM5eWhKZXJTdVJ5a1ZjRG1RaDVRXzdlVVhzSlhpMXVRSDQxTmtr?oc=5": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp v1.0.0, what changes for developers - Meteora Web"
   },
   "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOdHpQWE1RQnBiR1g1M0xCem5BWkkya3pfMHRrTnlLR3V1WDR3WlVKUHZLVXBUYmhwZ015NHZ3aGhmMjF0SkVlckxpV2YyVkRqVkx2NDBEWEFxSGp3NUROLXpaT3dpREFYNzhrMGtCT1RVcDluRkdMdGRqbFVZTndLY2czdnNHR3I1a29iR0pjSWpFNGdzemcwNm9sUmhoOHdVYnlEZEpmRGc?oc=5": {
     "first_seen": "2026-10-19",
@@ -691,5 +831,40 @@
     "status": "new",
     "times_seen": 1,
     "title": "RustingStrata vs llama.cpp, DeepSeek-V4.1-Flash Q2 (249 GB) on a single RTX 3060 12 GB with 30 GB RAM"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xx607x/llamacpp_performance_improvement_over_time_gemma4": {
+    "first_seen": "2026-11-16",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Llama.cpp performance improvement over time (Gemma4 models)"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xx7qbf/i_have_created_a_tool_to_observe_what_happens": {
+    "first_seen": "2026-11-16",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "I have created a tool to observe what happens inside an LLM. Also allows for the comparison of two quantizations of the "
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xxawbh/why_download_abliterated_flash_next_models_when": {
+    "first_seen": "2026-11-16",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Why download abliterated Flash Next models when LoRA exists?"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xxo0f5/tandemcpp_v030_prefill_speed_improved_project": {
+    "first_seen": "2026-11-16",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "tandem.cpp v0.3.0: prefill speed improved; Project Maya's DeepSeek-V4.1 GGUFs support"
+  },
+  "https://reddit.com/r/LocalLLaMA/comments/1xxq01s/project_gemmac_gemma_123_multimodal_inference_in": {
+    "first_seen": "2026-11-16",
+    "last_score": 2.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "[Project] Gemma.c - Gemma 1/2/3 + multimodal inference in one C file (CPU only)"
   }
 }
