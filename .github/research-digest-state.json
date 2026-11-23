@@ -279,12 +279,89 @@
     "times_seen": 1,
     "title": "Neural Classifiers as Error-Correcting Codes"
   },
+  "https://arxiv.org/abs/2611.24507v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Sparse designs via quantization of the uniform measure on high-dimensional hypercubes"
+  },
+  "https://arxiv.org/abs/2611.24648v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Zonotopic Analysis of Quantization Error in Neural Networks"
+  },
+  "https://arxiv.org/abs/2611.24727v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Surrogate Modeling and Reduced-Order Methods in Gravitational-Wave Physics and Numerical Relativity: From Spectral Repre"
+  },
+  "https://arxiv.org/abs/2611.24999v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "PsyWorld: Profile-Conditioned World Modeling for Human Behavior Prediction"
+  },
+  "https://arxiv.org/abs/2611.25264v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Process-Knowledge-Guided Latent Diffusion for Generative Design of Porous Architectures: A Case Study in Aerosol Jet Pri"
+  },
+  "https://arxiv.org/abs/2611.25538v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Towards Autoregressive Neural Network Parameter Generation"
+  },
+  "https://arxiv.org/abs/2611.26157v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "NariQ: Sub-3-Bit Quantization for Long-Horizon Agentic Tasks"
+  },
+  "https://arxiv.org/abs/2611.27056v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "A Continuous Relaxation of Quantization-Aware Training"
+  },
+  "https://arxiv.org/abs/2611.27092v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "PLoQ: A Prompt-Specific Low-Rank Basis for 4-bit Quantization of LLM Activations"
+  },
+  "https://arxiv.org/abs/2611.27155v1": {
+    "first_seen": "2026-11-23",
+    "last_score": 3.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "The Vulnerability Window: Decision Instability in Quantized Reward Models"
+  },
   "https://dev.to/ai_maya_063fc568e157562fd/ling-31-flash-and-the-71-hybrid-how-much-kv-cache-does-a-560b-model-need-at-1m-tokens-4oah": {
     "first_seen": "2026-10-19",
     "last_score": 6.0,
     "status": "new",
     "times_seen": 1,
     "title": "Ling-3.1-flash and the 7:1 hybrid: how much KV cache does a 560B model need at 1M tokens?"
+  },
+  "https://dev.to/alanwest/how-to-run-inkling-2-mini-locally-on-a-16-or-24-gb-gpu-card-says-32-gb-29oa": {
+    "first_seen": "2026-11-23",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "How to Run Inkling 2 Mini Locally on a 16 or 24 GB GPU (Card Says 32 GB)"
   },
   "https://dev.to/gpunz/a-coding-agent-on-your-own-model-opencode-qwen-code-and-more-2l34": {
     "first_seen": "2026-11-16",
@@ -349,6 +426,13 @@
     "times_seen": 1,
     "title": "Michael-A-Kuykendall/shimmy"
   },
+  "https://github.com/OpenMOSS/MOSS-TTS-Nano": {
+    "first_seen": "2026-11-23",
+    "last_score": 470.8,
+    "status": "new",
+    "times_seen": 1,
+    "title": "OpenMOSS/MOSS-TTS-Nano"
+  },
   "https://github.com/Osmantic/ODS": {
     "first_seen": "2026-11-09",
     "last_score": 780.2,
@@ -369,6 +453,20 @@
     "status": "new",
     "times_seen": 1,
     "title": "RapidAI/RapidOCR"
+  },
+  "https://github.com/codewhale-hq/Codewhale": {
+    "first_seen": "2026-11-23",
+    "last_score": 4119.7,
+    "status": "new",
+    "times_seen": 1,
+    "title": "codewhale-hq/Codewhale"
+  },
+  "https://github.com/deepjavalibrary/djl": {
+    "first_seen": "2026-11-23",
+    "last_score": 485.9,
+    "status": "new",
+    "times_seen": 1,
+    "title": "deepjavalibrary/djl"
   },
   "https://github.com/dograh-hq/dograh": {
     "first_seen": "2026-11-09",
@@ -398,6 +496,27 @@
     "times_seen": 1,
     "title": "open-multi-agent/open-multi-agent"
   },
+  "https://github.com/qybaihe/bla": {
+    "first_seen": "2026-11-23",
+    "last_score": 650.9,
+    "status": "new",
+    "times_seen": 1,
+    "title": "qybaihe/bla"
+  },
+  "https://github.com/royshil/obs-backgroundremoval": {
+    "first_seen": "2026-11-23",
+    "last_score": 471.6,
+    "status": "new",
+    "times_seen": 1,
+    "title": "royshil/obs-backgroundremoval"
+  },
+  "https://github.com/vinta/pangu.js": {
+    "first_seen": "2026-11-23",
+    "last_score": 486.1,
+    "status": "new",
+    "times_seen": 1,
+    "title": "vinta/pangu.js"
+  },
   "https://github.com/xorbitsai/inference": {
     "first_seen": "2026-11-09",
     "last_score": 964.9,
@@ -412,6 +531,13 @@
     "times_seen": 1,
     "title": "Llama.cpp hits v1.0 with a native app for macOS"
   },
+  "https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF": {
+    "first_seen": "2026-11-23",
+    "last_score": 19.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "NariQ: BF16-level Qwen3.8-27B in a 10 GB file"
+  },
   "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPMlNJdnBmOE02Q2M2RlJxbVdKZFhEbHlzTTlMZmZSVF9MUnE3X09XdzZvTkFFN0tieWdxdzNRRURuSGJqTGpVck1kOHNaeURPbm50V3VXeTRVaVlHY0JKWjBxRUtOUHhSejU0MjVpSDFidV9KSkg4YnZSOEhBYXV6UTFablM2c3pBWmlRY3ZNX0ZrQ3NfNFk3Q3QyTVlsR2wybkptQ1RYc0dabW5QMXFMcVJ5a0dDMVM1N2hNUkJlMXR1eF82NkhLN0loUUlsVnBsSkRFR2F3d9IB1wFBVV95cUxPMlNJdnBmOE02Q2M2RlJxbVdKZFhEbHlzTTlMZmZSVF9MUnE3X09XdzZvTkFFN0tieWdxdzNRRURuSGJqTGpVck1kOHNaeURPbm50V3VXeTRVaVlHY0JKWjBxRUtOUHhSejU0MjVpSDFidV9KSkg4YnZSOEhBYXV6UTFablM2c3pBWmlRY3ZNX0ZrQ3NfNFk3Q3QyTVlsR2wybkptQ1RYc0dabW5QMXFMcVJ5a0dDMVM1N2hNUkJlMXR1eF82NkhLN0loUUlsVnBsSkRFR2F3dw?oc=5": {
     "first_seen": "2026-11-09",
     "last_score": 6.0,
@@ -425,6 +551,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "Intel OpenVINO 2026.1 integrates llama.cpp with Wildcat Lake and - igor\u00b4sLAB"
+  },
+  "https://news.google.com/rss/articles/CBMi5wFBVV95cUxOMkN5R3F3SHdzUGgyTjlLcFVQQ1hoR0UxQ0g0SHVsa0xaRjdVZ3lvSjdia05HRHBlai1SaFR3NVdkV1I0bDkzTHFFNGNFbVdjOHpoRWpia094RTgzU29MdnRQSWU3SmJ6R2FLTWpOdWU1MnJjdlpvTVNjN0o5cE85eFQxUVNmTURTbXZTVDFqdDcyZnhLNGlxa0poQmJNMTdSWU1wTDlaVlFoQ201T0ptQV93aVZUYmd6UmtJa3VfYWVDUkN1Z01YS2Q3SGZZM0VjMzVOOU81REh5ZHFuN0NIUUhvTjRham8?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp GGUF Parser Flaws: Critical Integer Overflow Enables Arbitrary Reads in Every Local AI Stack - Tech Times"
   },
   "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9SWUVqR3FmWS00ZDdhUEpqa1N0cDd0V0hnZjdfd3FOS1ZVNzVCaUhPc2RXMS1kLWZkTEtORzhrbWZPSEhaUmJVNFNPYzh6ZnJzN2lMN0hTYTdjZmhG?oc=5": {
     "first_seen": "2026-11-16",
@@ -461,6 +594,13 @@
     "times_seen": 1,
     "title": "What else is included in the 'GGUF' file format used by llama.cpp for AI language models, besides weights? - GIGAZINE"
   },
+  "https://news.google.com/rss/articles/CBMib0FVX3lxTE9MN3ZCaS1UU3lZRVdFd080bGd1X2lLTG1VWFZYbWRiWGxfZXp5X1FReWNVNDlGdEZmUWZRYmpKaV9uNjlQVGFXUFptRnEwLURoU0JpeFZEQ0p6Uk1kRHdEMmFPM2I3b2JDMFpuTlhzaw?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "llama.cpp Decision Models: 5 Open GGUFs (Oct 2026) - explainx.ai"
+  },
   "https://news.google.com/rss/articles/CBMid0FVX3lxTE9FR3VEdlZPT21QWlo1ZVg1cVNUdzM1dEVuelRaNTFuSWkxYzV4MWduOG84NHFHZDVYVTFOOWVpYzZwbDMxMEtJZmlSOS1nQnNDLThKbTZHZWhJSGRMU3ZfMHhkc0dOeVNsVEIyRk9MTU1JUVVneUFv?oc=5": {
     "first_seen": "2026-10-26",
     "last_score": 4.0,
@@ -474,6 +614,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "llama.cpp and Open WebUI: 12 Steps, 60 Min [2026] - shattered.io"
+  },
+  "https://news.google.com/rss/articles/CBMidEFVX3lxTE0tYmRxZGVYd1QxRlJSMkZLSXZ1YUdOYkc3S3FNQlF3UGhiVDBZdGNQNFRKdnJwUm9YRkFOYmxUZmpKWWlRY19aQk9sSVljNno3YlB1V0xYbzJicGJodUwzLTdJb3h6ZzB6LWdwY3ZzVGhQZXAt?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "What Is llama.cpp? Run GGUF Models Locally - explainx.ai"
   },
   "https://news.google.com/rss/articles/CBMidEFVX3lxTE5SRDdNaGcxWEtfVVFrQUVid1RKLVlhSUVfQ3Zwc19UZDJKUGZFNUtYUFFvOXU2aHFlNVBnQWtDdGRRRWF4ejdNaGp1R0o5TFI2ck5JQjFfOXRPZndjQ1FHcGxlLUNLRlBTLWhNMi1reFdWS2l4?oc=5": {
     "first_seen": "2026-10-26",
@@ -510,12 +657,26 @@
     "times_seen": 1,
     "title": "llama.cpp 1.0 arrives with a stable API and 35 fewer deprecated functions - Pasquale Pillitteri"
   },
+  "https://news.google.com/rss/articles/CBMigwFBVV95cUxOeENXazdxQTZFQnltT0pCUFZUM2FiQnJXbDE2cmFUbFhxNEhMY01vRUNicXg4MENIcExWVmdpWDl5bFZwUVBvY2xoUW8yb1U0UU00RWxMdHZSMlJZOE9YUVJpTndmX2hsQWVvRkpBZk96SWJKUkNEMDNXMFFlOHA5b0M4QQ?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 8.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "HF Transformers Matches llama.cpp GGUF Speed (2026) - explainx.ai"
+  },
   "https://news.google.com/rss/articles/CBMihAFBVV95cUxNd012RG1oaFE4SDBmM0lVRGpvVV9NLUtLcHNZNU5Yb1hxLXE3c2I3ZlUzU0pDOTY1SGp2VDBjdThtY3htdlowMWItZ1JzRXlUVkNCWlBjUU1uVEpLOHhLTzdlYmNkQnFhZjEyLVdHNmdoa2N6enhDb2N4STk1ZGVXbHNvSmo?oc=5": {
     "first_seen": "2026-11-09",
     "last_score": 4.0,
     "status": "new",
     "times_seen": 1,
     "title": "llama.cpp checkpoint fix speeds local coding agents - Startup Fortune"
+  },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxQdkt2MXF4WWNNdXcyYTk4bl8xVjVpOHFPZHZid19feE1vaFoyLXRkbGM3MU1CcFNiRW5LbGRnX3lrRWQxVU9WWkRLN2ZNbkcyRXpJZUNfZklWRURKNzROSlpzNEd0LVBySWRZQ3JibmR3aklDYmJ3RnFyRkdEZzlEZjFxcVM?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Ollama and llama.cpp Welcome Decision Models - Brief IA"
   },
   "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOa0tfdkRIUXJHNTR3VEdGRWRqU213VnFucmh4bm1KSEI5dHBDVDlkc0o1bE84bkVDdXpJU0l4MTdBcjVXcEROOEhJTlY1MGdlSTY2XzZnSDlYeHdPZEtST0lTTGs1MU5PT09hdjZtVEVTSzVCWWx1dXpVcFJWSDBKVXhUS0JxV0ls?oc=5": {
     "first_seen": "2026-11-09",
@@ -594,6 +755,13 @@
     "times_seen": 1,
     "title": "Scaling llama.cpp On Neoverse N2: Solving Cross-NUMA Performance Issues - Semiconductor Engineering"
   },
+  "https://news.google.com/rss/articles/CBMiogFBVV95cUxOSHRKRGstMWxXOFNob2NtaW9oSGNnTGM0dFhTbC0tV3NTc0RCb1BrZ21EeFR2MlpkdGp0QURRR0ZDNFBMVktXdE90RkYybTZWYjBFVXNZbTcxUW5WMm9sbW00cFFKN191NjVScjBTc0Ixc3JHZVJ0ZlBMS2pqNl9ELXRXbGpIM1FtQ2ZDYlVHMHRldTFydEZMMjZlbjJ1cTgyY2c?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 4.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Building a Private AI Document Assistant on an 8GB GPU Using RAG and llama.cpp - HackerNoon"
+  },
   "https://news.google.com/rss/articles/CBMiowFBVV95cUxNeENwbzMwWkFqaVBZSzRTVU9ReUdCeXdONkdxYjdrazVhV3RucUI3RjZ6SzBkQ2JqSW14S3d1bmtIbXZBVzVxVFJiYlpZd0NFUS1QLUJ4ZUE5NkRNekttaXc4ZlRBLUoycXc4UXZZQUFOT3pMSlFCbXJ5T0E3ODM5eWhKZXJTdVJ5a1ZjRG1RaDVRXzdlVVhzSlhpMXVRSDQxTmtr?oc=5": {
     "first_seen": "2026-11-16",
     "last_score": 4.0,
@@ -628,6 +796,13 @@
     "status": "new",
     "times_seen": 1,
     "title": "I switched from LM Studio to llama.cpp, and I'm never going back to a bloated wrapper - How-To Geek"
+  },
+  "https://news.google.com/rss/articles/CBMisAFBVV95cUxPNWgzMTBuR2FtTGdnYXdQWEF0cHVibDZwMm85ZFBMamoyckRERUFrUTZKWjgyMU1nZVRpMHpwSFJBYUJVQ1VaWTN5aFRJdFpVLUZ5NEc3dEtld3VaSW5MUUx0V09ZdEpFWGRYSXU5MlJEMEVXN214MW43SExHRVF5c0x6eXlac1RjVUZfbmpkWDBTNmJ2Ny1ieTdYNzlsclFsa2VLeUpIMGhVell0c3otNA?oc=5": {
+    "first_seen": "2026-11-23",
+    "last_score": 6.0,
+    "status": "new",
+    "times_seen": 1,
+    "title": "Serving a Local LLM to Several Users: Ollama, LM Studio, llama.cpp and vLLM Benchmarked - SitePoint"
   },
   "https://news.google.com/rss/articles/CBMisgFBVV95cUxNcldseERzcm8xTG1qLXBicmpQa2dYZVp0YWZZSmlJdWp6SkNMWGpXTFoyUURZMkRtUV92WGM3bWNybUd5ZldGOTdyaW03aXFmQ0NCeFhoYzlaZndLWXI1OV9CTFJ6b3VYMGRzMEFXbGRTQlhjTlVoeHJnY0h5NjJGUWtuWU9jaEdvMmZvak9IeFgtSkY1OTZGYXA0Y0FjbUpkd3otVUtqakZUYWV3QWtET0ln?oc=5": {
     "first_seen": "2026-11-02",
